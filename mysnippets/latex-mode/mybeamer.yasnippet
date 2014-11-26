@@ -1,0 +1,39 @@
+# -*- mode: snippet -*-
+# name: mybeamer
+# --
+%# -*- coding: utf-8 -*-
+\\documentclass{beamer}
+\\usepackage[bars]{beamerthemetree}
+\\usetheme{Darmstadt}
+%\\usecolortheme{lily}
+%\\usecolortheme{sidebartab}
+\\usestructuretemplate{\\color{structrue}}{}
+\\beamertemplateshadingbackground{magenta!5}{blue!5}
+
+\\usepackage{xeCJK}
+\\usepackage{mathrsfs}
+\\usepackage{latexsym}
+\\setCJKmainfont[BoldFont=SimHei]{SimSun}
+\\usefonttheme[onlymath]{serif}
+\\usepackage{moreverb}
+
+\\usefonttheme{structurebold}
+\\usepackage{amsmath,amssymb}
+
+\\title{${1:标题}}
+\\author{${2:何春晖}}
+\\date{\\today}
+
+\\begin{document}
+\\frame{\\titlepage}
+
+\\frame{\\frametitle{目录}\\tableofcontents}
+\\AtBeginSubsection[]
+{
+\\begin{frame}<beamer>
+\\frametitle{目录}
+\\tableofcontents[currentsection,currentsubsection]
+\\end{frame}
+}
+$3
+\\end{document}
