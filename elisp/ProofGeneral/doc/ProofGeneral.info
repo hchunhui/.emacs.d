@@ -1,4 +1,4 @@
-This is ProofGeneral.info, produced by makeinfo version 4.13 from
+This is ProofGeneral.info, produced by makeinfo version 4.8 from
 ProofGeneral.texi.
 
 INFO-DIR-SECTION Theorem proving
@@ -15,7 +15,7 @@ Proof General
 This file documents version 4.3pre of Proof General, a generic Emacs
 interface for proof assistants.
 
-Proof General 4.3pre has been tested with GNU Emacs 24.2 on Linux.  It
+Proof General 4.3pre has been tested with GNU Emacs 24.4 on Linux.  It
 is supplied ready to use for the proof assistants LEGO, Coq, Isabelle,
 and PhoX.  Experimental support is provided for several other provers.
 
@@ -55,7 +55,7 @@ Welcome to Proof General!
 
 This preface has some news about the current release, future plans, and
 acknowledgements to those who have helped along the way.  The appendix
-*note History of Proof General:: contains old news about previous
+*Note History of Proof General:: contains old news about previous
 releases, and notes on the development of Proof General.
 
 Proof General has a home page at `http://proofgeneral.inf.ed.ac.uk'.
@@ -134,7 +134,7 @@ main changes are:
    * numerous smaller enhancements and efficiency improvements.
 
 See the `CHANGES' file in the distribution for more complete details of
-changes, and the appendix *note History of Proof General:: for old news.
+changes, and the appendix *Note History of Proof General:: for old news.
 
 
 File: ProofGeneral.info,  Node: Future,  Next: Credits,  Prev: News for Version 4.0,  Up: Preface
@@ -399,8 +399,8 @@ page or index of this manual to find out about the others!
      _asserting_ or _retracting_ parts of a proof script, which alters
      the coloured regions.
 
-     For more details, *note Basic Script Management::, *note Script
-     processing commands::, and *note Advanced Script Management and
+     For more details, *note Basic Script Management::, *Note Script
+     processing commands::, and *Note Advanced Script Management and
      Editing::.
 
    * Script editing mode
@@ -410,7 +410,7 @@ page or index of this manual to find out about the others!
      lines of proof script to the proof assistant, or undo previous
      proof steps.
 
-     For more details, *note Script editing commands::, and *note
+     For more details, *note Script editing commands::, and *Note
      Script processing commands::.
 
    * Proof-tree visualization
@@ -432,8 +432,8 @@ page or index of this manual to find out about the others!
      functions for operations in the proof assistant, as well as
      customization of Proof General.
 
-     For more details, *note Toolbar commands::, *note Proof assistant
-     commands::, and *note Customizing Proof General::.
+     For more details, *note Toolbar commands::, *Note Proof assistant
+     commands::, and *Note Customizing Proof General::.
 
    * Proof by pointing
      Proof General has support for proof-by-pointing and similar
@@ -623,8 +623,8 @@ assistants and file extensions.
      This first command begins the definition of a new theory inside
      Isabelle, which extends the theory `Main'.  (We're assuming that
      you have Isabelle/HOL available, which declares the `Main' theory.
-     You should be able to see the list of installed logics in Isabelle
-     on the `Logics' menu).
+     You should be able to see the list of installed logics in
+     Isabelle on the `Logics' menu).
 
 Electric terminator sends commands to the proof assistant as you type
 them.  At the moment you type the semicolon, the `theory' command will
@@ -2030,8 +2030,8 @@ control tokens for layout: character controls and region controls.  The
 character controls apply to the next "character", although this is a
 prover-specific notion and might actually mean the next word or
 identifier.  An example might be writing `BOLDCHAR x' to make a bold x.
-Similarly the region controls apply to a delineated region of text, for
-example, writing `BEGINBOLD this is bold ENDBOLD' could cause the
+Similarly the region controls apply to a delineated region of text,
+for example, writing `BEGINBOLD this is bold ENDBOLD' could cause the
 enclosed text this is bold to be displayed in a bold font.
 
 The control tokens that have been configured populate the Tokens menu,
@@ -3377,11 +3377,11 @@ _Remarque 1:_ The examples in the following are for Coq but the trick
 is applicable to other provers.
 
 _Remarque 2:_ For Coq specifically there is a recommended other way of
-configuring coq options: project files (*note Using the Coq project
+configuring coq options: project files (*Note Using the Coq project
 file::).
 
 For example, in Coq projects involving multiple directories, it is
-necessary to set the variable `coq-load-path' (*note Customizing Coq
+necessary to set the variable `coq-load-path' (*Note Customizing Coq
 Multiple File Support::).  Here is an example: Assume the file
 `.../dir/bar/foo.v' depends on modules in `.../dir/theories/'. Then you
 can put the following at the end of `foo.v':
@@ -3531,7 +3531,7 @@ File: ProofGeneral.info,  Node: LEGO tags,  Next: LEGO customizations,  Prev: LE
 
 You might want to ask your local system administrator to tag the
 directories `lib_Prop', `lib_Type' and `lib_TYPE' of the LEGO library.
-See *note Support for tags::, for further details on tags.
+See *Note Support for tags::, for further details on tags.
 
 
 File: ProofGeneral.info,  Node: LEGO customizations,  Prev: LEGO tags,  Up: LEGO Proof General
@@ -3539,7 +3539,7 @@ File: ProofGeneral.info,  Node: LEGO customizations,  Prev: LEGO tags,  Up: LEGO
 10.3 LEGO customizations
 ========================
 
-We refer to chapter *note Customizing Proof General::, for an
+We refer to chapter *Note Customizing Proof General::, for an
 introduction to the customisation mechanism. In addition to
 customizations at the generic level, for LEGO you can also customize:
 
@@ -3619,7 +3619,7 @@ File: ProofGeneral.info,  Node: Using the Coq project file,  Next: Multiple File
 
 Before starting the Coq process, one need to set `coqtop' options, in
 particular the -I and -R command that set the directories to have in
-the coq load path. You can use file variables (*note Using file
+the coq load path. You can use file variables (*Note Using file
 variables::) as it was recommended on previous versions of ProofGeneral
 but there is now a better way. ProofGeneral knows how to extract this
 information from the Coq project file if there is one. The Coq project
@@ -3627,6 +3627,7 @@ file must be named following variable `coq-project-filename' (default:
 `_CoqProject') and be on the root directory of your development.
 
 It should contain something like:
+
 
 -R foo bar
 -I foo2
@@ -3643,7 +3644,7 @@ compilation, CoqIde and Proofgeneral. Its main advantage is that it
 avoids duplicating informations between these three tools.
 
 For specific (and rare) per file configuration one can still use file
-variables (*note Using file variables::).
+variables (*Note Using file variables::).
 
 * Menu:
 
@@ -3665,7 +3666,7 @@ or:
 (setq (make-local-variable 'coq-project-filename) "myprojectfile")
 
 If this is for a project, the best is probably to have a .dir-locals.el
-at the root of the project, as explained in  *note Using file
+at the root of the project, as explained in  *Note Using file
 variables::. This file should contain something like:
 
      ((coq-mode . ((coq-project-filename . "myprojectfile"))))
@@ -3713,8 +3714,8 @@ Restarting `coqtop' when changing the active scripting buffer
 Locking ancestors
      Locking those buffers on which the current active scripting buffer
      depends. This is controlled by the user option
-     `coq-lock-ancestors', *note Customizing Coq Multiple File
-     Support:: and *note Locking Ancestors::.
+     `coq-lock-ancestors', *Note Customizing Coq Multiple File
+     Support:: and *Note Locking Ancestors::.
 
 (Re-)Compilation
      Before a `Require' command is processed it may be necessary to
@@ -3751,7 +3752,7 @@ points:
 
    * In `coq-load-path' use strings `"dir"' for `-I' options and lists
      of two strings `("dir" "path")' for `-R "dir" -as "path"' (for
-     more details see the documentation of `coq-load-path' or *note
+     more details see the documentation of `coq-load-path' or *Note
      Customizing Coq Multiple File Support::).
 
    * For a nonstandard compilation procedure and limited ML module
@@ -3783,7 +3784,7 @@ File: ProofGeneral.info,  Node: Automatic Compilation in Detail,  Next: Locking 
 
 When `coq-compile-before-require' is enabled, Proof General looks for
 `Require' commands in text that gets asserted (i.e., in text that is
-moved from the editing region to the queue region, *note Locked queue
+moved from the editing region to the queue region, *Note Locked queue
 and editing regions::). If Proof General finds a `Require' command, it
 checks the dependencies and (re-)compiles files as necessary. The
 Require command and the following text is only sent to Coq after the
@@ -3803,7 +3804,7 @@ done internally, by Proof General itself, or by an external command. If
 `coq-compile-command' is the empty string, Proof General does
 dependency checking and compilation itself. Otherwise the command in
 `coq-compile-command' is started as an external process after
-substituting certain keys, *note Customizing Coq Multiple File
+substituting certain keys, *Note Customizing Coq Multiple File
 Support::.
 
 For an external compilation command Proof General uses the general
@@ -3893,7 +3894,7 @@ buffer and unlock that ancestor.
 
 You have two choices, if you don't like ancestor locking in its default
 way.  You can either switch ancestor locking completely off via
-`coq-lock-ancestors' (*note Customizing Coq Multiple File Support::) or
+`coq-lock-ancestors' (*Note Customizing Coq Multiple File Support::) or
 you can generally permit editing in locked sections with selecting
 `Proof-General' -> `Quick Options' -> `Read Only' -> `Freely Edit'
 (which will set the option `proof-strict-read-only' to `nil').
@@ -5099,7 +5100,7 @@ experimental Unicode Tokens package has been added which will replace
 X-Symbol.
 
 See the `CHANGES' file in the distribution for more complete details of
-changes since version 3.5, and the appendix *note History of Proof
+changes since version 3.5, and the appendix *Note History of Proof
 General:: for old news.
 
 
@@ -5356,19 +5357,19 @@ Keystroke Index
 * C-c C-a b:                             Isabelle commands.    (line 78)
 * C-c C-a C-):                           Coq-specific commands.
                                                                (line  6)
-* C-c C-a C-a <1>:                       Isabelle commands.    (line 78)
-* C-c C-a C-a:                           Coq-specific commands.
+* C-c C-a C-a <1>:                       Coq-specific commands.
                                                                (line  6)
-* C-c C-a C-b <1>:                       Isabelle commands.    (line 78)
-* C-c C-a C-b:                           Coq-specific commands.
+* C-c C-a C-a:                           Isabelle commands.    (line 78)
+* C-c C-a C-b <1>:                       Coq-specific commands.
                                                                (line  6)
+* C-c C-a C-b:                           Isabelle commands.    (line 78)
 * C-c C-a C-c:                           Coq-specific commands.
                                                                (line  6)
 * C-c C-a C-d:                           Isabelle commands.    (line  6)
 * C-c C-a C-f:                           Isabelle commands.    (line  6)
-* C-c C-a C-i <1>:                       Isabelle commands.    (line 78)
-* C-c C-a C-i:                           Coq-specific commands.
+* C-c C-a C-i <1>:                       Coq-specific commands.
                                                                (line  6)
+* C-c C-a C-i:                           Isabelle commands.    (line 78)
 * C-c C-a C-I:                           LEGO specific commands.
                                                                (line 11)
 * C-c C-a C-i:                           LEGO specific commands.
@@ -5388,8 +5389,8 @@ Keystroke Index
 * C-c C-a C-s:                           Coq-specific commands.
                                                                (line  6)
 * C-c C-a C-u:                           Isabelle commands.    (line 78)
-* C-c C-a h a:                           Isabelle commands.    (line  6)
 * C-c C-a h A:                           Isabelle commands.    (line  6)
+* C-c C-a h a:                           Isabelle commands.    (line  6)
 * C-c C-a h b:                           Isabelle commands.    (line  6)
 * C-c C-a h c:                           Isabelle commands.    (line  6)
 * C-c C-a h C:                           Isabelle commands.    (line  6)
@@ -5399,8 +5400,8 @@ Keystroke Index
 * C-c C-a h m:                           Isabelle commands.    (line  6)
 * C-c C-a h o:                           Isabelle commands.    (line  6)
 * C-c C-a h S:                           Isabelle commands.    (line  6)
-* C-c C-a h t:                           Isabelle commands.    (line  6)
 * C-c C-a h T:                           Isabelle commands.    (line  6)
+* C-c C-a h t:                           Isabelle commands.    (line  6)
 * C-c C-a l:                             Isabelle commands.    (line 78)
 * C-c C-a r:                             Isabelle commands.    (line  6)
 * C-c C-a u:                             Isabelle commands.    (line 78)
@@ -5412,9 +5413,9 @@ Keystroke Index
                                                                (line  6)
 * C-c C-e:                               Script editing commands.
                                                                (line 18)
-* C-c C-f <1>:                           Isabelle commands.    (line  6)
-* C-c C-f:                               Proof assistant commands.
+* C-c C-f <1>:                           Proof assistant commands.
                                                                (line  6)
+* C-c C-f:                               Isabelle commands.    (line  6)
 * C-c C-h:                               Proof assistant commands.
                                                                (line  6)
 * C-c C-n:                               Script processing commands.
@@ -5498,8 +5499,8 @@ Concept Index
 * Imenu:                                 Imenu and Speedbar.   (line  6)
 * Indentation:                           User options.         (line  6)
 * index menu:                            Imenu and Speedbar.   (line  6)
-* Input ring <1>:                        User options.         (line  6)
-* Input ring:                            Editing features.     (line  6)
+* Input ring <1>:                        Editing features.     (line  6)
+* Input ring:                            User options.         (line  6)
 * Isabelle commands:                     Isabelle commands.    (line  6)
 * Isabelle customizations:               Isabelle customizations.
                                                                (line  6)
@@ -5512,9 +5513,9 @@ Concept Index
 * keybindings:                           Adding your own keybindings.
                                                                (line  6)
 * LEGO Proof General:                    LEGO Proof General.   (line  6)
-* lego-mode <1>:                         History of Proof General.
+* lego-mode <1>:                         Credits.              (line  6)
+* lego-mode:                             History of Proof General.
                                                                (line  6)
-* lego-mode:                             Credits.              (line  6)
 * Locked region:                         Locked queue and editing regions.
                                                                (line  6)
 * logical symbols:                       Unicode symbols and special layout support.
@@ -5532,12 +5533,12 @@ Concept Index
                                                                (line  6)
 * multiple windows:                      Display customization.
                                                                (line  6)
-* news <1>:                              Old News for 3.2.     (line  6)
-* news <2>:                              Old News for 3.1.     (line  6)
+* news <1>:                              News for Version 4.3. (line  6)
+* news <2>:                              News for Version 4.1. (line  6)
 * news <3>:                              News for Version 4.0. (line  6)
-* news <4>:                              News for Version 4.1. (line  6)
+* news <4>:                              Old News for 3.2.     (line  6)
 * news <5>:                              News for Version 4.2. (line  6)
-* news:                                  News for Version 4.3. (line  6)
+* news:                                  Old News for 3.1.     (line  6)
 * outline mode:                          Support for outline mode.
                                                                (line  6)
 * pink text:                             Locked queue and editing regions.
@@ -5546,10 +5547,10 @@ Concept Index
                                                                (line  6)
 * proof assistant:                       Introducing Proof General.
                                                                (line  6)
-* proof by pointing <1>:                 History of Proof General.
-                                                               (line 19)
-* proof by pointing:                     Summary of Proof General buffers.
+* proof by pointing <1>:                 Summary of Proof General buffers.
                                                                (line  6)
+* proof by pointing:                     History of Proof General.
+                                                               (line 19)
 * Proof General:                         Introducing Proof General.
                                                                (line  6)
 * Proof General Kit:                     Future.               (line  6)
@@ -5613,92 +5614,92 @@ Concept Index
 
 
 Tag Table:
-Node: Top235
-Node: Preface1280
-Node: News for Version 4.31992
-Node: News for Version 4.22444
-Node: News for Version 4.12987
-Node: News for Version 4.03388
-Node: Future4289
-Node: Credits5639
-Node: Introducing Proof General9456
-Ref: Introducing Proof General-Footnote-110949
-Ref: Introducing Proof General-Footnote-211180
-Node: Installing Proof General11281
-Node: Quick start guide11812
-Node: Features of Proof General13993
-Node: Supported proof assistants18465
-Node: Prerequisites for this manual20342
-Node: Organization of this manual21969
-Node: Basic Script Management22793
-Node: Walkthrough example in Isabelle23456
-Node: Proof scripts32920
-Node: Script buffers34974
-Node: Locked queue and editing regions35586
-Node: Goal-save sequences37659
-Node: Active scripting buffer38848
-Ref: Active scripting buffer-Footnote-142177
-Node: Summary of Proof General buffers42426
-Node: Script editing commands44741
-Node: Script processing commands46458
-Ref: Script processing commands-Footnote-150908
-Node: Proof assistant commands51272
-Node: Toolbar commands57690
-Node: Interrupting during trace output58694
-Node: Advanced Script Management and Editing60592
-Node: Document centred working61322
-Node: Automatic processing65944
-Node: Visibility of completed proofs67941
-Node: Switching between proof scripts69772
-Ref: Switching between proof scripts-Footnote-171759
-Node: View of processed files71886
-Ref: View of processed files-Footnote-174369
-Node: Retracting across files74469
-Node: Asserting across files75241
-Node: Automatic multiple file handling75957
-Node: Escaping script management77147
-Node: Editing features79346
-Node: Unicode symbols and special layout support81610
-Node: Maths menu83125
-Node: Unicode Tokens mode83900
-Node: Configuring tokens symbols and shortcuts86420
-Node: Special layout87464
-Node: Moving between Unicode and tokens91353
-Node: Finding available tokens shortcuts and symbols93427
-Node: Selecting suitable fonts94586
-Node: Support for other Packages97399
-Node: Syntax highlighting98320
-Node: Imenu and Speedbar99261
-Node: Support for outline mode100862
-Node: Support for completion102038
-Node: Support for tags104183
-Node: Subterm Activation and Proof by Pointing106378
-Node: Goals buffer commands107119
-Node: Graphical Proof-Tree Visualization110020
-Node: Starting and Stopping Proof-Tree Visualization111304
-Node: Features of Prooftree112579
-Node: Prooftree Customization114106
-Node: Customizing Proof General115000
-Node: Basic options116641
-Node: How to customize117483
-Node: Display customization119392
-Node: User options127035
-Node: Changing faces134985
-Node: Script buffer faces135966
-Node: Goals and response faces137127
-Node: Tweaking configuration settings138352
-Node: Hints and Tips140719
-Node: Adding your own keybindings141422
-Node: Using file variables144115
-Node: Using abbreviations147183
-Node: LEGO Proof General148536
-Ref: LEGO Proof General-Footnote-1149808
-Node: LEGO specific commands149888
-Node: LEGO tags150352
-Node: LEGO customizations150708
-Node: Coq Proof General151251
-Node: Coq-specific commands151752
-Node: Using the Coq project file152925
+Node: Top234
+Node: Preface1279
+Node: News for Version 4.31991
+Node: News for Version 4.22443
+Node: News for Version 4.12986
+Node: News for Version 4.03387
+Node: Future4288
+Node: Credits5638
+Node: Introducing Proof General9455
+Ref: Introducing Proof General-Footnote-110948
+Ref: Introducing Proof General-Footnote-211179
+Node: Installing Proof General11280
+Node: Quick start guide11811
+Node: Features of Proof General13992
+Node: Supported proof assistants18464
+Node: Prerequisites for this manual20341
+Node: Organization of this manual21968
+Node: Basic Script Management22792
+Node: Walkthrough example in Isabelle23455
+Node: Proof scripts32919
+Node: Script buffers34973
+Node: Locked queue and editing regions35585
+Node: Goal-save sequences37658
+Node: Active scripting buffer38847
+Ref: Active scripting buffer-Footnote-142176
+Node: Summary of Proof General buffers42425
+Node: Script editing commands44740
+Node: Script processing commands46457
+Ref: Script processing commands-Footnote-150907
+Node: Proof assistant commands51271
+Node: Toolbar commands57689
+Node: Interrupting during trace output58693
+Node: Advanced Script Management and Editing60591
+Node: Document centred working61321
+Node: Automatic processing65943
+Node: Visibility of completed proofs67940
+Node: Switching between proof scripts69771
+Ref: Switching between proof scripts-Footnote-171758
+Node: View of processed files71885
+Ref: View of processed files-Footnote-174368
+Node: Retracting across files74468
+Node: Asserting across files75240
+Node: Automatic multiple file handling75956
+Node: Escaping script management77146
+Node: Editing features79345
+Node: Unicode symbols and special layout support81609
+Node: Maths menu83124
+Node: Unicode Tokens mode83899
+Node: Configuring tokens symbols and shortcuts86419
+Node: Special layout87463
+Node: Moving between Unicode and tokens91352
+Node: Finding available tokens shortcuts and symbols93426
+Node: Selecting suitable fonts94585
+Node: Support for other Packages97398
+Node: Syntax highlighting98319
+Node: Imenu and Speedbar99260
+Node: Support for outline mode100861
+Node: Support for completion102037
+Node: Support for tags104182
+Node: Subterm Activation and Proof by Pointing106377
+Node: Goals buffer commands107118
+Node: Graphical Proof-Tree Visualization110019
+Node: Starting and Stopping Proof-Tree Visualization111303
+Node: Features of Prooftree112578
+Node: Prooftree Customization114105
+Node: Customizing Proof General114999
+Node: Basic options116640
+Node: How to customize117482
+Node: Display customization119391
+Node: User options127034
+Node: Changing faces134984
+Node: Script buffer faces135965
+Node: Goals and response faces137126
+Node: Tweaking configuration settings138351
+Node: Hints and Tips140718
+Node: Adding your own keybindings141421
+Node: Using file variables144114
+Node: Using abbreviations147182
+Node: LEGO Proof General148535
+Ref: LEGO Proof General-Footnote-1149807
+Node: LEGO specific commands149887
+Node: LEGO tags150351
+Node: LEGO customizations150707
+Node: Coq Proof General151250
+Node: Coq-specific commands151751
+Node: Using the Coq project file152924
 Node: Changing the name of the coq project file154455
 Node: Disabling the coq project file mechanism155334
 Node: Multiple File Support155913

@@ -12,18 +12,15 @@
 ##
 ## Edit the EMACS setting below or call with an explicit one, like this:
 ##
-##     make EMACS=emacs-23.0.60
-## or
 ##     make EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
 ##
-## Makefile,v 12.7 2013/07/05 09:12:22 da Exp
+## Makefile,v 12.9 2015/03/13 14:16:33 da Exp
 ## 
 ###########################################################################
 
 # Set this according to your version of Emacs.
 # NB: this is also used to set default install path names below.
 EMACS=$(shell if [ -z "`which emacs`" ]; then echo "Emacs executable not found"; exit 1; else echo emacs; fi)
-# EMACS=/Applications/Emacs\ 23.4.app/Contents/MacOS/Emacs
 
 # We default to /usr rather than /usr/local because installs of
 # desktop and doc files under /usr/local are unlikely to work with

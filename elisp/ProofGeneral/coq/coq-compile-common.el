@@ -4,7 +4,7 @@
 ;; License:     GPL (GNU GENERAL PUBLIC LICENSE)
 ;; Maintainer: Hendrik Tews <hendrik@askra.de>
 ;;
-;; coq-compile-common.el,v 11.12 2013/01/03 09:33:38 tews Exp
+;; coq-compile-common.el,v 11.16 2015/03/03 09:36:22 pier Exp
 ;;
 ;;; Commentary:
 ;;
@@ -108,6 +108,10 @@ Must be used together with `coq-par-enable'."
                (every 'stringp (cdr entry))
                (equal (length entry) 3))
           (and (listp entry)
+               (eq (car entry) 'recnoimport)
+               (every 'stringp (cdr entry))
+               (equal (length entry) 3))
+          (and (listp entry)
                (every 'stringp entry)
                (equal (length entry) 2))))
     path)))
@@ -126,7 +130,7 @@ Must be used together with `coq-par-enable'."
     (condition-case nil
 	(with-temp-buffer
 	  (setq status
-		(call-process "getconf" nil (current-buffer) nil 
+		(call-process "getconf" nil (current-buffer) t 
 			      "_NPROCESSORS_ONLN"))
 	  (setq ncpus (string-to-number (buffer-string))))
       (error
@@ -270,6 +274,11 @@ forms of include options ('-I' and '-R'). An element can be
   - A list of the form '(rec dir path)' (where dir and path are
     strings) specifying a directory to be recursively mapped to the
     logical path 'path' ('-R dir -as path').
+  - A list of the form '(recnoimport dir path)' (where dir and
+    path are strings) specifying a directory to be recursively
+    mapped to the logical path 'path' ('-Q dir path'), but not
+    imported (modules accessible for import with qualified names
+    only).
   - A list of the form '(norec dir path)', specifying a directory
     to be mapped to the logical path 'path' ('-I dir -as path').
 
@@ -285,6 +294,11 @@ directory (see `coq-load-path-include-current')."
                                (const rec)
                                (string :tag "directory")
                                (string :tag "log path"))
+			 (list :tag
+                               "recursive directory without recursive inport with path (-Q ... ...)"
+                               (const recnoimport)
+                               (string :tag "directory")
+                               (string :tag "log path"))
                          (list :tag
                                "simple directory with path (-I ... -as ...)"
                                (const nonrec)
@@ -292,6 +306,8 @@ directory (see `coq-load-path-include-current')."
                                (string :tag "log path"))))
   :safe 'coq-load-path-safep
   :group 'coq-auto-compile)
+
+(make-variable-buffer-local 'coq-load-path)
 
 (defcustom coq-compile-auto-save 'ask-coq
   "Buffers to save before checking dependencies for compilation.
@@ -455,6 +471,8 @@ options they are translated."
     (list "-I" (expand-file-name entry)))
    ((eq (car entry) 'nonrec)
     (list "-I" (expand-file-name (nth 1 entry)) "-as" (nth 2 entry)))
+   ((eq (car entry) 'recnoimport)
+    (list "-Q" (expand-file-name (nth 1 entry)) (nth 2 entry)))
    (t
     (if (eq (car entry) 'rec)
         (setq entry (cdr entry)))
@@ -558,7 +576,12 @@ the command whose output will appear in the buffer."
       (setq buffer-object
             (get-buffer-create coq-compile-response-buffer))
       (with-current-buffer buffer-object
-        (compilation-mode)))
+        (compilation-mode)
+	;; read-only-mode makes compilation fail if some messages need
+	;; to be displayed by compilation. there was a bug in emacs 23
+	;; which make it work some time without this, but now it seems
+	;; mandatory:
+	(read-only-mode 0)))
     ;; I don't really care if somebody gets the right mode when
     ;; he saves and reloads this buffer. However, error messages in
     ;; the first line are not found for some reason ...
@@ -631,10 +654,10 @@ correct in the new scripting buffer."
   (unless proof-shell-exit-in-progress
     (proof-shell-exit t)))
 
-
-(add-hook 'proof-deactivate-scripting-hook
-          'coq-switch-buffer-kill-proof-shell
-          t)
+;; This is now always done (in coq.el)
+;(add-hook 'proof-deactivate-scripting-hook
+;          'coq-switch-buffer-kill-proof-shell
+;          t)
 
 
 (provide 'coq-compile-common)

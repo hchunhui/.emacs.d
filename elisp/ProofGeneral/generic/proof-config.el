@@ -4,7 +4,7 @@
 ;; Author:      David Aspinall <David.Aspinall@ed.ac.uk> and others
 ;; License:     GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; proof-config.el,v 12.8 2012/11/13 22:05:11 tews Exp
+;; proof-config.el,v 12.10 2015/02/04 10:42:14 pier Exp
 ;;
 ;;; Commentary:
 ;;
@@ -752,6 +752,16 @@ Elisp errors will be trapped when evaluating; set
   :type 'string
   :group 'proof-script)
 
+(defcustom proof-script-insert-newlines t
+  "if non-nil inserts a newline between each message in response buffer."
+  :type 'boolean
+  :group 'proof-script)
+
+(defcustom proof-script-color-error-messages t
+  "if non-nil error messages will be globally colored with corresponding face.
+If prover mode has a better coloring mechanism for errors, set this to nil."
+  :type 'boolean
+  :group 'proof-script)
 
 (defcustom proof-script-font-lock-keywords nil
   "Value of `font-lock-keywords' used to fontify proof scripts.

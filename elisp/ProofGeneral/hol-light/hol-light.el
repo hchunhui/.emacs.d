@@ -5,7 +5,7 @@
 ;; Author: David Aspinall <David.Aspinall@ed.ac.uk>
 ;;         Mark Adams <mark@proof-technologies.com>
 ;;
-;; hol-light.el,v 12.20 2013/01/15 14:40:18 tews Exp
+;; hol-light.el,v 12.21 2015/01/05 11:41:31 da Exp
 ;;
 ;; See the README file in this directory for information.
 ;;
@@ -265,7 +265,7 @@ You need to restart Emacs if you change this setting."
    "CONJUNCT1" "CONJUNCT2" "CONJ_PAIR" "CONJUNCTS" "IMP_DEF" "MP"
    "DISCH" "DISCH_ALL" "UNDISCH" "UNDISCH_ALL" "IMP_ANTISYM_RULE" "ADD_ASSUM"
    "EQ_IMP_RULE" "IMP_TRANS" "FORALL_DEF" "SPEC" "SPECL" "SPEC_VAR"
-   "SPEC_ALL" "ISPEC" "ISPECL" "GEN" "GENL" "GEN_ALL th"
+   "SPEC_ALL" "ISPEC" "ISPECL" "GEN" "GENL" "GEN_ALL"
    "EXISTS_DEF" "EXISTS" "SIMPLE_EXISTS" "CHOOSE" "SIMPLE_CHOOSE" "OR_DEF"
    "DISJ1" "DISJ2" "DISJ_CASES" "SIMPLE_DISJ_CASES" "F_DEF" "NOT_DEF"
    "NOT_ELIM" "NOT_INTRO" "EQF_INTRO" "EQF_ELIM" "CONTR" "EXISTS_UNIQUE_DEF"

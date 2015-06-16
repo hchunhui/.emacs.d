@@ -1,4 +1,4 @@
-This is PG-adapting.info, produced by makeinfo version 4.13 from
+This is PG-adapting.info, produced by makeinfo version 4.8 from
 PG-adapting.texi.
 
 INFO-DIR-SECTION Theorem proving
@@ -16,7 +16,7 @@ Proof General
 This file documents configuration mechanisms for version 4.3pre of
 Proof General, a generic Emacs interface for proof assistants.
 
-Proof General 4.3pre has been tested with GNU Emacs 24.2.  It is
+Proof General 4.3pre has been tested with GNU Emacs 24.4.  It is
 supplied ready customized for the proof assistants Coq, Lego, Isabelle,
 and HOL.
 
@@ -157,13 +157,13 @@ your modes, please follow the Emacs Lisp conventions, *note
 
 The configuration variables are declared in the file
 `generic/proof-config.el'.  The details in the central part of this
-manual are based on the contents of that file, beginning in *note Menus
-and Toolbar and User-level Commands::, and continuing until *note
+manual are based on the contents of that file, beginning in *Note Menus
+and Toolbar and User-level Commands::, and continuing until *Note
 Global Constants::.  Other chapters cover the details of configuring
 for multiple files and for supporting the other Emacs packages
 mentioned in the user manual (Support for other Packages).  If you
 write additional Elisp code interfacing to Proof General, you can find
-out about some useful functions by reading *note Writing More Lisp
+out about some useful functions by reading *Note Writing More Lisp
 Code::.  The last chapter of this manual describes some of the
 internals of Proof General, in case you are interested, maybe because
 you need to extend the generic core to do something new.
@@ -261,7 +261,7 @@ Isabelle Proof General, which you can use as a template to get support
 for a new assistant going.  Check the directory `demoisa' for the two
 files `demoisa.el' and `demoisa-easy.el'.
 
-The file `demoisa.el' follows the scheme described in *note Major modes
+The file `demoisa.el' follows the scheme described in *Note Major modes
 used by Proof General::.  It uses the Emacs Lisp macro
 `define-derived-mode' to define the four modes for a Proof General
 instance, by inheriting from the generic code.  Settings which configure
@@ -4034,7 +4034,7 @@ B.1 demoisa-easy.el
      ;;
      ;; Author: David Aspinall <David.Aspinall@ed.ac.uk>
      ;;
-     ;; PG-adapting.texi,v 12.13 2013/07/17 10:38:52 da Exp
+     ;; PG-adapting.texi,v 12.15 2015/03/13 19:34:11 da Exp
      ;;
      ;; This is an alternative version of demoisa.el which uses the
      ;; proof-easy-config macro to do the work of declaring derived modes,
@@ -4095,7 +4095,7 @@ B.2 demoisa.el
      ;;
      ;; Author: David Aspinall <David.Aspinall@ed.ac.uk>
      ;;
-     ;; PG-adapting.texi,v 12.13 2013/07/17 10:38:52 da Exp
+     ;; PG-adapting.texi,v 12.15 2015/03/13 19:34:11 da Exp
      ;;
      ;; =================================================================
      ;;
@@ -4371,7 +4371,7 @@ Variable and User Option Index
                                                               (line  93)
 * pg-topterm-regexp:                     Goals Buffer Settings.
                                                               (line  51)
-* proof-action-list:                     Proof shell mode.    (line  49)
+* proof-action-list:                     Proof shell mode.    (line 205)
 * proof-activate-scripting-hook:         Activate scripting hook.
                                                               (line   7)
 * proof-assistant-home-page:             Settings for generic user-level commands.
@@ -4416,9 +4416,9 @@ Variable and User Option Index
 * proof-goal-with-hole-regexp <1>:       Recognizing other elements.
                                                               (line   6)
 * proof-goal-with-hole-regexp:           Recognizing proofs.  (line  32)
-* proof-goal-with-hole-result <1>:       Recognizing other elements.
+* proof-goal-with-hole-result <1>:       Recognizing proofs.  (line  42)
+* proof-goal-with-hole-result:           Recognizing other elements.
                                                               (line   6)
-* proof-goal-with-hole-result:           Recognizing proofs.  (line  42)
 * proof-goals-buffer:                    Global variables.    (line  19)
 * proof-goals-font-lock-keywords:        Configuring Font Lock.
                                                               (line  29)
@@ -4428,9 +4428,9 @@ Variable and User Option Index
                                                               (line  30)
 * proof-images-directory:                Proof General site configuration.
                                                               (line  24)
-* proof-included-files-list <1>:         Global variables.    (line  26)
-* proof-included-files-list <2>:         Handling Multiple Files.
+* proof-included-files-list <1>:         Handling Multiple Files.
                                                               (line  25)
+* proof-included-files-list <2>:         Global variables.    (line  26)
 * proof-included-files-list:             Settings for matching urgent messages from proof process.
                                                               (line 177)
 * proof-info-command:                    Settings for generic user-level commands.
@@ -4495,17 +4495,17 @@ Variable and User Option Index
                                                               (line  83)
 * proof-shell-clear-response-regexp:     Settings for matching urgent messages from proof process.
                                                               (line  72)
-* proof-shell-compute-new-files-list <1>: Handling Multiple Files.
-                                                              (line  54)
-* proof-shell-compute-new-files-list:    Settings for matching urgent messages from proof process.
+* proof-shell-compute-new-files-list <1>: Settings for matching urgent messages from proof process.
                                                               (line 208)
+* proof-shell-compute-new-files-list:    Handling Multiple Files.
+                                                              (line  54)
 * proof-shell-delayed-output-end:        Proof shell mode.    (line 353)
 * proof-shell-delayed-output-flags:      Proof shell mode.    (line 357)
 * proof-shell-delayed-output-start:      Proof shell mode.    (line 349)
-* proof-shell-eager-annotation-end <1>:  Handling Multiple Files.
-                                                              (line 112)
-* proof-shell-eager-annotation-end:      Settings for matching urgent messages from proof process.
+* proof-shell-eager-annotation-end <1>:  Settings for matching urgent messages from proof process.
                                                               (line  50)
+* proof-shell-eager-annotation-end:      Handling Multiple Files.
+                                                              (line 112)
 * proof-shell-eager-annotation-start <1>: Handling Multiple Files.
                                                               (line 112)
 * proof-shell-eager-annotation-start:    Settings for matching urgent messages from proof process.
@@ -4536,7 +4536,7 @@ Variable and User Option Index
 * proof-shell-interrupt-regexp:          Settings for matching various output from proof process.
                                                               (line  51)
 * proof-shell-last-output:               Proof shell mode.    (line 305)
-* proof-shell-last-output-kind:          Proof shell mode.    (line 309)
+* proof-shell-last-output-kind:          Proof shell mode.    (line 329)
 * proof-shell-last-prompt:               Proof shell mode.    (line 300)
 * proof-shell-pre-interrupt-hook:        Hooks and other settings.
                                                               (line  40)
@@ -4559,10 +4559,10 @@ Variable and User Option Index
                                                               (line  32)
 * proof-shell-result-start:              Goals Buffer Settings.
                                                               (line  26)
-* proof-shell-retract-files-regexp <1>:  Handling Multiple Files.
-                                                              (line  54)
-* proof-shell-retract-files-regexp:      Settings for matching urgent messages from proof process.
+* proof-shell-retract-files-regexp <1>:  Settings for matching urgent messages from proof process.
                                                               (line 197)
+* proof-shell-retract-files-regexp:      Handling Multiple Files.
+                                                              (line  54)
 * proof-shell-set-elisp-variable-regexp: Settings for matching urgent messages from proof process.
                                                               (line 122)
 * proof-shell-silent-threshold:          Proof shell commands.
@@ -4663,76 +4663,76 @@ Concept Index
 
 
 Tag Table:
-Node: Top254
-Node: Introduction1317
-Node: Future3040
-Node: Credits4633
-Node: Beginning with a New Prover4978
-Node: Overview of adding a new prover7025
-Node: Demonstration instance and easy configuration10375
-Node: Major modes used by Proof General13790
-Node: Menus and Toolbar and User-level Commands15530
-Node: Settings for generic user-level commands16198
-Node: Menu configuration17775
-Node: Toolbar configuration18738
-Node: Proof Script Settings20965
-Node: Recognizing commands and comments21697
-Node: Recognizing proofs27551
-Node: Recognizing other elements31662
-Node: Configuring undo behaviour34024
-Node: Nested proofs39079
-Node: Safe (state-preserving) commands40792
-Node: Activate scripting hook41764
-Node: Automatic multiple files42767
-Node: Completely asserted buffers43757
-Node: Completions45330
-Node: Proof Shell Settings46795
-Node: Proof shell commands48162
-Node: Script input to the shell55438
-Node: Settings for matching various output from proof process58761
-Node: Settings for matching urgent messages from proof process64127
-Node: Hooks and other settings74970
-Node: Goals Buffer Settings77940
-Node: Splash Screen Settings80489
-Node: Global Constants81288
-Node: Handling Multiple Files82082
-Node: Configuring Editing Syntax90131
-Node: Configuring Font Lock92143
-Node: Configuring Tokens95467
-Node: Configuring Proof-Tree Visualization97458
-Node: A layered set of proof trees98148
-Node: Prerequisites99570
-Node: Proof-Tree Display Internals102490
-Node: Organization of the Code103151
-Node: Communication107318
-Node: Guards108682
-Node: Urgent and Delayed Actions110799
-Node: Full Annotation113664
-Node: Configuring Prooftree for a New Proof Assistant114327
-Node: Proof Tree Elisp configuration114809
-Node: Prooftree Adaption115759
-Node: Writing More Lisp Code116537
-Node: Default values for generic settings117305
-Node: Adding prover-specific configurations118435
-Node: Useful variables119820
-Node: Useful functions and macros120415
-Node: Internals of Proof General124346
-Node: Spans125289
-Node: Proof General site configuration125655
-Node: Configuration variable mechanisms128380
-Node: Global variables133734
-Node: Proof script mode136070
-Node: Proof shell mode147373
-Node: Debugging171132
-Node: Plans and Ideas171899
-Node: Proof by pointing and similar features172738
-Node: Granularity of atomic command sequences174474
-Node: Browser mode for script files and theories176733
-Node: Demonstration Instantiations177803
-Node: demoisa-easy.el178353
-Node: demoisa.el180750
-Node: Function Index186249
-Node: Variable Index192038
-Node: Concept Index213191
+Node: Top253
+Node: Introduction1316
+Node: Future3039
+Node: Credits4632
+Node: Beginning with a New Prover4977
+Node: Overview of adding a new prover7024
+Node: Demonstration instance and easy configuration10374
+Node: Major modes used by Proof General13789
+Node: Menus and Toolbar and User-level Commands15529
+Node: Settings for generic user-level commands16197
+Node: Menu configuration17774
+Node: Toolbar configuration18737
+Node: Proof Script Settings20964
+Node: Recognizing commands and comments21696
+Node: Recognizing proofs27550
+Node: Recognizing other elements31661
+Node: Configuring undo behaviour34023
+Node: Nested proofs39078
+Node: Safe (state-preserving) commands40791
+Node: Activate scripting hook41763
+Node: Automatic multiple files42766
+Node: Completely asserted buffers43756
+Node: Completions45329
+Node: Proof Shell Settings46794
+Node: Proof shell commands48161
+Node: Script input to the shell55437
+Node: Settings for matching various output from proof process58760
+Node: Settings for matching urgent messages from proof process64126
+Node: Hooks and other settings74969
+Node: Goals Buffer Settings77939
+Node: Splash Screen Settings80488
+Node: Global Constants81287
+Node: Handling Multiple Files82081
+Node: Configuring Editing Syntax90130
+Node: Configuring Font Lock92142
+Node: Configuring Tokens95466
+Node: Configuring Proof-Tree Visualization97457
+Node: A layered set of proof trees98147
+Node: Prerequisites99569
+Node: Proof-Tree Display Internals102489
+Node: Organization of the Code103150
+Node: Communication107317
+Node: Guards108681
+Node: Urgent and Delayed Actions110798
+Node: Full Annotation113663
+Node: Configuring Prooftree for a New Proof Assistant114326
+Node: Proof Tree Elisp configuration114808
+Node: Prooftree Adaption115758
+Node: Writing More Lisp Code116536
+Node: Default values for generic settings117304
+Node: Adding prover-specific configurations118434
+Node: Useful variables119819
+Node: Useful functions and macros120414
+Node: Internals of Proof General124345
+Node: Spans125288
+Node: Proof General site configuration125654
+Node: Configuration variable mechanisms128379
+Node: Global variables133733
+Node: Proof script mode136069
+Node: Proof shell mode147372
+Node: Debugging171131
+Node: Plans and Ideas171898
+Node: Proof by pointing and similar features172737
+Node: Granularity of atomic command sequences174473
+Node: Browser mode for script files and theories176732
+Node: Demonstration Instantiations177802
+Node: demoisa-easy.el178352
+Node: demoisa.el180749
+Node: Function Index186248
+Node: Variable Index192037
+Node: Concept Index213190
 
 End Tag Table

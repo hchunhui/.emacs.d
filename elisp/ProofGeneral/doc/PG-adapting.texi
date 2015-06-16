@@ -1,10 +1,7 @@
-
-\def\fontdefs{\psfamily{bsf}{r}{c}{b}{b}{ri}{ri}{ro}{bo}\def\mainmagstep{1200}}
 \input texinfo
 @c TODO: setting for configuring proof hidden regions.
 @c
-@c
-@c PG-adapting.texi,v 12.13 2013/07/17 10:38:52 da Exp
+@c PG-adapting.texi,v 12.15 2015/03/13 19:34:11 da Exp
 @c
 @c NB: the first line of this file uses a non-standard TeXinfo
 @c hack to print in Serifa fonts.  It has no effect if you don't have
@@ -55,9 +52,9 @@
 
 
 @set version 4.3pre
-@set emacsversion 24.2
-@set last-update January 2013
-@set rcsid PG-adapting.texi,v 12.13 2013/07/17 10:38:52 da Exp
+@set emacsversion 24.4
+@set last-update April 2015
+@set rcsid PG-adapting.texi,v 12.15 2015/03/13 19:34:11 da Exp
 
 @dircategory Theorem proving
 @direntry
@@ -2298,8 +2295,7 @@ undoing, @code{proof-shell-retract-files-regexp} and
 urgent messages from proof process}.  To tell the prover about files
 handled with script management, use
  @code{proof-shell-inform-file-processed-cmd} and
- @code{proof-shell-inform-file-retracted-cmd}.  @xref{Proof shell
- commands}.
+ @code{proof-shell-inform-file-retracted-cmd}.  @xref{Proof shell commands}.
 If your prover does not allow re-opening of closed
 files, set @code{proof-cannot-reopen-processed-files} to @code{t}.
   Finally, set the flag @code{proof-auto-multiple-files} 
@@ -4575,7 +4571,7 @@ Proof General.
 ;;
 ;; Author: David Aspinall <David.Aspinall@@ed.ac.uk>
 ;;
-;; PG-adapting.texi,v 12.13 2013/07/17 10:38:52 da Exp
+;; PG-adapting.texi,v 12.15 2015/03/13 19:34:11 da Exp
 ;;
 ;; This is an alternative version of demoisa.el which uses the
 ;; proof-easy-config macro to do the work of declaring derived modes,
@@ -4637,7 +4633,7 @@ Proof General.
 ;;
 ;; Author: David Aspinall <David.Aspinall@@ed.ac.uk>
 ;;
-;; PG-adapting.texi,v 12.13 2013/07/17 10:38:52 da Exp
+;; PG-adapting.texi,v 12.15 2015/03/13 19:34:11 da Exp
 ;;
 ;; =================================================================
 ;;

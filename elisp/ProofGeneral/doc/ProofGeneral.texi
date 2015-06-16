@@ -1,6 +1,6 @@
 \input texinfo
 @c
-@c ProofGeneral.texi,v 12.24 2013/07/22 12:21:36 pier Exp
+@c ProofGeneral.texi,v 12.25 2015/03/13 19:34:11 da Exp
 @c
 @c
 @c TODO:  
@@ -58,9 +58,9 @@
 @c
 
 @set version 4.3pre
-@set emacsversion 24.2
-@set last-update January 2013
-@set rcsid ProofGeneral.texi,v 12.24 2013/07/22 12:21:36 pier Exp
+@set emacsversion 24.4
+@set last-update April 2015
+@set rcsid ProofGeneral.texi,v 12.25 2015/03/13 19:34:11 da Exp
 
 @dircategory Theorem proving
 @direntry
