@@ -43,6 +43,7 @@
 (setq c-default-style
       '((java-mode . "java") (awk-mode . "awk") (other . "linux")))
 (put 'dired-find-alternate-file 'disabled nil)
+(menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (ido-mode t)
@@ -77,6 +78,7 @@
 
 ;; proof general (Coq)
 (load-file "~/.emacs.d/elisp/ProofGeneral/generic/proof-site.el")
+(setq proof-splash-enable nil)
 (defvar proof-mode-map (make-sparse-keymap))
 (define-key proof-mode-map (kbd "C-,") 'proof-undo-last-successful-command)
 (define-key proof-mode-map (kbd "C-.") 'proof-assert-next-command-interactive)
@@ -145,6 +147,7 @@ occurence of CHAR."
 
 ;; global keys
 (global-set-key [(f5)] 'wl-revert-buffer)
+(global-set-key [(f6)] 'golden-ratio-mode)
 (global-set-key [(f7)] 'other-window)
 (global-set-key [(f8)] 'delete-other-windows)
 (global-set-key [(f9)] 'compile)
