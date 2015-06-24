@@ -61,7 +61,6 @@
 
 ;; golden ratio
 (require 'golden-ratio)
-(golden-ratio-mode t)
 
 ;; auto complete
 (require 'auto-complete-config)
