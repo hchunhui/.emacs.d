@@ -77,6 +77,10 @@
 ;; unicad
 (require 'unicad)
 
+;; window numbering
+(require 'window-numbering)
+(window-numbering-mode 1)
+
 ;; tuareg (OCaml)
 (add-to-list 'load-path "~/.emacs.d/elisp/tuareg-2.0.6")
 (load "tuareg-site-file.el")
