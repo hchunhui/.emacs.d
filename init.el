@@ -168,6 +168,27 @@ occurence of CHAR."
 (global-set-key (kbd "C-c d") 'sdcv-search)
 (define-key global-map (kbd "C-c g") 'wy-go-to-char)
 
+
+;; mew
+;;(add-to-list 'load-path "~/.emacs.d/elisp/mew")
+(autoload 'mew "mew" nil t)
+(autoload 'mew-send "mew" nil t)
+
+;; Optional setup (Read Mail menu):
+(setq read-mail-command 'mew)
+
+;; Optional setup (e.g. C-xm for sending a message):
+(autoload 'mew-user-agent-compose "mew" nil t)
+(if (boundp 'mail-user-agent)
+    (setq mail-user-agent 'mew-user-agent))
+(if (fboundp 'define-mail-user-agent)
+    (define-mail-user-agent
+      'mew-user-agent
+      'mew-user-agent-compose
+      'mew-draft-send-message
+      'mew-draft-kill
+      'mew-send-hook))
+
 ;; evil
 (add-to-list 'load-path "~/.emacs.d/elisp/evil")
 (require 'evil)
