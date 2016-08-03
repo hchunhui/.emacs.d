@@ -168,6 +168,11 @@ occurence of CHAR."
 (global-set-key (kbd "C-c d") 'sdcv-search)
 (define-key global-map (kbd "C-c g") 'wy-go-to-char)
 
+;; evil
+(add-to-list 'load-path "~/.emacs.d/elisp/evil")
+(require 'evil)
+(global-set-key [(f1)] 'evil-mode)
+
 ;; ido-imenu
 (defun ido-imenu ()
   "Update the imenu index and then use ido to select a symbol to navigate to.
