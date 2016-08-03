@@ -1,6 +1,9 @@
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (add-to-list 'load-path "~/.emacs.d/elisp/emacs-goodies-el")
 
+(setq-default initial-scratch-message
+	      ";; A man, a plan, a canal - Panama! ;;\n\n")
+
 ;; theme
 (require 'color-theme-solarized)
 (color-theme-initialize)
