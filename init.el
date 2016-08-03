@@ -68,6 +68,7 @@
 ;; auto complete
 (require 'auto-complete-config)
 (ac-config-default)
+(add-to-list 'ac-modes 'coq-mode)
 
 ;; yasnippet
 (require 'yasnippet-bundle)
