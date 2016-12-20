@@ -4,7 +4,7 @@
 ;; License:     GPL (GNU GENERAL PUBLIC LICENSE)
 ;; Maintainer: Hendrik Tews <hendrik@askra.de>
 ;;
-;; coq-seq-compile.el,v 11.12 2012/11/13 22:05:11 tews Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;;
@@ -64,7 +64,7 @@ error occurred and the returned list is the (possibly empty) list
 of file names LIB-SRC-FILE depends on.
 
 If an error occurs this funtion displays
-`coq-compile-response-buffer' with the complete command and its
+`coq--compile-response-buffer' with the complete command and its
 output. The optional argument COMMAND-INTRO is only used in the
 error case. It is prepended to the displayed command.
 
@@ -73,20 +73,21 @@ dependencies are absolute too and the simplified treatment of
 `coq-load-path-include-current' in `coq-include-options' won't
 break."
   (let ((coqdep-arguments
-         (nconc (coq-include-options lib-src-file coq-load-path)
+         ;; FIXME should this use coq-coqdep-prog-args?
+         (nconc (coq-include-options coq-load-path (file-name-directory lib-src-file) (coq--pre-v85))
 		(list lib-src-file)))
         coqdep-status coqdep-output)
-    (if coq-debug-auto-compilation
-        (message "call coqdep arg list: %s" coqdep-arguments))
+    (when coq--debug-auto-compilation
+      (message "call coqdep arg list: %S" coqdep-arguments))
     (with-temp-buffer
       (setq coqdep-status
             (apply 'call-process
                    coq-dependency-analyzer nil (current-buffer) nil
                    coqdep-arguments))
       (setq coqdep-output (buffer-string)))
-    (if coq-debug-auto-compilation
-        (message "coqdep status %s, output on %s: %s"
-                 coqdep-status lib-src-file coqdep-output))
+    (when coq--debug-auto-compilation
+      (message "coqdep status %s, output on %s: %s"
+	       coqdep-status lib-src-file coqdep-output))
     (if (or
          (not (eq coqdep-status 0))
          (string-match coq-coqdep-error-regexp coqdep-output))
@@ -98,7 +99,7 @@ break."
           (coq-init-compile-response-buffer
            (mapconcat 'identity full-command " "))
           (let ((inhibit-read-only t))
-            (with-current-buffer coq-compile-response-buffer
+            (with-current-buffer coq--compile-response-buffer
               (insert coqdep-output)))
           (coq-display-compile-response-buffer)
           "unsatisfied dependencies")
@@ -108,23 +109,25 @@ break."
 
 (defun coq-seq-compile-library (src-file)
   "Recompile coq library SRC-FILE.
-Display errors in buffer `coq-compile-response-buffer'."
+Display errors in buffer `coq--compile-response-buffer'."
   (message "Recompile %s" src-file)
   (let ((coqc-arguments
-         (nconc (coq-include-options src-file coq-load-path) (list src-file)))
+         (nconc
+          (coq-coqc-prog-args coq-load-path (file-name-directory src-file) (coq--pre-v85))
+	  (list src-file)))
         coqc-status)
     (coq-init-compile-response-buffer
      (mapconcat 'identity (cons coq-compiler coqc-arguments) " "))
-    (if coq-debug-auto-compilation
-        (message "call coqc arg list: %s" coqc-arguments))
+    (when coq--debug-auto-compilation
+      (message "call coqc arg list: %s" coqc-arguments))
     (setq coqc-status
           (apply 'call-process
-           coq-compiler nil coq-compile-response-buffer t coqc-arguments))
-    (if coq-debug-auto-compilation
-        (message "compilation %s exited with %s, output |%s|"
-                 src-file coqc-status
-                 (with-current-buffer coq-compile-response-buffer
-                   (buffer-string))))
+                 coq-compiler nil coq--compile-response-buffer t coqc-arguments))
+    (when coq--debug-auto-compilation
+      (message "compilation %s exited with %s, output |%s|"
+	       src-file coqc-status
+	       (with-current-buffer coq--compile-response-buffer
+		 (buffer-string))))
     (unless (eq coqc-status 0)
       (coq-display-compile-response-buffer)
       (let ((terminated-text (if (numberp coqc-status)
@@ -175,8 +178,8 @@ OBJ have identical modification times."
           (progn
             (coq-seq-compile-library src)
             'just-compiled)
-        (if coq-debug-auto-compilation
-            (message "Skip compilation of %s" src))
+        (when coq--debug-auto-compilation
+	  (message "Skip compilation of %s" src))
         obj-time))))
 
 (defun coq-seq-make-lib-up-to-date (coq-obj-hash span lib-obj-file)
@@ -199,8 +202,8 @@ function."
   (let ((result (gethash lib-obj-file coq-obj-hash)))
     (if result
         (progn
-          (if coq-debug-auto-compilation
-              (message "Checked %s already" lib-obj-file))
+          (when coq--debug-auto-compilation
+	    (message "Checked %s already" lib-obj-file))
           result)
       ;; lib-obj-file has not been checked -- do it now
       (message "Check %s" lib-obj-file)
@@ -209,7 +212,7 @@ function."
           (setq result '(0 0))
         (let* ((lib-src-file
                 (expand-file-name
-		 (coq-library-src-of-obj-file lib-obj-file)))
+		 (coq-library-src-of-vo-file lib-obj-file)))
                dependencies deps-mod-time)
           (if (file-exists-p lib-src-file)
               ;; recurse into dependencies now
@@ -257,7 +260,7 @@ therefore the customizations for `compile' do not apply."
     (let* ((local-compile-command coq-compile-command)
            (physical-dir (file-name-directory absolute-module-obj-file))
            (module-object (file-name-nondirectory absolute-module-obj-file))
-           (module-source (coq-library-src-of-obj-file module-object))
+           (module-source (coq-library-src-of-vo-file module-object))
            (requiring-file buffer-file-name))
       (mapc
        (lambda (substitution)
@@ -279,9 +282,9 @@ therefore the customizations for `compile' do not apply."
       (compilation-start local-compile-command)
       (coq-seq-lock-ancestor
        span
-       (coq-library-src-of-obj-file absolute-module-obj-file)))))
+       (coq-library-src-of-vo-file absolute-module-obj-file)))))
 
-(defun coq-seq-map-module-id-to-obj-file (module-id span)
+(defun coq-seq-map-module-id-to-obj-file (module-id span &optional from)
   "Map MODULE-ID to the appropriate coq object file.
 The mapping depends of course on `coq-load-path'. The current
 implementation invokes coqdep with a one-line require command.
@@ -298,7 +301,7 @@ function returns () if MODULE-ID comes from the standard library."
            coq-load-path))
         (coq-load-path-include-current nil)
         (temp-require-file (make-temp-file "ProofGeneral-coq" nil ".v"))
-        (coq-string (concat "Require " module-id "."))
+        (coq-string (concat (if from (concat "From " from " ") "") "Require " module-id "."))
         result)
     (unwind-protect
         (progn
@@ -312,16 +315,16 @@ function returns () if MODULE-ID comes from the standard library."
     (if (stringp result)
         ;; Error handling: coq-seq-get-library-dependencies was not able to
         ;; translate module-id into a file name. We insert now a faked error
-        ;; message into coq-compile-response-buffer to make next-error happy.
+        ;; message into coq--compile-response-buffer to make next-error happy.
         (let ((error-message
                (format "Cannot find library %s in loadpath" module-id))
               (inhibit-read-only t))
-          ;; Writing a message into coq-compile-response-buffer for next-error
+          ;; Writing a message into coq--compile-response-buffer for next-error
           ;; does currently not work. We do have exact position information
           ;; about the span, but we don't know how much white space there is
           ;; between the start of the span and the start of the command string.
-          ;; Check that coq-compile-response-buffer is a valid buffer!
-          ;; (with-current-buffer coq-compile-response-buffer
+          ;; Check that coq--compile-response-buffer is a valid buffer!
+          ;; (with-current-buffer coq--compile-response-buffer
           ;;   (insert
           ;;    (format "File \"%s\", line %d\n%s.\n"
           ;;            (buffer-file-name (span-buffer span))
@@ -334,7 +337,7 @@ function returns () if MODULE-ID comes from the standard library."
             "Internal error in coq-seq-map-module-id-to-obj-file")
     (car-safe result)))
 
-(defun coq-seq-check-module (coq-object-local-hash-symbol span module-id)
+(defun coq-seq-check-module (coq-object-local-hash-symbol span module-id &optional from)
   "Locate MODULE-ID and compile if necessary.
 If `coq-compile-command' is not nil the whole task of checking which
 modules need compilation and the compilation itself is done by an external
@@ -351,7 +354,7 @@ the coq-obj-hash, which is used during internal
 compilation (see `coq-seq-make-lib-up-to-date'). This way one hash
 will be used for all \"Require\" commands added at once to the
 queue."
-  (let ((module-obj-file (coq-seq-map-module-id-to-obj-file module-id span)))
+  (let ((module-obj-file (coq-seq-map-module-id-to-obj-file module-id span from)))
     ;; coq-seq-map-module-id-to-obj-file currently returns () for
     ;; standard library modules!
     (when module-obj-file
@@ -379,7 +382,8 @@ compilation (if necessary) of the dependencies."
             (when (and string
                        (string-match coq-require-command-regexp string))
               (let ((span (car item))
-                    (start (match-end 0)))
+                    (start (match-end 0))
+                    (prefix (match-string 1 string)))
                 (span-add-delete-action
                  span
                  `(lambda ()
@@ -389,7 +393,7 @@ compilation (if necessary) of the dependencies."
                 (while (string-match coq-require-id-regexp string start)
                   (setq start (match-end 0))
                   (coq-seq-check-module 'coq-object-hash-symbol span
-                                    (match-string 1 string))))))))))
+                                    (match-string 1 string) prefix)))))))))
 
 
 (provide 'coq-seq-compile)

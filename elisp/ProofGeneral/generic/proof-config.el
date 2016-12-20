@@ -4,7 +4,7 @@
 ;; Author:      David Aspinall <David.Aspinall@ed.ac.uk> and others
 ;; License:     GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; proof-config.el,v 12.10 2015/02/04 10:42:14 pier Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;;
@@ -1534,9 +1534,12 @@ This setting is used inside the function `proof-format-filename'."
   :type '(list (cons string string))
   :group 'proof-shell)
 
-(defcustom proof-shell-process-connection-type (if (= emacs-major-version 24) nil t)
+(defcustom proof-shell-process-connection-type (if (>= emacs-major-version 24) nil t)
   "The value of `process-connection-type' for the proof shell.
-Set non-nil for ptys, nil for pipes."
+Set non-nil for ptys, nil for pipes.
+
+NOTE: In emacs >= 24 (checked for 24 and 25.0.50.1), t is not a
+good choice: input is cut after 4095 chars, which hangs pg."
   :type 'boolean
   :group 'proof-shell)
 
@@ -1613,6 +1616,36 @@ it is added to the queue of commands."
   :type '(repeat function)
   :group 'proof-shell)
 
+(defcustom proof-assert-command-hook nil
+  "Hooks run before asserting a command (or a set of commands).
+Can be used to insert commands before any (set of) input sent
+by the user. It is run by `proof-assert-until-point'.
+
+WARNING: don't call `proof-assert-until-point' in this hook, you
+would loop forever.
+
+Example of use: Insert a command to adapt printing width. Note
+that `proof-shell-insert-hook' may be use instead (see lego mode)
+if no more prompt will be displayed (see
+`proof-shell-insert-hook' for details)."
+  :type '(repeat function)
+  :group 'proof-shell)
+
+(defcustom proof-retract-command-hook nil
+  "Hooks run before retracting a command (or a set of commands).
+Can be used to insert commands. It is run by
+`proof-retract-until-point'.
+
+WARNING: don't call `proof-retract-until-point' in this hook, you
+would loop forever.
+
+Example of use: Insert a command to adapt printing width. Note
+that `proof-shell-insert-hook' may be use instead (see lego mode)
+if no more prompt will be displayed (see
+`proof-shell-insert-hook' for details)."
+  :type '(repeat function)
+  :group 'proof-shell)
+
 (defcustom proof-script-preprocess nil
   "Function to pre-process (SPAN STRING) taken from proof script."
   :type 'function
@@ -1650,7 +1683,12 @@ tries to interrupt the proof process. It is therefore run earlier
 than `proof-shell-handle-error-or-interrupt-hook', which runs
 when the interrupt is acknowledged inside `proof-shell-exec-loop'.
 
-This hook also runs when the proof assistent is killed."
+This hook also runs when the proof assistent is killed.
+
+Hook functions should set the dynamic variable `prover-was-busy'
+to t if there might have been a reason to interrupt. Otherwise
+the generic interrupt handler might issue a prover-not-busy
+error."
   :type '(repeat function)
   :group 'proof-shell)
 

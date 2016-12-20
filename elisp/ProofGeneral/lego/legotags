@@ -2,7 +2,7 @@
 #
 # Or perhaps: /usr/local/bin/perl
 #
-# legotags,v 12.0 2011/10/13 10:54:50 da Exp
+# $Id$
 #
 undef $/;
 

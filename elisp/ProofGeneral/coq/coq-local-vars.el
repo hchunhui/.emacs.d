@@ -4,7 +4,7 @@
 ;; Authors: Pierre Courtieu
 ;; Maintainer: Pierre Courtieu <Pierre.Courtieu@cnam.fr>
 ;;
-;; coq-local-vars.el,v 11.5 2013/07/22 12:21:13 pier Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;;

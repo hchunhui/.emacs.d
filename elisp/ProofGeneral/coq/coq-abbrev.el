@@ -75,6 +75,26 @@
   (coq-install-abbrevs))
 ;;;;;
 
+; Redefining this macro to change the way a string option is asked to
+; the user: we pre fill the answer with current value of the option;
+(defun proof-defstringset-fn (var &optional othername)
+  "Define a function <VAR>-toggle for setting an integer customize setting VAR.
+Args as for the macro `proof-defstringset', except will be evaluated."
+  (eval
+   `(defun ,(if othername othername
+	      (intern (concat (symbol-name var) "-stringset"))) (arg)
+	      ,(concat "Set `" (symbol-name var) "' to ARG.
+This function simply uses customize-set-variable to set the variable.
+It was constructed with `proof-defstringset-fn'.")
+;	      (interactive ,(format "sValue for %s (a string, currenly %s): "
+;				    (symbol-name var) (symbol-value var)))
+	      (interactive (list
+			    (read-string
+			     (format "Value for %s (float): "
+				     (symbol-name (quote ,var))
+				     (symbol-value (quote ,var)))
+			     (symbol-value (quote ,var)))))
+	      (customize-set-variable (quote ,var) arg))))
 
 ;; The coq menu partly built from tables
 
@@ -128,6 +148,67 @@
      :style toggle
      :selected coq-double-hit-enable
      :help "Automatically send commands when terminator typed twiced quickly."]
+    ("Auto Compilation"
+     ["Compile Before Require"
+      coq-compile-before-require-toggle
+      :style toggle
+      :selected coq-compile-before-require
+      :help "Check dependencies of required modules and compile on the fly."]
+     ["Parallel background compilation"
+      coq-compile-parallel-in-background-toggle
+      :style toggle
+      :selected coq-compile-parallel-in-background
+      :active coq-compile-before-require
+      :help ,(concat "Compile parallel in background or "
+		    "sequentially with blocking ProofGeneral.")]
+     ["Keep going"
+      coq-compile-keep-going-toggle
+      :style toggle
+      :selected coq-compile-keep-going
+      :active (and coq-compile-before-require
+		   coq-compile-parallel-in-background)
+      :help ,(concat "Continue background compilation after "
+		     "the first error as far as possible")]
+    ["no quick"
+      (customize-set-variable 'coq-compile-quick 'no-quick)
+      :style radio
+      :selected (eq coq-compile-quick 'no-quick)
+      :active (and coq-compile-before-require
+		   coq-compile-parallel-in-background)
+      :help "Compile without -quick but accept existion .vio's"]
+     ["quick no vio2vo"
+      (customize-set-variable 'coq-compile-quick 'quick-no-vio2vo)
+      :style radio
+      :selected (eq coq-compile-quick 'quick-no-vio2vo)
+      :active (and coq-compile-before-require
+		   coq-compile-parallel-in-background)
+      :help "Compile with -quick, accept existing .vo's, don't run vio2vo"]
+     ["quick and vio2vo"
+      (customize-set-variable 'coq-compile-quick 'quick-and-vio2vo)
+      :style radio
+      :selected (eq coq-compile-quick 'quick-and-vio2vo)
+      :active (and coq-compile-before-require
+		   coq-compile-parallel-in-background)
+      :help "Compile with -quick, accept existing .vo's, run vio2vo later"]
+     ["ensure vo"
+      (customize-set-variable 'coq-compile-quick 'ensure-vo)
+      :style radio
+      :selected (eq coq-compile-quick 'ensure-vo)
+      :active (and coq-compile-before-require
+		   coq-compile-parallel-in-background)
+      :help "Ensure only vo's are used for consistency"]
+     ["Confirm External Compilation"
+      coq-confirm-external-compilation-toggle
+      :style toggle
+      :selected coq-confirm-external-compilation
+      :active (and coq-compile-before-require
+		   (not (equal coq-compile-command "")))
+      :help "Confirm external compilation command, see `coq-compile-command'."]
+     ["Abort Background Compilation"
+      coq-par-emergency-cleanup
+      :active (and coq-compile-before-require
+		   coq-compile-parallel-in-background)
+      :help "Abort background compilation and kill all compilation processes."])
     ""
     ["Print..." coq-Print :help "With prefix arg (C-u): Set Printing All first"]
     ["Check..." coq-Check :help "With prefix arg (C-u): Set Printing All first"]
@@ -169,15 +250,18 @@
      ["Print Scope/Visibility..." coq-PrintScope t])
     ("OPTIONS"
      ["Set Printing All" coq-set-printing-all t]
-     ["UnSet Printing All" coq-unset-printing-all t]
-     ["Set Implicit Argument" coq-set-implicit-arguments t]
-     ["Unset Implicit Argument" coq-unset-implicit-arguments t]
-     ["Set Printing Synth" coq-set-printing-synth t]
-     ["Unset Printing Synth" coq-unset-printing-synth t]
+     ["Unset Printing All" coq-unset-printing-all t]
+     ["Set Printing Implicit" coq-set-printing-implicit t]
+     ["Unset Printing Implicit" coq-unset-printing-implicit t]
      ["Set Printing Coercions" coq-set-printing-coercions t]
      ["Unset Printing Coercions" coq-unset-printing-coercions t]
+     ["Set Printing Synth" coq-set-printing-synth t]
+     ["Unset Printing Synth" coq-unset-printing-synth t]
+     ["Set Printing Universes" coq-set-printing-universes t]
+     ["Unset Printing Universes" coq-unset-printing-universes t]
      ["Set Printing Wildcards" coq-set-printing-wildcards t]
-     ["Unset Printing Wildcards" coq-unset-printing-wildcards t])
+     ["Unset Printing Wildcards" coq-unset-printing-wildcards t]
+     ["Set Printing Width" coq-ask-adapt-printing-width-and-show t])
     ""
     ["ML4PG" (coq-activate-ml4pg) :help "Activates ML4PG: machine-learning methods for Proof General"]
     ))

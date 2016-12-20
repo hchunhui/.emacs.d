@@ -6,7 +6,7 @@ Later contributions by Patrick Loiseleur, Pierre Courtieu,
 
 Status:		supported
 Maintainer:	Pierre Courtieu
-Coq version:	8.3
+Coq version:	8.5
 Coq homepage:	http://coq.inria.fr/
 
 ===========================================================================
@@ -66,4 +66,4 @@ Grammar for Unicode Tokens:
 
 ========================================
 
-README,v 11.3 2011/10/03 09:04:25 da Exp
+$Id$

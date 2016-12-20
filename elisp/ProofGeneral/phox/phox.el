@@ -1,4 +1,4 @@
-;; Exp 2015/03/05 09:47:06 12.1
+;; $State$ $Date$ $Revision$
 
 (require 'proof)			; load generic parts
 

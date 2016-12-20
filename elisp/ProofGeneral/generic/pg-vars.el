@@ -4,7 +4,7 @@
 ;; Author:      David Aspinall <David.Aspinall@ed.ac.uk> and others
 ;; License:     GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; pg-vars.el,v 12.1 2012/09/02 21:06:35 da Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;;
@@ -247,7 +247,7 @@ Internal variable dynamically bound.")
   :group 'proof-general-internals)
 
 (defcustom proof-general-home-page
-  "http://proofgeneral.inf.ed.ac.uk"
+  "https://proofgeneral.github.io"
   "*Web address for Proof General."
   :type 'string
   :group 'proof-general-internals)

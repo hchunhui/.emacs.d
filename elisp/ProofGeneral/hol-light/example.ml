@@ -1,7 +1,7 @@
 (*
     Example proof script for HOL Proof General.
 
-    example.ml,v 12.2 2012/02/08 18:29:13 da Exp
+    $Id$
 *)    
 
 g `A /\ B ==> B /\ A`;;

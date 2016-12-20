@@ -5,7 +5,7 @@
 ;; Copyright   (C) 1998 David Aspinall
 ;; License:     GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; texi-docstring-magic.el,v 12.1 2012/08/30 14:30:23 monnier Exp
+;; $Id$
 ;;
 ;; This file is distributed under the terms of the GNU General Public
 ;; License, Version 2.  Find a copy of the GPL with your version of

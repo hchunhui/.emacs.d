@@ -4,7 +4,7 @@
 ;; Authors:   David Aspinall
 ;; License:   GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; proof-menu.el,v 12.4 2014/12/22 23:47:37 pier Exp
+;; $Id$
 ;;
 
 (require 'cl)				; mapcan

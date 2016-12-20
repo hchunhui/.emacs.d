@@ -7,7 +7,7 @@
 ;;
 ;; Keywords: languages
 ;;
-;; proof.el,v 12.1 2012/01/03 09:36:05 tews Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;;

@@ -4,7 +4,7 @@
 ;; Author:    David Aspinall <David.Aspinall@ed.ac.uk>
 ;; License:   GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; pg-fontsets.el,v 12.1 2012/03/01 15:49:43 tews Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;;

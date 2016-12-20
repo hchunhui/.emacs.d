@@ -8,7 +8,7 @@
 ;; Keywords: convenience, faces, languages, tools
 ;; Version: 0.4.8
 
-;; Revision: mmm-mode.el,v 12.0 2011/10/13 10:54:47 da Exp
+;; Revision: $Id$
 
 ;;{{{ GPL
 

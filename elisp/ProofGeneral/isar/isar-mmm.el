@@ -4,7 +4,7 @@
 ;; Authors:       David Aspinall <David.Aspinall@ed.ac.uk>
 ;; Licence:	 GPL
 ;;
-;; isar-mmm.el,v 12.0 2011/10/13 10:54:50 da Exp
+;; $Id$
 ;;
 ;; Presently, we deal with several cases of {* text *}.
 ;; It's not a good idea to do too much, since searching for the

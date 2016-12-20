@@ -5,7 +5,7 @@
 ;;            Thomas Kleymann and Dilip Sequeira
 ;; License:   GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; pg-goals.el,v 12.2 2012/06/04 20:16:04 tews Exp
+;; $Id$
 ;;
 
 ;;; Commentary:

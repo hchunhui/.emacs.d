@@ -4,7 +4,7 @@
 ;;
 ;; Author: David Aspinall <David.Aspinall@ed.ac.uk>
 ;;
-;; hol98.el,v 12.0 2011/10/13 10:54:49 da Exp
+;; $Id$
 ;;
 ;; Needs improvement!
 ;;

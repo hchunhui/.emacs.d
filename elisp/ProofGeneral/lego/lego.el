@@ -5,7 +5,7 @@
 ;; Maintainer: Paul Callaghan <P.C.Callaghan@durham.ac.uk>
 
 ;;
-;; lego.el,v 12.1 2012/08/30 14:30:23 monnier Exp
+;; $Id$
 ;;
 
 (require 'proof)

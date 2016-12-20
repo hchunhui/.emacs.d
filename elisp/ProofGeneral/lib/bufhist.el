@@ -6,7 +6,7 @@
 ;; License:    GPL (GNU GENERAL PUBLIC LICENSE)
 ;; Keywords:   tools
 ;;
-;; bufhist.el,v 12.0 2011/10/13 10:54:50 da Exp
+;; $Id$
 ;;
 ;; This file is distributed under the terms of the GNU General Public
 ;; License, Version 2.  Find a copy of the GPL with your version of

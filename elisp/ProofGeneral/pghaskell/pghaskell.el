@@ -1,6 +1,6 @@
 ;; pghaskell.el - Proof General for Haskell scripts.
 ;;
-;; David Aspinall.  pghaskell.el,v 1.3 2015/01/05 11:39:38 da Exp
+;; David Aspinall.  $Id$
 ;;
 ;; This instance of PG is handy just for using script management to
 ;; cut-and-paste into a buffer running Haskell (ghci)

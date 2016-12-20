@@ -1,6 +1,6 @@
 ;; pgshell.el - Proof General for shell scripts.
 ;;
-;; David Aspinall.  pgshell.el,v 12.0 2011/10/13 10:54:51 da Exp
+;; David Aspinall.  $Id$
 ;;
 ;; This instance of PG is handy just for using script management to
 ;; cut-and-paste into a buffer running an ordinary shell of some kind.

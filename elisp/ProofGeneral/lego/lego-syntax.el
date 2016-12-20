@@ -5,7 +5,7 @@
 ;; Maintainer: Paul Callaghan <P.C.Callaghan@durham.ac.uk>
 
 ;;
-;; lego-syntax.el,v 12.0 2011/10/13 10:54:50 da Exp
+;; $Id$
 ;;
 
 (require 'proof-syntax)

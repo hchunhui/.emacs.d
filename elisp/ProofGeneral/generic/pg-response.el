@@ -22,6 +22,7 @@
   (defvar proof-assistant-menu nil))
 
 (require 'pg-assoc)
+(require 'span)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -130,6 +131,18 @@ Internal variable, setting this will have no effect!")
 (defun proof-three-window-enable ()
   (proof-layout-windows))
 
+
+(defun proof-guess-3win-display-policy (&optional policy)
+  "Return the 3 windows mode layout policy from user choice POLICY.
+If POLIY is smart then guess the good policy from the current
+frame geometry, otherwise follow POLICY."
+  (if (eq policy 'smart)
+      (cond
+       ((>= (frame-width) (* 1.5 split-width-threshold)) 'horizontal)
+       ((>= (frame-width) split-width-threshold) 'hybrid)
+       (t 'vertical))
+    policy))
+
 (defun proof-select-three-b (b1 b2 b3 &optional policy)
   "Put the given three buffers into three windows.
 Following POLICY, which can be one of 'smart, 'horizontal,
@@ -137,15 +150,7 @@ Following POLICY, which can be one of 'smart, 'horizontal,
   (interactive "bBuffer1:\nbBuffer2:\nbBuffer3:")
   (delete-other-windows)
   (switch-to-buffer b1)
-  (let ((pol))
-    (if (eq policy 'smart)
-	(cond
-	 ((>= (frame-width) (* 1.5 split-width-threshold))
-	  (setq pol 'horizontal))
-	 ((>= (frame-width) split-width-threshold)
-	  (setq pol 'hybrid))
-	 (t (setq pol 'vertical)))
-      (setq pol policy))
+  (let ((pol (proof-guess-3win-display-policy policy)))
   (save-selected-window
     (cond
      ((eq pol 'hybrid)
@@ -183,6 +188,19 @@ Following POLICY, which can be one of 'smart, 'horizontal,
       (proof-select-three-b
        proof-script-buffer proof-goals-buffer proof-response-buffer
        policy))))
+
+;; this is a canidate for replacing proof-delete-other-frames below, less brutal.
+;; For the moment we experiment this locall on coq mode.
+(defun proof-delete-all-associated-windows ()
+  "Delete windows (and maybe frames) showing associated buffers.
+Delete a frame if it displays only associated buffers, unless it
+is the only frame (try to bury buffers then)."
+  (mapc (lambda (w)
+	  ;; try to delete window, or frame, or only bury buffer
+	  (if (not (frame-root-window-p w)) (delete-window w)
+	    (if (< 1 (length (frame-list))) (delete-frame (window-frame w))
+	      (window--display-buffer (other-buffer) w 'window))))
+	(proof-associated-windows t)))
 
 (defvar pg-frame-configuration nil
   "Variable storing last used frame configuration.")
@@ -250,7 +268,7 @@ dragging the separating bars.
    (proof-three-window-enable ; single frame
     ;; If we are coming from multiple frame mode, delete associated
     ;; frames (and only them).
-    (proof-delete-other-frames)
+    (proof-delete-all-associated-windows)
     (set-window-dedicated-p (selected-window) nil)
     (proof-display-three-b proof-three-window-mode-policy))
    ;; Two-of-three window mode.
@@ -258,9 +276,8 @@ dragging the separating bars.
    (t
     ;; If we are coming from multiple frame mode, delete associated
     ;; frames (and only them).
-    (proof-delete-other-frames)
+    (proof-delete-all-associated-windows)
     (set-window-dedicated-p (selected-window) nil)
-    (delete-other-windows)
     (if (buffer-live-p proof-response-buffer)
 	(proof-display-and-keep-buffer proof-response-buffer nil 'force))))
   (pg-hint (pg-response-buffers-hint)))
@@ -377,23 +394,23 @@ Returns non-nil if response buffer was cleared."
    (t
     (let (start end)
       (with-current-buffer proof-response-buffer
-	(setq buffer-read-only nil)
-	;; da: I've moved newline before the string itself, to match
-	;; the other cases when messages are inserted and to cope
-	;; with warnings after delayed output (non newline terminated).
-	(goto-char (point-max))
-	;; insert a newline before the new message unless the
-	;; buffer is empty or proof-script-insert-newlines is nil
-	(unless (or (not proof-script-insert-newlines)
-		    (eq (point-min) (point-max)))
-	  (newline))
-	(setq start (point))
-	(insert str)
-	(unless (bolp) (newline))
-	(when face
-	  (overlay-put
-	   (make-overlay start (point-max))
-	   'face face))
+        (setq buffer-read-only nil)
+        ;; da: I've moved newline before the string itself, to match
+        ;; the other cases when messages are inserted and to cope
+        ;; with warnings after delayed output (non newline terminated).
+        (goto-char (point-max))
+        ;; insert a newline before the new message unless the
+        ;; buffer is empty or proof-script-insert-newlines is nil
+        (unless (or (not proof-script-insert-newlines)
+                    (eq (point-min) (point-max)))
+          (newline))
+        (setq start (point))
+        (insert str)
+        (unless (bolp) (newline))
+        (when face
+          (overlay-put
+           (span-make start (point-max))
+           'face face))
 
 	(setq buffer-read-only t)
 	(set-buffer-modified-p nil))))))

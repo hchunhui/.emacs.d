@@ -4,7 +4,7 @@
 ;; Author:      David Aspinall <David.Aspinall@ed.ac.uk> and others
 ;; License:     GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; proof-compat.el,v 12.1 2012/09/02 21:55:42 da Exp
+;; $Id$
 ;;
 ;; This file collects together compatibility hacks for different
 ;; operating systems and Emacs versions.  This is to help keep

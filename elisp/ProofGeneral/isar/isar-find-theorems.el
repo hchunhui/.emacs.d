@@ -7,7 +7,7 @@
 ;; as published by the Free Software Foundation; either version 2
 ;; of the License, or (at your option) any later version.
 ;;
-;; isar-find-theorems.el,v 12.0 2011/10/13 10:54:50 da Exp
+;; $Id$
 ;;
 
 (require 'pg-vars)

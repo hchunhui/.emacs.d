@@ -5,7 +5,7 @@
 ;;            Thomas Kleymann and Dilip Sequeira
 ;; License:   GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; proof-script.el,v 12.6 2014/06/06 17:25:29 monnier Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;;
@@ -1240,11 +1240,16 @@ activation is considered to have failed and an error is given."
       (assert (null proof-script-buffer)
 	      "Bug in proof-activate-scripting: deactivate failed.")
 
-      ;; Fire up the prover (or check it's going the right way).
-      (proof-shell-ready-prover queuemode)
-
-      ;; Set the active scripting buffer, and initialise regions
+      ;; Set the active scripting buffer
       (setq proof-script-buffer (current-buffer))
+
+      ;; Fire up the prover (or check it's going the right way).
+      (condition-case-unless-debug err
+          (proof-shell-ready-prover queuemode)
+        (error (setq proof-script-buffer nil)
+               (signal (car err) (cdr err))))
+
+      ;; Initialise regions
       (if (proof-locked-region-empty-p) ; leave alone if non-empty
 	  (proof-init-segmentation))
 
@@ -1912,6 +1917,7 @@ Assumes that point is at the end of a command."
 	(setq semis (cdr semis)))
     (if (null semis) ; maybe inside a string or something.
 	(error "I can't find any complete commands to process!"))
+    (run-hooks 'proof-assert-command-hook) ;; sneak commands (real ones with a prompt)
     (proof-assert-semis semis displayflags)))
 
 (defun proof-assert-electric-terminator ()
@@ -1983,11 +1989,12 @@ No effect if prover is busy."
       (proof-interrupt-process)
       (proof-shell-wait))
     (save-excursion
-      (save-restriction ;; see Trac#403
-	(widen)
-	(goto-char beg)
-	(proof-retract-until-point)
-	(proof-shell-wait)))))
+      (save-match-data ;; see PG#41
+        (save-restriction ;; see Trac#403
+          (widen)
+          (goto-char beg)
+          (proof-retract-until-point)
+          (proof-shell-wait))))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2237,7 +2244,9 @@ query saves here."
 	  (backward-char)
 	  (setq span (span-at (point) 'type)))
 	(if span
-	    (proof-retract-target span undo-action displayflags)
+	    (progn
+	      (run-hooks 'proof-retract-command-hook) ;; sneak commands (real ones with a prompt)
+	      (proof-retract-target span undo-action displayflags))
 	  ;; something wrong
 	  (proof-debug
 	   "proof-retract-until-point: couldn't find a span!"))))))

@@ -4,7 +4,7 @@
 ;; Author:      David Aspinall <David.Aspinall@ed.ac.uk> and others
 ;; License:     GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; proof-useropts.el,v 12.7 2012/11/13 08:01:12 tews Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;;

@@ -11,7 +11,7 @@
 ;;
 ;; Contributors:  David von Oheimb, Sebastian Skalberg
 ;;
-;; isar.el,v 12.2 2013/07/05 12:19:22 makarius Exp
+;; $Id$
 ;;
 
 ;;; Code:

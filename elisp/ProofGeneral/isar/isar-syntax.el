@@ -5,7 +5,7 @@
 ;; Authors:     David Aspinall <David.Aspinall@ed.ac.uk>
 ;;              Markus Wenzel
 ;;
-;; isar-syntax.el,v 12.1 2015/03/05 09:24:01 da Exp
+;; $Id$
 ;;
 
 (require 'cl)				; remove-if, remove-if-not

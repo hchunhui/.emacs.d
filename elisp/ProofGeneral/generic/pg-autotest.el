@@ -15,7 +15,7 @@
 ;; -- add more precise functional tests to check results
 ;; -- add negative tests
 ;;
-;; pg-autotest.el,v 12.0 2011/10/13 10:54:49 da Exp
+;; $Id$
 
 (require 'proof-splash)
 (setq proof-splash-enable nil)		; prevent splash when testing

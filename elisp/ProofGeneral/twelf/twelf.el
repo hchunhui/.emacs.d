@@ -4,7 +4,7 @@
 ;; License:   GPL (GNU GENERAL PUBLIC LICENSE)
 ;; Author:    David Aspinall <David.Aspinall@ed.ac.uk>
 ;;
-;; twelf.el,v 12.0 2011/10/13 10:54:51 da Exp
+;; $Id$
 ;;
 ;;
 ;; TODO:

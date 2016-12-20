@@ -4,7 +4,7 @@
 ;; Author:    David Aspinall <David.Aspinall@ed.ac.uk>
 ;; License:     GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; unicode-tokens.el,v 12.4 2015/03/13 15:16:04 da Exp
+;; $Id$
 ;;
 ;; This is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

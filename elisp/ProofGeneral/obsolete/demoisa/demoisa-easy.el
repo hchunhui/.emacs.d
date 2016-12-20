@@ -4,7 +4,7 @@
 ;;
 ;; Author: David Aspinall <David.Aspinall@ed.ac.uk>
 ;;
-;; demoisa-easy.el,v 12.0 2011/10/13 10:54:51 da Exp
+;; $Id$
 ;;
 ;; This is an alternative version of demoisa.el which uses the
 ;; proof-easy-config macro to do most of the work.

@@ -2,7 +2,7 @@
 ;;
 ;; You can run these by issuing "make test.coq" in PG home dir.
 ;;
-;; coq-autotest.el,v 11.11 2012/09/02 21:30:23 da Exp
+;; $Id$
 ;;
 
 (eval-when-compile

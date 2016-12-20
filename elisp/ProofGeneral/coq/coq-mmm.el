@@ -4,7 +4,7 @@
 ;; Authors:       David Aspinall <David.Aspinall@ed.ac.uk>
 ;; Licence:	 GPL
 ;;
-;; coq-mmm.el,v 11.0 2010/10/10 22:56:58 da Exp
+;; $Id$
 ;;
 ;; We only spot some simple cases of embedded LaTeX/HTML/verbatim.
 ;;

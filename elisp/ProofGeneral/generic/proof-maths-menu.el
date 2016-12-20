@@ -8,7 +8,7 @@
 ;; With thanks to Dave Love for the original maths menu code,
 ;; provided at http://www.loveshack.ukfsn.org/emacs/
 ;;
-;; proof-maths-menu.el,v 12.0 2011/10/13 10:54:49 da Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;; 

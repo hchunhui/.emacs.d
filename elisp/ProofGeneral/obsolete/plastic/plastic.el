@@ -2,7 +2,7 @@
 ;;
 ;; Author: Paul Callaghan <P.C.Callaghan@durham.ac.uk>
 ;;
-;; plastic.el,v 12.1 2012/08/30 14:30:23 monnier Exp
+;; $Id$
 
 ;; NOTES:
 ;;	remember to prefix all potential cmds with plastic-lit-string

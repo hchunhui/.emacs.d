@@ -3,7 +3,7 @@
 ;; Copyright (C) 2000 by Marcus Harnisch <Marcus.Harnisch@gmx.net>
 
 ;; Author:  Marcus Harnisch <Marcus.Harnisch@gmx.net>
-;; Version: mmm-rpm.el,v 12.0 2011/10/13 10:54:47 da Exp
+;; Version: $Id$
 
 ;;{{{ GPL
 

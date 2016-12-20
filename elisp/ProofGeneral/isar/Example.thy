@@ -1,7 +1,7 @@
 (*
       Example proof document for Isabelle/Isar Proof General.
    
-      Example.thy,v 12.0 2011/10/13 10:54:50 da Exp
+      $Id$
 *)
 
 

@@ -4,7 +4,7 @@
 ;; Author:    David Aspinall <David.Aspinall@ed.ac.uk>
 ;; License:   GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; proof-easy-config.el,v 12.1 2012/01/23 08:59:32 da Exp
+;; $Id$
 ;;
 ;; Future versions might copy settings instead; consider how best to
 ;; interface with customization mechanism so a new prover can be

@@ -5,7 +5,7 @@
 # FIXME: this code is just borrowed from legotags program,
 #        it isn't yet working!   Please send us fixes.
 #
-# isartags,v 12.0 2011/10/13 10:54:50 da Exp
+# $Id$
 #
 undef $/;
 

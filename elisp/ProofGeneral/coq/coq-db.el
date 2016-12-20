@@ -290,6 +290,8 @@ See `coq-syntax-db' for DB structure."
   :group 'proof-faces)
 
 ;;A new face for cheating tactics 
+;; FIXMe: the background color disappear when locked region overrides it.
+;; this is hard to fix without re-colorizing afterward.
 (defface coq-cheat-face
   (proof-face-specs
    (:background "red") ; pour les fonds clairs
@@ -298,14 +300,43 @@ See `coq-syntax-db' for DB structure."
   "Face for names of cheating tactics in proof scripts."
   :group 'proof-faces)
 
+(defface coq-symbol-binder-face
+  '((t :inherit font-lock-type-face :bold coq-bold-unicode-binders))
+  "Face for unicode binders, by default a bold version of `font-lock-type-face'."
+  :group 'proof-faces)
+
+(defface coq-symbol-face
+  '((t :inherit default-face :bold coq-bold-unicode-binders))
+  "Face for unicode binders, by default a bold version of `font-lock-type-face'."
+  :group 'proof-faces)
+
+(defface coq-question-mark-face
+  '((t :inherit font-lock-variable-name-face))
+  "Face for Ltac binders and evars."
+  :group 'proof-faces)
+
+(defface coq-context-qualifier-face
+  '((t :inherit font-lock-preprocessor-face :weight bold))
+  "Face used for `ltac:', `constr:', and `uconstr:' headers."
+  :group 'proof-faces)
+
 (defconst coq-solve-tactics-face 'coq-solve-tactics-face
   "Expression that evaluates to a face.
-Required so that 'proof-solve-tactics-face is a proper facename")
+Required so that 'coq-solve-tactics-face is a proper facename")
 
 (defconst coq-cheat-face 'coq-cheat-face
   "Expression that evaluates to a face.
-Required so that 'proof-solve-tactics-face is a proper facename")
+Required so that 'coq-cheat-face is a proper facename")
 
+(defconst coq-symbol-binder-face 'coq-symbol-binder-face
+  "Expression that evaluates to a face.
+Required so that 'coq-symbol-binder-face is a proper facename")
+
+(defconst coq-symbol-face 'coq-symbol-face
+  "Expression that evaluates to a face.
+Required so that 'coq-symbol-binder-face is a proper facename")
+
+(defconst coq-question-mark-face 'coq-question-mark-face)
 
 
 (provide 'coq-db)

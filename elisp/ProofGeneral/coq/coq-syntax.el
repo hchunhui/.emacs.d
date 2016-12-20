@@ -119,10 +119,9 @@ so for the following reasons:
   :group 'coq)
 
 
-
+;; user shortcuts are prioritized by being put at the end
 (defvar coq-tactics-db
   (append
-   coq-user-tactics-db
    '(
      ("absurd " "abs" "absurd " t "absurd")
      ("apply" "ap" "apply " t "apply")
@@ -136,10 +135,12 @@ so for the following reasons:
      ("autorewrite with in" "arwi" "autorewrite with @{db,db...} in @{hyp}" t)
      ("autorewrite with using" "arwu" "autorewrite with @{db,db...} using @{tac}" t)
      ("autorewrite with" "ar" "autorewrite with @{db,db...}" t "autorewrite")
-     ("case" "c" "case " t "case")
+     ("case" nil "case " t "case")
      ("case_eq" "ceq" "case_eq " t "case_eq")
      ("case_type" "cty" "case_type " t "case_type")
-     ("cbv" "cbv" "cbv beta [#] delta iota zeta" t "cbv")
+     ("cbn" "c" "cbn" t "cbn")
+     ("cbn (with flags)" "cbn" "cbn beta delta [#] iota zeta" t "cbn")
+     ("cbv" "cbv" "cbv beta delta [#] iota zeta" t "cbv")
      ("change in" "chi" "change # in #" t)
      ("change with in" "chwi" "change # with # in #" t)
      ("change with" "chw" "change # with" t)
@@ -183,11 +184,14 @@ so for the following reasons:
      ("eauto with" "eaw" "eauto with @{db}" t)
      ("eauto" "ea" "eauto" t "eauto")
      ("econstructor" "econs" "econstructor" t "econstructor")
+     ("edestruct" "edes" "edestruct " t  "edestruct")
      ("eexists" "eex" "eexists" t "eexists")
      ("eleft" "eleft" "eleft" t "eleft")
      ("elim using" "elu" "elim # using #" t)
      ("elim" "e" "elim #" t "elim")
-     ("elimtype" "elt" "elimtype" "elimtype")
+     ("elimtype" "elt" "elimtype" t "elimtype")
+     ("enough" "eng" "enough (#: #).\n{ #\n}" t "enough")
+     ("erewrite" "er" "erewrite #" t "erewrite")
      ("eright" "erig" "eright" "eright")
      ("esplit" "esp" "esplit" t "esplit")
      ;;     ("exact" "exa" "exact" t "exact")
@@ -224,18 +228,26 @@ so for the following reasons:
      ("inversion using in" "invui" "inversion # using # in #" t)
      ("inversion_clear" "invcl" "inversion_clear" t "inversion_clear")
      ("lapply" "lap" "lapply" t "lapply")
-     ("lazy" "lazy" "lazy beta [#] delta iota zeta" t "lazy")
+     ("lazy" "lazy" "lazy beta delta [#] iota zeta" t "lazy")
+     ("lazymatch with" "m" "lazymatch # with\n| # => #\nend")
      ("left" "left" "left" t "left")
+     ("lia" nil "lia" t "lia")
      ("linear" "lin" "linear" t "linear")
      ("load" "load" "load" t "load")
+     ("lra" nil "lra" t "lra")
      ("move after" "mov" "move # after #" t "move")
-     ("now_show" nil "now_show" t "now_show")     
+     ("multimatch with" "m" "multimatch # with\n| # => #\nend")
+     ("nia" nil "nia" t "nia")
+     ("now_show" nil "now_show" t "now_show")
+     ("nra" nil "nra" t "nra")
+     ("nsatz" nil "nsatz" t "nsatz")
      ("omega" "o" "omega" t "omega")
      ("pattern" "pat" "pattern" t "pattern")
      ("pattern(s)" "pats" "pattern # , #" t)
      ("pattern at" "pata" "pattern # at #" t)
      ("pose" "po" "pose ( # := # )" t "pose")
      ("prolog" "prol" "prolog" t "prolog")
+     ("psatz" nil "psatz" t "psatz")
      ("quote" "quote" "quote" t "quote")
      ("quote []" "quote2" "quote # [#]" t)
      ("red" "red" "red" t "red")
@@ -254,6 +266,7 @@ so for the following reasons:
      ("rewrite" "r" "rewrite #" t "rewrite")
      ("right" "rig" "right" t "right")
      ;;      ("ring" "ring" "ring #" t "ring")
+     ("romega" nil "romega" t "romega")
      ("set in * |-" "seth" "set ( # := #) in * |-" t)
      ("set in *" "set*" "set ( # := #) in *" t)
      ("set in |- *" "setg" "set ( # := #) in |- *" t)
@@ -264,7 +277,8 @@ so for the following reasons:
      ("setoid_rewrite" "strew" "setoid_rewrite #" t "setoid_rewrite")
      ("setoid rewrite" "strew" "setoid rewrite #" t "setoid\\s-+rewrite")
      ("simpl" "s" "simpl" t "simpl")
-     ("simpl" "sa" "simpl # at #" t)
+     ("simpl at" "sa" "simpl # at #" t)
+     ("simpl (all flags)" "simpl" "simpl beta delta [#] iota zeta" t)
      ("simple destruct" "sdes" "simple destruct" t "simple\\s-+destruct")
      ("simple inversion" "sinv" "simple inversion" t "simple\\s-+inversion")
      ("simple induction" "sind" "simple induction" t "simple\\s-+induction")
@@ -304,13 +318,14 @@ so for the following reasons:
      ("unlock" "unlock" "unlock #" t "unlock")
      ("suffices" "suffices" "suffices # : #" t "suffices")
      ("suff" "suff" "suff # : #" t "suff")
-     ))
+     )
+   coq-user-tactics-db)
   "Coq tactics information list. See `coq-syntax-db' for syntax. "
   )
 
+;; user shortcuts are prioritized by being put at the end
 (defvar coq-solve-tactics-db
   (append
-   coq-user-solve-tactics-db
    '(
      ("assumption" "as" "assumption" t "assumption")
      ("eassumption" "eas" "eassumption" t "eassumption")
@@ -326,25 +341,35 @@ so for the following reasons:
      ("fourier" "four" "fourier" t "fourier")
      ("fail" "fa" "fail" nil)
      ("field" "field" "field" t "field")
+     ("gfail" "gfa" "gfail" nil "gfail")
+     ("lia" nil "lia" t "lia")
+     ("lra" nil "lra" t "lra")
+     ("nia" nil "nia" t "nia")
+     ("nra" nil "nra" t "nra")
+     ("nsatz" nil "nsatz" t "nsatz")
      ("omega" "o" "omega" t "omega")
+     ("romega" nil "romega" t "romega")
+     ("psatz" nil "psatz" t "psatz")
      ("reflexivity" "refl" "reflexivity #" t "reflexivity")
      ("ring" "ring" "ring #" t "ring")
      ("solve" nil "solve [ # | # ]" nil "solve")
      ("tauto" "ta" "tauto" t "tauto")
      ;; SSReflect solving tactics.
      ("done" nil "done" nil "done")
-     ))
+     )
+   coq-user-solve-tactics-db)
   "Coq tactic(al)s that solve a subgoal."
   )
 
 (defvar coq-solve-cheat-tactics-db
   (append
-   coq-user-cheat-tactics-db
    '(("admit" nil "admit" t "admit")
-     ("Admitted" nil "Admitted" t "Admitted")))
+     ("Admitted" nil "Admitted" t "Admitted"))
+   coq-user-cheat-tactics-db)
   "Coq tactic(al)s that solve a subgoal."
   )
 
+;; FIXME is this needed?
 (defvar develock-coq-font-lock-keywords
   '((develock-find-long-lines
      (1 'develock-long-line-1 t)
@@ -358,7 +383,6 @@ so for the following reasons:
 
 (defvar coq-tacticals-db
   (append
-   coq-user-tacticals-db
    '(
      ("info" nil "info #" nil "info")
      ("first" nil "first [ # | # ]" nil "first")
@@ -371,12 +395,14 @@ so for the following reasons:
                                         ;    ("orelse" nil "orelse #" t "orelse")
      ("repeat" nil "repeat #" nil "repeat")
      ("try" nil "try #" nil "try")
+     ("tryif" "tryif" "tryif # then # else #" nil "tryif")
      ("progress" nil "progress #" nil "progress")
      ("|" nil "[ # | # ]" nil)
      ("||" nil "# || #" nil)
      ;; SSReflect tacticals.
      ("last" "lst" nil t "last")
-     ))
+     )
+   coq-user-tacticals-db)
   "Coq tacticals information list.  See `coq-syntax-db' for syntax.")
 
 
@@ -384,6 +410,7 @@ so for the following reasons:
 
 (defvar coq-decl-db
   '(
+    ("Local Axiom" nil "Local Axiom # : #" t "Local\\s-+Axiom")
     ("Axiom" "ax" "Axiom # : #" t "Axiom")
     ("Global Variable" "gv" "Global Variable #: #." t "Global\\s-+Variable")
     ("Global Variables" "gvs" "Global Variables # , #: #." t "Global\\s-+Variables")
@@ -394,7 +421,9 @@ so for the following reasons:
     ("Hint Rewrite ->" "hrw" "Hint Rewrite -> @{t1,t2...} using @{tac} : @{db}." t "Hint\\s-+Rewrite")
     ("Hint Rewrite <-" "hrw" "Hint Rewrite <- @{t1,t2...} using @{tac} : @{db}." t )
     ("Hint Unfold" "hu" "Hint Unfold # : #." t "Hint\\s-+Unfold")
+    ("Existing Class" nil "Existing Class " t "Existing\\s-+Class")
     ("Existing Instance" nil "Existing Instance " t "Existing\\s-+Instance")
+    ("Existing Instances" nil "Existing Instances " t "Existing\\s-+Instances")
     ("Hypothesis" "hyp" "Hypothesis #: #" t "Hypothesis")
     ("Hypotheses" "hyp" "Hypotheses #: #" t "Hypotheses")
     ("Parameter" "par" "Parameter #: #" t "Parameter")
@@ -402,6 +431,7 @@ so for the following reasons:
     ("Conjecture" "conj" "Conjecture #: #." t "Conjecture")
     ("Variable" "v" "Variable #: #." t "Variable")
     ("Variables" "vs" "Variables # , #: #." t "Variables")
+    ("Local Coercion" nil "Local Coercion @{id} : @{typ1} >-> @{typ2}." t "Local\\s-+Coercion")
     ("Coercion" "coerc" "Coercion @{id} : @{typ1} >-> @{typ2}." t "Coercion")
     )
   "Coq declaration keywords information list. See `coq-syntax-db' for syntax."
@@ -418,6 +448,7 @@ so for the following reasons:
     ("Declare Module Import <: :=" "dmi2" "Declare Module # <: # := #." t);; careful
     ("Declare Module Export : :=" "dme" "Declare Module # : # := #." t)
     ("Declare Module Export <: :=" "dme2" "Declare Module # <: # := #." t);; careful
+    ("Local Definition" nil "Local Definition #:# := #." t "Local\\s-+Definition");; careful
     ("Definition" "def" "Definition #:# := #." t "Definition");; careful
     ("Definition (2 args)" "def2" "Definition # (# : #) (# : #):# := #." t)
     ("Definition (3 args)" "def3" "Definition # (# : #) (# : #) (# : #):# := #." t)
@@ -448,6 +479,7 @@ so for the following reasons:
     ("Instance" nil "Instance #:#.\nProof.\n#Defined." t "Instance")
     ("Program Instance" "pinstance" "Program Instance [ # ] => # where \n# := #;\n# := #." t "Program\\s-+Instance")
     ("Let" "Let" "Let # : # := #." t "Let")
+    ("Local Ltac" nil "Local Ltac # := #" t "Local\\s-+Ltac")
     ("Ltac" "ltac" "Ltac # := #" t "Ltac")
     ("Module :=" "mo" "Module # : # := #." t ) ; careful
     ("Module <: :=" "mo2" "Module # <: # := #." t ) ; careful
@@ -510,6 +542,7 @@ so for the following reasons:
    '(
      ("About" nil "About #." nil "About")
      ("Check" nil "Check" nil "Check")
+     ("Fail" nil "Fail" nil "fail")
      ("Inspect" nil "Inspect #." nil "Inspect")
      ("Locate File" nil "Locate File \"#\"." nil "Locate\\s-+File")
      ("Locate Library" nil "Locate Library #." nil "Locate\\s-+Library")
@@ -524,131 +557,343 @@ so for the following reasons:
      ("SearchPattern" nil "SearchPattern (#)" nil "SearchPattern")
      ("SearchRewrite" nil "SearchRewrite #" nil "SearchRewrite")
      ("Show" nil "Show #." nil "Show")
-     ("Test" nil "Test" nil "Test" nil t)
-     ("Test Printing Depth" nil "Test Printing Depth." nil "Test\\s-+Printing\\s-+Depth")
-     ("Test Printing If" nil "Test Printing If #." nil "Test\\s-+Printing\\s-+If")
-     ("Test Printing Let" nil "Test Printing Let #." nil "Test\\s-+Printing\\s-+Let")
-     ("Test Printing Synth" nil "Test Printing Synth." nil "Test\\s-+Printing\\s-+Synth")
-     ("Test Printing Width" nil "Test Printing Width." nil "Test\\s-+Printing\\s-+Width")
-     ("Test Printing Wildcard" nil "Test Printing Wildcard." nil "Test\\s-+Printing\\s-+Wildcard")
+     ("Test" nil "Test" nil "Test" nil t) ; let us not highlight all possible options for Test
+     ("Timeout" nil "Timeout" nil "Timeout")
      )
    "Coq queries command, that deserve a separate menu for sending them to coq without insertion. "
    )
 
-
 ;; command that are not declarations, definition or goal starters
 (defvar coq-other-commands-db
-   '(
-     ("Add Parametric Relation" nil "Add Parametric Relation : " t "Add\\s-+Parametric\\s-+Relation")
-     ("BeginSubproof" "bs" "BeginSubproof.\n#\nEndSubproof." t "BeginSubproof")
-     ("EndSubproof" "es" "EndSubproof.#" t "EndSubproof")
-     ;; ("Abort" nil "Abort." t "Abort" nil nil);don't appear in menu
-;     ("Add" nil "Add #." nil "Add" nil t)
-     ("Add Abstract Ring" nil "Add Abstract Ring #." t "Add\\s-+Abstract\\s-+Ring")
-     ("Add Abstract Semi Ring" nil "Add Abstract Semi Ring #." t "Add\\s-+Abstract\\s-+Semi\\s-+Ring")
-     ("Add Field" nil "Add Field #." t "Add\\s-+Field")
-     ("Add LoadPath" nil "Add LoadPath #." nil "Add\\s-+LoadPath")
-     ("Add ML Path" nil "Add ML Path #." nil "Add\\s-+ML\\s-+Path")
-     ("Add Printing" nil "Add Printing #." t "Add\\s-+Printing")
-     ("Add Printing If" nil "Add Printing If #." t "Add\\s-+Printing\\s-+If")
-     ("Add Printing Let" nil "Add Printing Let #." t "Add\\s-+Printing\\s-+Let")
-     ("Add Rec LoadPath" nil "Add Rec LoadPath #." nil "Add\\s-+Rec\\s-+LoadPath")
-     ("Add Rec ML Path" nil "Add Rec ML Path #." nil "Add\\s-+Rec\\s-+ML\\s-+Path")
-     ("Add Ring" nil "Add Ring #." t "Add\\s-+Ring")
-     ("Add Semi Ring" nil "Add Semi Ring #." t "Add\\s-+Semi\\s-+Ring")
-     ("Add Setoid" nil "Add Setoid #." t "Add\\s-+Setoid")
-     ("Admit Obligations" "oblsadmit" "Admit Obligations." nil "Admit\\s-+Obligations")
-     ("Arguments Scope" "argsc" "Arguments Scope @{id} [ @{_} ]" t "Arguments\\s-+Scope")
-     ("Bind Scope" "bndsc" "Bind Scope @{scope} with @{type}" t "Bind\\s-+Scope")
-     ("Canonical Structure" nil "Canonical Structure #." t "Canonical\\s-+Structure")
-     ("Cd" nil "Cd #." nil "Cd")
-     ("Local Close Scope" "lclsc" "Local Close Scope #" t "Local\\s-+Close\\s-+Scope")
-     ("Close Scope" "clsc" "Close Scope #" t "Close\\s-+Scope")
-     ("Comments" nil "Comments #." nil "Comments")
-     ("Declare" nil "Declare #." nil "Declare")
-     ("Delimit Scope" "delsc" "Delimit Scope @{scope} with @{id}." t "Delimit\\s-+Scope" )
-     ("Eval" nil "Eval #." nil "Eval")
-     ("Export" nil "Export #." t "Export")
-     ("Extract Constant" "extrc" "Extract Constant @{id} => \"@{id}\"." nil "Extract\\s-+Constant")
-     ("Extract Inlined Constant" "extric" "Extract Inlined Constant @{id} => \"@{id}\"." nil "Extract\\s-+Inlined\\s-+Constant")
-     ("Extract Inductive" "extri" "Extract Inductive @{id} => \"@{id}\" [\"@{id}\" \"@{id...}\"]." nil "Extract")
-     ("Extraction (in a file)" "extrf" "Extraction \"@{file}\" @{id}." nil)
-     ("Extraction Inline" nil "Extraction Inline #." t "Extraction\\s-+Inline")
-     ("Extraction NoInline" nil "Extraction NoInline #." t "Extraction\\s-+NoInline")
-     ("Extraction Language" "extrlang" "Extraction Language #." t "Extraction\\s-+Language")
-     ("Extraction Library" "extrl" "Extraction Library @{id}." nil "Extraction\\s-+Library")
-     ("Extraction" "extr" "Extraction @{id}." nil "Extraction")
-     ("Focus" nil "Focus #." nil "Focus")
-     ("Generalizable Variables" nil "Generalizable Variables #." t "Generalizable\\s-+Variables")
-     ("Generalizable All Variables" nil "Generalizable All Variables." t "Generalizable\\s-+All\\s-+Variables")
-     ("Identity Coercion" nil "Identity Coercion #." t "Identity\\s-+Coercion")
-     ("Implicit Arguments Off" nil "Implicit Arguments Off." t "Implicit\\s-+Arguments\\s-+Off")
-     ("Implicit Arguments On" nil "Implicit Arguments On." t "Implicit\\s-+Arguments\\s-+On")
-     ("Implicit Arguments" nil "Implicit Arguments # [#]." t "Implicit\\s-+Arguments")
-     ("Implicit Types" nil "Implicit Types # : #." t "Implicit\\s-+Types")
-     ("Import" nil "Import #." t "Import")
-     ("Infix" "inf" "Infix \"#\" := # (at level #) : @{scope}." t "Infix")
-     ("Notation (assoc)" "notas" "Notation \"#\" := # (at level #, # associativity)." t)
-     ("Notation (at assoc)" "notassc" "Notation \"#\" := # (at level #, # associativity) : @{scope}." t)
-     ("Notation (at at scope)" "notasc" "Notation \"#\" := # (at level #, # at level #) : @{scope}." t)
-     ("Notation (at at)" "nota" "Notation \"#\" := # (at level #, # at level #)." t)
-     ("Notation (only parsing)" "notsp" "Notation # := # (only parsing)." t)
-     ("Local Notation" "lnots" "Local Notation # := #." t "Local\\s-+Notation")
-     ("Local Notation (only parsing)" "lnotsp" "Local Notation # := # (only parsing)." t)
-     ("Notation (simple)" "nots" "Notation # := #." t "Notation")
-     ("Typeclasses Opaque" nil "Typeclasses Opaque #." nil "Typeclasses\\s-+Opaque")
-     ("Opaque" nil "Opaque #." nil "Opaque")
-     ("Obligation Tactic" nil "Obligation Tactic := #." t "Obligation\\s-+Tactic")
-     ("Local Open Scope" nil "Local Open Scope #" t "Local\\s-+Open\\s-+Scope")
-     ("Open Local Scope" nil "Open Local Scope #" t "Open\\s-+Local\\s-+Scope")
-     ("Open Scope" "opsc" "Open Scope #" t "Open\\s-+Scope")
-     ("Preterm" nil "Preterm." nil "Preterm")
-     ("Qed" nil "Qed." nil "Qed")
-     ("Recursive Extraction" "recextr" "Recursive Extraction @{id}." nil "Recursive\\s-+Extraction")
-     ("Recursive Extraction Library" "recextrl" "Recursive Extraction Library @{id}." nil "Recursive\\s-+Extraction\\s-+Library")
-     ("Recursive Extraction Module" "recextrm" "Recursive Extraction Module @{id}." nil "Recursive\\s-+Extraction\\s-+Module")
-     ("Remove LoadPath" nil "Remove LoadPath" nil "Remove\\s-+LoadPath")
-     ("Remove LoadPath" nil "Remove LoadPath" nil "Remove\\s-+LoadPath")
-     ("Remove Printing If" nil "Remove Printing If #." t "Remove\\s-+Printing\\s-+If")
-     ("Remove Printing Let" nil "Remove Printing Let #." t "Remove\\s-+Printing\\s-+Let")
-     ("Require Export" nil "Require Export #." t "Require\\s-+Export")
-     ("Require Import" nil "Require Import #." t "Require\\s-+Import")
-     ("Require" nil "Require #." t "Require")
-     ("Reserved Notation" nil "Reserved Notation" nil "Reserved\\s-+Notation")
-     ("Reset Extraction Inline" nil "Reset Extraction Inline." t "Reset\\s-+Extraction\\s-+Inline")
-     ("Save" nil "Save." t "Save")
-     ("Set Extraction AutoInline" nil "Set Extraction AutoInline" t "Set\\s-+Extraction\\s-+AutoInline")
-     ("Set Extraction Optimize" nil "Set Extraction Optimize" t "Set\\s-+Extraction\\s-+Optimize")
-     ("Set Implicit Arguments" nil "Set Implicit Arguments" t "Set\\s-+Implicit\\s-+Arguments")
-     ("Set Strict Implicit" nil "Set Strict Implicit" t "Set\\s-+Strict\\s-+Implicit")
-     ("Set Printing Synth" nil "Set Printing Synth" t "Set\\s-+Printing\\s-+Synth")
-     ("Set Printing Wildcard" nil "Set Printing Wildcard" t "Set\\s-+Printing\\s-+Wildcard")
-     ("Set Printing All" "sprall" "Set Printing All" t "Set\\s-+Printing\\s-+All")
-     ("Set Hyps Limit" nil "Set Hyps Limit #." nil "Set\\s-+Hyps\\s-+Limit")
-     ("Set Printing Coercions" nil "Set Printing Coercions." t "Set\\s-+Printing\\s-+Coercions")
-     ("Set Printing Notations" "sprn" "Set Printing Notations" t "Set\\s-+Printing\\s-+Notations")
-     ("Set Undo" nil "Set Undo #." nil "Set\\s-+Undo")
-     ("Solve Obligations" "oblssolve" "Solve Obligations using #." t "Solve\\s-+Obligations")
-     ("Tactic Notation" nil "Tactic Notation # := #." t "Tactic\\s-+Notation")
-     ("Transparent" nil "Transparent #." nil "Transparent")
+  '(
+    ("Add Parametric Relation" nil "Add Parametric Relation : " t "Add\\s-+Parametric\\s-+Relation")
+    ;; ("Abort" nil "Abort." t "Abort" nil nil);don't appear in menu
+    ;; ("Add" nil "Add #." nil "Add" nil t)
+    ("Add Abstract Ring" nil "Add Abstract Ring #." t "Add\\s-+Abstract\\s-+Ring")
+    ("Add Abstract Semi Ring" nil "Add Abstract Semi Ring #." t "Add\\s-+Abstract\\s-+Semi\\s-+Ring")
+    ("Add Field" nil "Add Field #." t "Add\\s-+Field")
+    ("Add LoadPath" nil "Add LoadPath #." nil "Add\\s-+LoadPath")
+    ("Add ML Path" nil "Add ML Path #." nil "Add\\s-+ML\\s-+Path")
+    ("Add Printing" nil "Add Printing #." t "Add\\s-+Printing")
+    ("Add Printing If" nil "Add Printing If #." t "Add\\s-+Printing\\s-+If")
+    ("Add Printing Let" nil "Add Printing Let #." t "Add\\s-+Printing\\s-+Let")
+    ("Add Rec LoadPath" nil "Add Rec LoadPath #." nil "Add\\s-+Rec\\s-+LoadPath")
+    ("Add Rec ML Path" nil "Add Rec ML Path #." nil "Add\\s-+Rec\\s-+ML\\s-+Path")
+    ("Add Ring" nil "Add Ring #." t "Add\\s-+Ring")
+    ("Add Semi Ring" nil "Add Semi Ring #." t "Add\\s-+Semi\\s-+Ring")
+    ("Add Setoid" nil "Add Setoid #." t "Add\\s-+Setoid")
+    ("Admit Obligations" "oblsadmit" "Admit Obligations." nil "Admit\\s-+Obligations")
+    ("Arguments Scope" "argsc" "Arguments Scope @{id} [ @{_} ]" t "Arguments\\s-+Scope")
+    ("Local Arguments" nil "Local Arguments @{id} : @{rule}" t "Local\\s-+Arguments")
+    ("Arguments" "args" "Arguments @{id} : @{rule}" t "Arguments")
+    ("Bind Scope" "bndsc" "Bind Scope @{scope} with @{type}" t "Bind\\s-+Scope")
+    ("Canonical Structure" nil "Canonical Structure #." t "Canonical\\s-+Structure")
+    ("Cd" nil "Cd #." nil "Cd")
+    ("Local Close Scope" "lclsc" "Local Close Scope #" t "Local\\s-+Close\\s-+Scope")
+    ("Close Scope" "clsc" "Close Scope #" t "Close\\s-+Scope")
+    ("Comments" nil "Comments #." nil "Comments")
+    ("Declare" nil "Declare #." nil "Declare")
+    ("Delimit Scope" "delsc" "Delimit Scope @{scope} with @{id}." t "Delimit\\s-+Scope" )
+    ("Eval" nil "Eval #." nil "Eval")
+    ("Export" nil "Export #." t "Export")
+    ("Extract Constant" "extrc" "Extract Constant @{id} => \"@{id}\"." nil "Extract\\s-+Constant")
+    ("Extract Inlined Constant" "extric" "Extract Inlined Constant @{id} => \"@{id}\"." nil "Extract\\s-+Inlined\\s-+Constant")
+    ("Extract Inductive" "extri" "Extract Inductive @{id} => \"@{id}\" [\"@{id}\" \"@{id...}\"]." nil "Extract")
+    ("Extraction (in a file)" "extrf" "Extraction \"@{file}\" @{id}." nil)
+    ("Extraction Inline" nil "Extraction Inline #." t "Extraction\\s-+Inline")
+    ("Extraction NoInline" nil "Extraction NoInline #." t "Extraction\\s-+NoInline")
+    ("Extraction Language" "extrlang" "Extraction Language #." t "Extraction\\s-+Language")
+    ("Extraction Library" "extrl" "Extraction Library @{id}." nil "Extraction\\s-+Library")
+    ("Extraction" "extr" "Extraction @{id}." nil "Extraction")
+    ("Focus" nil "Focus #." nil "Focus")
+    ("Generalizable Variables" nil "Generalizable Variables #." t "Generalizable\\s-+Variables")
+    ("Generalizable All Variables" nil "Generalizable All Variables." t "Generalizable\\s-+All\\s-+Variables")
+    ("Identity Coercion" nil "Identity Coercion #." t "Identity\\s-+Coercion")
+    ("Implicit Arguments Off" nil "Implicit Arguments Off." t "Implicit\\s-+Arguments\\s-+Off")
+    ("Implicit Arguments On" nil "Implicit Arguments On." t "Implicit\\s-+Arguments\\s-+On")
+    ("Implicit Arguments" nil "Implicit Arguments # [#]." t "Implicit\\s-+Arguments")
+    ("Implicit Types" nil "Implicit Types # : #." t "Implicit\\s-+Types")
+    ("Import" nil "Import #." t "Import")
+    ("Include" nil "Include #." t "Include")
+    ("Infix" "inf" "Infix \"#\" := # (at level #) : @{scope}." t "Infix")
+    ("Notation (assoc)" "notas" "Notation \"#\" := # (at level #, # associativity)." t)
+    ("Notation (at assoc)" "notassc" "Notation \"#\" := # (at level #, # associativity) : @{scope}." t)
+    ("Notation (at at scope)" "notasc" "Notation \"#\" := # (at level #, # at level #) : @{scope}." t)
+    ("Notation (at at)" "nota" "Notation \"#\" := # (at level #, # at level #)." t)
+    ("Notation (only parsing)" "notsp" "Notation # := # (only parsing)." t)
+    ("Local Notation" "lnots" "Local Notation # := #." t "Local\\s-+Notation")
+    ("Local Notation (only parsing)" "lnotsp" "Local Notation # := # (only parsing)." t)
+    ("Notation (simple)" "nots" "Notation # := #." t "Notation")
+    ("Typeclasses Opaque" nil "Typeclasses Opaque #." nil "Typeclasses\\s-+Opaque")
+    ("Opaque" nil "Opaque #." nil "Opaque")
+    ("Obligation Tactic" nil "Obligation Tactic := #." t "Obligation\\s-+Tactic")
+    ("Local Open Scope" nil "Local Open Scope #" t "Local\\s-+Open\\s-+Scope")
+    ("Open Local Scope" nil "Open Local Scope #" t "Open\\s-+Local\\s-+Scope")
+    ("Open Scope" "opsc" "Open Scope #" t "Open\\s-+Scope")
+    ("Preterm" nil "Preterm." nil "Preterm")
+    ("Qed" nil "Qed." nil "Qed")
+    ("Recursive Extraction" "recextr" "Recursive Extraction @{id}." nil "Recursive\\s-+Extraction")
+    ("Recursive Extraction Library" "recextrl" "Recursive Extraction Library @{id}." nil "Recursive\\s-+Extraction\\s-+Library")
+    ("Recursive Extraction Module" "recextrm" "Recursive Extraction Module @{id}." nil "Recursive\\s-+Extraction\\s-+Module")
+    ("Remove LoadPath" nil "Remove LoadPath" nil "Remove\\s-+LoadPath")
+    ("Remove LoadPath" nil "Remove LoadPath" nil "Remove\\s-+LoadPath")
+    ("Remove Printing If" nil "Remove Printing If #." t "Remove\\s-+Printing\\s-+If")
+    ("Remove Printing Let" nil "Remove Printing Let #." t "Remove\\s-+Printing\\s-+Let")
+    ("Require Export" nil "Require Export #." t "Require\\s-+Export")
+    ("Require Import" nil "Require Import #." t "Require\\s-+Import")
+    ("Require" nil "Require #." t "Require")
+    ("Reserved Infix" nil "Reserved Infix" nil "Reserved\\s-+Infix")
+    ("Reserved Notation" nil "Reserved Notation" nil "Reserved\\s-+Notation")
+    ("Reset Extraction Inline" nil "Reset Extraction Inline." t "Reset\\s-+Extraction\\s-+Inline")
+    ("Save" nil "Save." t "Save")
+    ("Set Asymmetric Patterns" nil "Set Asymmetric Patterns" t "Set Asymmetric\\s-+Patterns")
+    ("Set Atomic Load" nil "Set Atomic Load" t "Set Atomic\\s-+Load")
+    ("Set Automatic Coercions Import" nil "Set Automatic Coercions Import" t "Set Automatic\\s-+Coercions\\s-+Import")
+    ("Set Automatic Introduction" nil "Set Automatic Introduction" t "Set Automatic\\s-+Introduction")
+    ("Set Boolean Equality Schemes" nil "Set Boolean Equality Schemes" t "Set Boolean\\s-+Equality\\s-+Schemes")
+    ("Set Bracketing Last Introduction Pattern" nil "Set Bracketing Last Introduction Pattern" t "Set Bracketing\\s-+Last\\s-+Introduction\\s-+Pattern")
+    ("Set Bullet Behavior" nil "Set Bullet Behavior" t "Set Bullet\\s-+Behavior")
+    ("Set Case Analysis Schemes" nil "Set Case Analysis Schemes" t "Set Case\\s-+Analysis\\s-+Schemes")
+    ("Set Compat Notations" nil "Set Compat Notations" t "Set Compat\\s-+Notations")
+    ("Set Congruence Depth" nil "Set Congruence Depth" t "Set Congruence\\s-+Depth")
+    ("Set Congruence Verbose" nil "Set Congruence Verbose" t "Set Congruence\\s-+Verbose")
+    ("Set Contextual Implicit" nil "Set Contextual Implicit" t "Set Contextual\\s-+Implicit")
+    ("Set Debug Auto" nil "Set Debug Auto" t "Set Debug\\s-+Auto")
+    ("Set Debug Eauto" nil "Set Debug Eauto" t "Set Debug\\s-+Eauto")
+    ("Set Debug RAKAM" nil "Set Debug RAKAM" t "Set Debug\\s-+RAKAM")
+    ("Set Debug Tactic Unification" nil "Set Debug Tactic Unification" t "Set Debug\\s-+Tactic\\s-+Unification")
+    ("Set Debug Trivial" nil "Set Debug Trivial" t "Set Debug\\s-+Trivial")
+    ("Set Debug Unification" nil "Set Debug Unification" t "Set Debug\\s-+Unification")
+    ("Set Decidable Equality Schemes" nil "Set Decidable Equality Schemes" t "Set Decidable\\s-+Equality\\s-+Schemes")
+    ("Set Default Clearing Used Hypotheses" nil "Set Default Clearing Used Hypotheses" t "Set Default\\s-+Clearing\\s-+Used\\s-+Hypotheses")
+    ("Set Default Goal Selector" nil "Set Default Goal Selector" t "Set Default\\s-+Goal\\s-+Selector")
+    ("Set Default Proof Mode" nil "Set Default Proof Mode" t "Set Default\\s-+Proof\\s-+Mode")
+    ("Set Default Proof Using" nil "Set Default Proof Using" t "Set Default\\s-+Proof\\s-+Using")
+    ("Set Default Timeout" nil "Set Default Timeout" t "Set Default\\s-+Timeout")
+    ("Set Dependent Propositions Elimination" nil "Set Dependent Propositions Elimination" t "Set Dependent\\s-+Propositions\\s-+Elimination")
+    ("Set Discriminate Introduction" nil "Set Discriminate Introduction" t "Set Discriminate\\s-+Introduction")
+    ("Set Dump Bytecode" nil "Set Dump Bytecode" t "Set Dump\\s-+Bytecode")
+    ("Set Elimination Schemes" nil "Set Elimination Schemes" t "Set Elimination\\s-+Schemes")
+    ("Set Equality Scheme" nil "Set Equality Scheme" t "Set Equality\\s-+Scheme")
+    ("Set Extraction AccessOpaque" nil "Set Extraction AccessOpaque" t "Set Extraction\\s-+AccessOpaque")
+    ("Set Extraction AutoInline" nil "Set Extraction AutoInline" t "Set Extraction\\s-+AutoInline")
+    ("Set Extraction Conservative Types" nil "Set Extraction Conservative Types" t "Set Extraction\\s-+Conservative\\s-+Types")
+    ("Set Extraction File Comment" nil "Set Extraction File Comment" t "Set Extraction\\s-+File\\s-+Comment")
+    ("Set Extraction Flag" nil "Set Extraction Flag" t "Set Extraction\\s-+Flag")
+    ("Set Extraction KeepSingleton" nil "Set Extraction KeepSingleton" t "Set Extraction\\s-+KeepSingleton")
+    ("Set Extraction Optimize" nil "Set Extraction Optimize" t "Set Extraction\\s-+Optimize")
+    ("Set Extraction SafeImplicits" nil "Set Extraction SafeImplicits" t "Set Extraction\\s-+SafeImplicits")
+    ("Set Extraction TypeExpand" nil "Set Extraction TypeExpand" t "Set Extraction\\s-+TypeExpand")
+    ("Set Firstorder Depth" nil "Set Firstorder Depth" t "Set Firstorder\\s-+Depth")
+    ("Set Hide Obligations" nil "Set Hide Obligations" t "Set Hide\\s-+Obligations")
+    ("Set Implicit Arguments" nil "Set Implicit Arguments" t "Set Implicit\\s-+Arguments")
+    ("Set Info Auto" nil "Set Info Auto" t "Set Info\\s-+Auto")
+    ("Set Info Eauto" nil "Set Info Eauto" t "Set Info\\s-+Eauto")
+    ("Set Info Level" nil "Set Info Level" t "Set Info\\s-+Level")
+    ("Set Info Trivial" nil "Set Info Trivial" t "Set Info\\s-+Trivial")
+    ("Set Injection L2R Pattern Order" nil "Set Injection L2R Pattern Order" t "Set Injection\\s-+L2R\\s-+Pattern\\s-+Order")
+    ("Set Injection On Proofs" nil "Set Injection On Proofs" t "Set Injection\\s-+On\\s-+Proofs")
+    ("Set Inline Level" nil "Set Inline Level" t "Set Inline\\s-+Level")
+    ("Set Intuition Iff Unfolding" nil "Set Intuition Iff Unfolding" t "Set Intuition\\s-+Iff\\s-+Unfolding")
+    ("Set Intuition Negation Unfolding" nil "Set Intuition Negation Unfolding" t "Set Intuition\\s-+Negation\\s-+Unfolding")
+    ("Set Kernel Term Sharing" nil "Set Kernel Term Sharing" t "Set Kernel\\s-+Term\\s-+Sharing")
+    ("Set Keyed Unification" nil "Set Keyed Unification" t "Set Keyed\\s-+Unification")
+    ("Set Loose Hint Behavior" nil "Set Loose Hint Behavior" t "Set Loose\\s-+Hint\\s-+Behavior")
+    ("Set Maximal Implicit Insertion" nil "Set Maximal Implicit Insertion" t "Set Maximal\\s-+Implicit\\s-+Insertion")
+    ("Set Nonrecursive Elimination Schemes" nil "Set Nonrecursive Elimination Schemes" t "Set Nonrecursive\\s-+Elimination\\s-+Schemes")
+    ("Set Parsing Explicit" nil "Set Parsing Explicit" t "Set Parsing\\s-+Explicit")
+    ("Set Primitive Projections" nil "Set Primitive Projections" t "Set Primitive\\s-+Projections")
+    ("Set Printing All" nil "Set Printing All" t "Set Printing\\s-+All")
+    ("Set Printing Coercions" nil "Set Printing Coercions" t "Set Printing\\s-+Coercions")
+    ("Set Printing Depth" nil "Set Printing Depth" t "Set Printing\\s-+Depth")
+    ("Set Printing Existential Instances" nil "Set Printing Existential Instances" t "Set Printing\\s-+Existential\\s-+Instances")
+    ("Set Printing Implicit" nil "Set Printing Implicit" t "Set Printing\\s-+Implicit")
+    ("Set Printing Implicit Defensive" nil "Set Printing Implicit Defensive" t "Set Printing\\s-+Implicit\\s-+Defensive")
+    ("Set Printing Matching" nil "Set Printing Matching" t "Set Printing\\s-+Matching")
+    ("Set Printing Notations" nil "Set Printing Notations" t "Set Printing\\s-+Notations")
+    ("Set Printing Primitive Projection Compatibility" nil "Set Printing Primitive Projection Compatibility" t "Set Printing\\s-+Primitive\\s-+Projection\\s-+Compatibility")
+    ("Set Printing Primitive Projection Parameters" nil "Set Printing Primitive Projection Parameters" t "Set Printing\\s-+Primitive\\s-+Projection\\s-+Parameters")
+    ("Set Printing Projections" nil "Set Printing Projections" t "Set Printing\\s-+Projections")
+    ("Set Printing Records" nil "Set Printing Records" t "Set Printing\\s-+Records")
+    ("Set Printing Synth" nil "Set Printing Synth" t "Set Printing\\s-+Synth")
+    ("Set Printing Universes" nil "Set Printing Universes" t "Set Printing\\s-+Universes")
+    ("Set Printing Width" nil "Set Printing Width" t "Set Printing\\s-+Width")
+    ("Set Printing Wildcard" nil "Set Printing Wildcard" t "Set Printing\\s-+Wildcard")
+    ("Set Program Mode" nil "Set Program Mode" t "Set Program\\s-+Mode")
+    ("Set Proof Using Clear Unused" nil "Set Proof Using Clear Unused" t "Set Proof\\s-+Using\\s-+Clear\\s-+Unused")
+    ("Set Record Elimination Schemes" nil "Set Record Elimination Schemes" t "Set Record\\s-+Elimination\\s-+Schemes")
+    ("Set Refine Instance Mode" nil "Set Refine Instance Mode" t "Set Refine\\s-+Instance\\s-+Mode")
+    ("Set Regular Subst Tactic" nil "Set Regular Subst Tactic" t "Set Regular\\s-+Subst\\s-+Tactic")
+    ("Set Reversible Pattern Implicit" nil "Set Reversible Pattern Implicit" t "Set Reversible\\s-+Pattern\\s-+Implicit")
+    ("Set Rewriting Schemes" nil "Set Rewriting Schemes" t "Set Rewriting\\s-+Schemes")
+    ("Set Short Module Printing" nil "Set Short Module Printing" t "Set Short\\s-+Module\\s-+Printing")
+    ("Set Shrink Obligations" nil "Set Shrink Obligations" t "Set Shrink\\s-+Obligations")
+    ("Set SimplIsCbn" nil "Set SimplIsCbn" t "Set SimplIsCbn")
+    ("Set Standard Proposition Elimination Names" nil "Set Standard Proposition Elimination Names" t "Set Standard\\s-+Proposition\\s-+Elimination\\s-+Names")
+    ("Set Strict Proofs" nil "Set Strict Proofs" t "Set Strict\\s-+Proofs")
+    ("Set Strict Universe Declaration" nil "Set Strict Universe Declaration" t "Set Strict\\s-+Universe\\s-+Declaration")
+    ("Set Strongly Strict Implicit" nil "Set Strongly Strict Implicit" t "Set Strongly\\s-+Strict\\s-+Implicit")
+    ("Set Suggest Proof Using" nil "Set Suggest Proof Using" t "Set Suggest\\s-+Proof\\s-+Using")
+    ("Set Tactic Compat Context" nil "Set Tactic Compat Context" t "Set Tactic\\s-+Compat\\s-+Context")
+    ("Set Tactic Evars Pattern Unification" nil "Set Tactic Evars Pattern Unification" t "Set Tactic\\s-+Evars\\s-+Pattern\\s-+Unification")
+    ("Set Tactic Pattern Unification" nil "Set Tactic Pattern Unification" t "Set Tactic\\s-+Pattern\\s-+Unification")
+    ("Set Transparent Obligations" nil "Set Transparent Obligations" t "Set Transparent\\s-+Obligations")
+    ("Set Typeclass Resolution After Apply" nil "Set Typeclass Resolution After Apply" t "Set Typeclass\\s-+Resolution\\s-+After\\s-+Apply")
+    ("Set Typeclass Resolution For Conversion" nil "Set Typeclass Resolution For Conversion" t "Set Typeclass\\s-+Resolution\\s-+For\\s-+Conversion")
+    ("Set Typeclasses Debug" nil "Set Typeclasses Debug" t "Set Typeclasses\\s-+Debug")
+    ("Set Typeclasses Dependency Order" nil "Set Typeclasses Dependency Order" t "Set Typeclasses\\s-+Dependency\\s-+Order")
+    ("Set Typeclasses Depth" nil "Set Typeclasses Depth" t "Set Typeclasses\\s-+Depth")
+    ("Set Typeclasses Modulo Eta" nil "Set Typeclasses Modulo Eta" t "Set Typeclasses\\s-+Modulo\\s-+Eta")
+    ("Set Typeclasses Strict Resolution" nil "Set Typeclasses Strict Resolution" t "Set Typeclasses\\s-+Strict\\s-+Resolution")
+    ("Set Typeclasses Unique Instances" nil "Set Typeclasses Unique Instances" t "Set Typeclasses\\s-+Unique\\s-+Instances")
+    ("Set Typeclasses Unique Solutions" nil "Set Typeclasses Unique Solutions" t "Set Typeclasses\\s-+Unique\\s-+Solutions")
+    ("Set Universal Lemma Under Conjunction" nil "Set Universal Lemma Under Conjunction" t "Set Universal\\s-+Lemma\\s-+Under\\s-+Conjunction")
+    ("Set Universe Minimization ToSet" nil "Set Universe Minimization ToSet" t "Set Universe\\s-+Minimization\\s-+ToSet")
+    ("Set Universe Polymorphism" nil "Set Universe Polymorphism" t "Set Universe\\s-+Polymorphism")
+    ("Set Verbose Compat Notations" nil "Set Verbose Compat Notations" t "Set Verbose\\s-+Compat\\s-+Notations")
+    ("Set Function_debug" nil "Set Function_debug" t "Set Function_debug")
+    ("Set Function_raw_tcc" nil "Set Function_raw_tcc" t "Set Function_raw_tcc")
+    ("Set Functional Induction Rewrite Dependent" nil "Set Functional Induction Rewrite Dependent" t "Set Functional\\s-+Induction\\s-+Rewrite\\s-+Dependent")
+    ("Set Hyps Limit" nil "Set Hyps Limit" t "Set Hyps\\s-+Limit")
+    ("Set Ltac Debug" nil "Set Ltac Debug" t "Set Ltac\\s-+Debug")
+    ("Set Silent" nil "Set Silent" t "Set Silent")
+    ("Set Undo" nil "Set Undo" t "Set Undo")
+    ("Set Search Blacklist" nil "Set Search Blacklist" t "Set Search\\s-+Blacklist")
+    ("Set Printing Coercion" nil "Set Printing Coercion" t "Set Printing\\s-+Coercion")
+    ("Set Printing If" nil "Set Printing If" t "Set Printing\\s-+If")
+    ("Set Printing Let" nil "Set Printing Let" t "Set Printing\\s-+Let")
+    ("Set Printing Record" nil "Set Printing Record" t "Set Printing\\s-+Record")
+    ("Set Printing Constructor" nil "Set Printing Constructor" t "Set Printing\\s-+Constructor")
+    ("Solve Obligations" "oblssolve" "Solve Obligations using #." t "Solve\\s-+Obligations")
+    ("Local Strategy" nil "Local Strategy # [#]." t "Local\\s-+Strategy")
+    ("Strategy" nil "Strategy # [#]." t "Strategy")
+    ("Tactic Notation" nil "Tactic Notation # := #." t "Tactic\\s-+Notation")
+    ("Transparent" nil "Transparent #." nil "Transparent")
 
-     ("Unfocus" nil "Unfocus." nil "Unfocus")
-     ("Unset Extraction AutoInline" nil "Unset Extraction AutoInline" t "Unset\\s-+Extraction\\s-+AutoInline")
-     ("Unset Extraction Optimize" nil "Unset Extraction Optimize" t "Unset\\s-+Extraction\\s-+Optimize")
-     ("Unset Implicit Arguments" nil "Unset Implicit Arguments" t "Unset\\s-+Implicit\\s-+Arguments")
-     ("Unset Strict Implicit" nil "Unset Strict Implicit" t "Unset\\s-+Strict\\s-+Implicit")
-     ("Unset Printing Synth" nil "Unset Printing Synth" t "Unset\\s-+Printing\\s-+Synth")
-     ("Unset Printing Wildcard" nil "Unset Printing Wildcard" t "Unset\\s-+Printing\\s-+Wildcard")
-     ("Unset Hyps Limit" nil "Unset Hyps Limit" nil "Unset\\s-+Hyps\\s-+Limit")
-     ("Unset Printing All" "unsprall" "Unset Printing All" nil "Unset\\s-+Printing\\s-+All")
-     ("Unset Printing Coercion" nil "Unset Printing Coercion #." t "Unset\\s-+Printing\\s-+Coercion")
-     ("Unset Printing Coercions" nil "Unset Printing Coercions." nil "Unset\\s-+Printing\\s-+Coercions")
-     ("Unset Printing Notations" "unsprn" "Unset Printing Notations" nil "Unset\\s-+Printing\\s-+Notations")
-     ("Unset Undo" nil "Unset Undo." nil "Unset\\s-+Undo")
- ;    ("print" "pr" "print #" "print")
-     )
+    ("Unfocus" nil "Unfocus." nil "Unfocus")
+    ("Unset Asymmetric Patterns" nil "Unset Asymmetric Patterns" t "Unset Asymmetric\\s-+Patterns")
+    ("Unset Atomic Load" nil "Unset Atomic Load" t "Unset Atomic\\s-+Load")
+    ("Unset Automatic Coercions Import" nil "Unset Automatic Coercions Import" t "Unset Automatic\\s-+Coercions\\s-+Import")
+    ("Unset Automatic Introduction" nil "Unset Automatic Introduction" t "Unset Automatic\\s-+Introduction")
+    ("Unset Boolean Equality Schemes" nil "Unset Boolean Equality Schemes" t "Unset Boolean\\s-+Equality\\s-+Schemes")
+    ("Unset Bracketing Last Introduction Pattern" nil "Unset Bracketing Last Introduction Pattern" t "Unset Bracketing\\s-+Last\\s-+Introduction\\s-+Pattern")
+    ("Unset Bullet Behavior" nil "Unset Bullet Behavior" t "Unset Bullet\\s-+Behavior")
+    ("Unset Case Analysis Schemes" nil "Unset Case Analysis Schemes" t "Unset Case\\s-+Analysis\\s-+Schemes")
+    ("Unset Compat Notations" nil "Unset Compat Notations" t "Unset Compat\\s-+Notations")
+    ("Unset Congruence Depth" nil "Unset Congruence Depth" t "Unset Congruence\\s-+Depth")
+    ("Unset Congruence Verbose" nil "Unset Congruence Verbose" t "Unset Congruence\\s-+Verbose")
+    ("Unset Contextual Implicit" nil "Unset Contextual Implicit" t "Unset Contextual\\s-+Implicit")
+    ("Unset Debug Auto" nil "Unset Debug Auto" t "Unset Debug\\s-+Auto")
+    ("Unset Debug Eauto" nil "Unset Debug Eauto" t "Unset Debug\\s-+Eauto")
+    ("Unset Debug RAKAM" nil "Unset Debug RAKAM" t "Unset Debug\\s-+RAKAM")
+    ("Unset Debug Tactic Unification" nil "Unset Debug Tactic Unification" t "Unset Debug\\s-+Tactic\\s-+Unification")
+    ("Unset Debug Trivial" nil "Unset Debug Trivial" t "Unset Debug\\s-+Trivial")
+    ("Unset Debug Unification" nil "Unset Debug Unification" t "Unset Debug\\s-+Unification")
+    ("Unset Decidable Equality Schemes" nil "Unset Decidable Equality Schemes" t "Unset Decidable\\s-+Equality\\s-+Schemes")
+    ("Unset Default Clearing Used Hypotheses" nil "Unset Default Clearing Used Hypotheses" t "Unset Default\\s-+Clearing\\s-+Used\\s-+Hypotheses")
+    ("Unset Default Goal Selector" nil "Unset Default Goal Selector" t "Unset Default\\s-+Goal\\s-+Selector")
+    ("Unset Default Proof Mode" nil "Unset Default Proof Mode" t "Unset Default\\s-+Proof\\s-+Mode")
+    ("Unset Default Proof Using" nil "Unset Default Proof Using" t "Unset Default\\s-+Proof\\s-+Using")
+    ("Unset Default Timeout" nil "Unset Default Timeout" t "Unset Default\\s-+Timeout")
+    ("Unset Dependent Propositions Elimination" nil "Unset Dependent Propositions Elimination" t "Unset Dependent\\s-+Propositions\\s-+Elimination")
+    ("Unset Discriminate Introduction" nil "Unset Discriminate Introduction" t "Unset Discriminate\\s-+Introduction")
+    ("Unset Dump Bytecode" nil "Unset Dump Bytecode" t "Unset Dump\\s-+Bytecode")
+    ("Unset Elimination Schemes" nil "Unset Elimination Schemes" t "Unset Elimination\\s-+Schemes")
+    ("Unset Equality Scheme" nil "Unset Equality Scheme" t "Unset Equality\\s-+Scheme")
+    ("Unset Extraction AccessOpaque" nil "Unset Extraction AccessOpaque" t "Unset Extraction\\s-+AccessOpaque")
+    ("Unset Extraction AutoInline" nil "Unset Extraction AutoInline" t "Unset Extraction\\s-+AutoInline")
+    ("Unset Extraction Conservative Types" nil "Unset Extraction Conservative Types" t "Unset Extraction\\s-+Conservative\\s-+Types")
+    ("Unset Extraction File Comment" nil "Unset Extraction File Comment" t "Unset Extraction\\s-+File\\s-+Comment")
+    ("Unset Extraction Flag" nil "Unset Extraction Flag" t "Unset Extraction\\s-+Flag")
+    ("Unset Extraction KeepSingleton" nil "Unset Extraction KeepSingleton" t "Unset Extraction\\s-+KeepSingleton")
+    ("Unset Extraction Optimize" nil "Unset Extraction Optimize" t "Unset Extraction\\s-+Optimize")
+    ("Unset Extraction SafeImplicits" nil "Unset Extraction SafeImplicits" t "Unset Extraction\\s-+SafeImplicits")
+    ("Unset Extraction TypeExpand" nil "Unset Extraction TypeExpand" t "Unset Extraction\\s-+TypeExpand")
+    ("Unset Firstorder Depth" nil "Unset Firstorder Depth" t "Unset Firstorder\\s-+Depth")
+    ("Unset Hide Obligations" nil "Unset Hide Obligations" t "Unset Hide\\s-+Obligations")
+    ("Unset Implicit Arguments" nil "Unset Implicit Arguments" t "Unset Implicit\\s-+Arguments")
+    ("Unset Info Auto" nil "Unset Info Auto" t "Unset Info\\s-+Auto")
+    ("Unset Info Eauto" nil "Unset Info Eauto" t "Unset Info\\s-+Eauto")
+    ("Unset Info Level" nil "Unset Info Level" t "Unset Info\\s-+Level")
+    ("Unset Info Trivial" nil "Unset Info Trivial" t "Unset Info\\s-+Trivial")
+    ("Unset Injection L2R Pattern Order" nil "Unset Injection L2R Pattern Order" t "Unset Injection\\s-+L2R\\s-+Pattern\\s-+Order")
+    ("Unset Injection On Proofs" nil "Unset Injection On Proofs" t "Unset Injection\\s-+On\\s-+Proofs")
+    ("Unset Inline Level" nil "Unset Inline Level" t "Unset Inline\\s-+Level")
+    ("Unset Intuition Iff Unfolding" nil "Unset Intuition Iff Unfolding" t "Unset Intuition\\s-+Iff\\s-+Unfolding")
+    ("Unset Intuition Negation Unfolding" nil "Unset Intuition Negation Unfolding" t "Unset Intuition\\s-+Negation\\s-+Unfolding")
+    ("Unset Kernel Term Sharing" nil "Unset Kernel Term Sharing" t "Unset Kernel\\s-+Term\\s-+Sharing")
+    ("Unset Keyed Unification" nil "Unset Keyed Unification" t "Unset Keyed\\s-+Unification")
+    ("Unset Loose Hint Behavior" nil "Unset Loose Hint Behavior" t "Unset Loose\\s-+Hint\\s-+Behavior")
+    ("Unset Maximal Implicit Insertion" nil "Unset Maximal Implicit Insertion" t "Unset Maximal\\s-+Implicit\\s-+Insertion")
+    ("Unset Nonrecursive Elimination Schemes" nil "Unset Nonrecursive Elimination Schemes" t "Unset Nonrecursive\\s-+Elimination\\s-+Schemes")
+    ("Unset Parsing Explicit" nil "Unset Parsing Explicit" t "Unset Parsing\\s-+Explicit")
+    ("Unset Primitive Projections" nil "Unset Primitive Projections" t "Unset Primitive\\s-+Projections")
+    ("Unset Printing All" nil "Unset Printing All" t "Unset Printing\\s-+All")
+    ("Unset Printing Coercions" nil "Unset Printing Coercions" t "Unset Printing\\s-+Coercions")
+    ("Unset Printing Depth" nil "Unset Printing Depth" t "Unset Printing\\s-+Depth")
+    ("Unset Printing Existential Instances" nil "Unset Printing Existential Instances" t "Unset Printing\\s-+Existential\\s-+Instances")
+    ("Unset Printing Implicit" nil "Unset Printing Implicit" t "Unset Printing\\s-+Implicit")
+    ("Unset Printing Implicit Defensive" nil "Unset Printing Implicit Defensive" t "Unset Printing\\s-+Implicit\\s-+Defensive")
+    ("Unset Printing Matching" nil "Unset Printing Matching" t "Unset Printing\\s-+Matching")
+    ("Unset Printing Notations" nil "Unset Printing Notations" t "Unset Printing\\s-+Notations")
+    ("Unset Printing Primitive Projection Compatibility" nil "Unset Printing Primitive Projection Compatibility" t "Unset Printing\\s-+Primitive\\s-+Projection\\s-+Compatibility")
+    ("Unset Printing Primitive Projection Parameters" nil "Unset Printing Primitive Projection Parameters" t "Unset Printing\\s-+Primitive\\s-+Projection\\s-+Parameters")
+    ("Unset Printing Projections" nil "Unset Printing Projections" t "Unset Printing\\s-+Projections")
+    ("Unset Printing Records" nil "Unset Printing Records" t "Unset Printing\\s-+Records")
+    ("Unset Printing Synth" nil "Unset Printing Synth" t "Unset Printing\\s-+Synth")
+    ("Unset Printing Universes" nil "Unset Printing Universes" t "Unset Printing\\s-+Universes")
+    ("Unset Printing Width" nil "Unset Printing Width" t "Unset Printing\\s-+Width")
+    ("Unset Printing Wildcard" nil "Unset Printing Wildcard" t "Unset Printing\\s-+Wildcard")
+    ("Unset Program Mode" nil "Unset Program Mode" t "Unset Program\\s-+Mode")
+    ("Unset Proof Using Clear Unused" nil "Unset Proof Using Clear Unused" t "Unset Proof\\s-+Using\\s-+Clear\\s-+Unused")
+    ("Unset Record Elimination Schemes" nil "Unset Record Elimination Schemes" t "Unset Record\\s-+Elimination\\s-+Schemes")
+    ("Unset Refine Instance Mode" nil "Unset Refine Instance Mode" t "Unset Refine\\s-+Instance\\s-+Mode")
+    ("Unset Regular Subst Tactic" nil "Unset Regular Subst Tactic" t "Unset Regular\\s-+Subst\\s-+Tactic")
+    ("Unset Reversible Pattern Implicit" nil "Unset Reversible Pattern Implicit" t "Unset Reversible\\s-+Pattern\\s-+Implicit")
+    ("Unset Rewriting Schemes" nil "Unset Rewriting Schemes" t "Unset Rewriting\\s-+Schemes")
+    ("Unset Short Module Printing" nil "Unset Short Module Printing" t "Unset Short\\s-+Module\\s-+Printing")
+    ("Unset Shrink Obligations" nil "Unset Shrink Obligations" t "Unset Shrink\\s-+Obligations")
+    ("Unset SimplIsCbn" nil "Unset SimplIsCbn" t "Unset SimplIsCbn")
+    ("Unset Standard Proposition Elimination Names" nil "Unset Standard Proposition Elimination Names" t "Unset Standard\\s-+Proposition\\s-+Elimination\\s-+Names")
+    ("Unset Strict Proofs" nil "Unset Strict Proofs" t "Unset Strict\\s-+Proofs")
+    ("Unset Strict Universe Declaration" nil "Unset Strict Universe Declaration" t "Unset Strict\\s-+Universe\\s-+Declaration")
+    ("Unset Strongly Strict Implicit" nil "Unset Strongly Strict Implicit" t "Unset Strongly\\s-+Strict\\s-+Implicit")
+    ("Unset Suggest Proof Using" nil "Unset Suggest Proof Using" t "Unset Suggest\\s-+Proof\\s-+Using")
+    ("Unset Tactic Compat Context" nil "Unset Tactic Compat Context" t "Unset Tactic\\s-+Compat\\s-+Context")
+    ("Unset Tactic Evars Pattern Unification" nil "Unset Tactic Evars Pattern Unification" t "Unset Tactic\\s-+Evars\\s-+Pattern\\s-+Unification")
+    ("Unset Tactic Pattern Unification" nil "Unset Tactic Pattern Unification" t "Unset Tactic\\s-+Pattern\\s-+Unification")
+    ("Unset Transparent Obligations" nil "Unset Transparent Obligations" t "Unset Transparent\\s-+Obligations")
+    ("Unset Typeclass Resolution After Apply" nil "Unset Typeclass Resolution After Apply" t "Unset Typeclass\\s-+Resolution\\s-+After\\s-+Apply")
+    ("Unset Typeclass Resolution For Conversion" nil "Unset Typeclass Resolution For Conversion" t "Unset Typeclass\\s-+Resolution\\s-+For\\s-+Conversion")
+    ("Unset Typeclasses Debug" nil "Unset Typeclasses Debug" t "Unset Typeclasses\\s-+Debug")
+    ("Unset Typeclasses Dependency Order" nil "Unset Typeclasses Dependency Order" t "Unset Typeclasses\\s-+Dependency\\s-+Order")
+    ("Unset Typeclasses Depth" nil "Unset Typeclasses Depth" t "Unset Typeclasses\\s-+Depth")
+    ("Unset Typeclasses Modulo Eta" nil "Unset Typeclasses Modulo Eta" t "Unset Typeclasses\\s-+Modulo\\s-+Eta")
+    ("Unset Typeclasses Strict Resolution" nil "Unset Typeclasses Strict Resolution" t "Unset Typeclasses\\s-+Strict\\s-+Resolution")
+    ("Unset Typeclasses Unique Instances" nil "Unset Typeclasses Unique Instances" t "Unset Typeclasses\\s-+Unique\\s-+Instances")
+    ("Unset Typeclasses Unique Solutions" nil "Unset Typeclasses Unique Solutions" t "Unset Typeclasses\\s-+Unique\\s-+Solutions")
+    ("Unset Universal Lemma Under Conjunction" nil "Unset Universal Lemma Under Conjunction" t "Unset Universal\\s-+Lemma\\s-+Under\\s-+Conjunction")
+    ("Unset Universe Minimization ToUnset" nil "Unset Universe Minimization ToUnset" t "Unset Universe\\s-+Minimization\\s-+ToUnset")
+    ("Unset Universe Polymorphism" nil "Unset Universe Polymorphism" t "Unset Universe\\s-+Polymorphism")
+    ("Unset Verbose Compat Notations" nil "Unset Verbose Compat Notations" t "Unset Verbose\\s-+Compat\\s-+Notations")
+    ("Unset Function_debug" nil "Unset Function_debug" t "Unset Function_debug")
+    ("Unset Function_raw_tcc" nil "Unset Function_raw_tcc" t "Unset Function_raw_tcc")
+    ("Unset Functional Induction Rewrite Dependent" nil "Unset Functional Induction Rewrite Dependent" t "Unset Functional\\s-+Induction\\s-+Rewrite\\s-+Dependent")
+    ("Unset Hyps Limit" nil "Unset Hyps Limit" t "Unset Hyps\\s-+Limit")
+    ("Unset Ltac Debug" nil "Unset Ltac Debug" t "Unset Ltac\\s-+Debug")
+    ("Unset Silent" nil "Unset Silent" t "Unset Silent")
+    ("Unset Undo" nil "Unset Undo" t "Unset Undo")
+    ("Unset Search Blacklist" nil "Unset Search Blacklist" t "Unset Search\\s-+Blacklist")
+    ("Unset Printing Coercion" nil "Unset Printing Coercion" t "Unset Printing\\s-+Coercion")
+    ("Unset Printing If" nil "Unset Printing If" t "Unset Printing\\s-+If")
+    ("Unset Printing Let" nil "Unset Printing Let" t "Unset Printing\\s-+Let")
+    ("Unset Printing Record" nil "Unset Printing Record" t "Unset Printing\\s-+Record")
+    ("Unset Printing Constructor" nil "Unset Printing Constructor" t "Unset Printing\\s-+Constructor")
+                                        ;    ("print" "pr" "print #" "print")
+    )
    "Command that are not declarations, definition or goal starters."
   )
+
 
 (defvar coq-ssreflect-commands-db
   '(("Unset Strict Implicit" "unsti" nil t "Strict\\s-+Implicit")
@@ -744,29 +989,29 @@ so for the following reasons:
 (defun coq-module-opening-p (str)
   "Decide whether STR is a module or section opening or not.
 Used by `coq-goal-command-p'"
-  (let* ((match (coq-count-match "\\<match\\>" str))
-         (with (coq-count-match "\\<with\\>" str))
-         (letwith (+ (coq-count-match "\\<let\\>" str) (- with match)))
+  (let* ((match (coq-count-match "\\_<match\\_>" str))
+         (with (coq-count-match "\\_<with\\_>" str))
+         (letwith (+ (coq-count-match "\\_<let\\_>" str) (- with match)))
          (affect (coq-count-match ":=" str)))
-    (and (proof-string-match "\\`\\(Module\\)\\>" str)
+    (and (proof-string-match "\\`\\(Module\\)\\_>" str)
          (= letwith affect))))
 
 (defun coq-section-command-p (str)
-  (proof-string-match "\\`\\(Section\\|Chapter\\)\\>" str))
+  (proof-string-match "\\`\\(Section\\|Chapter\\)\\_>" str))
 
 ;; unused anymore (for good)
 (defun coq-goal-command-str-p (str)
   "Decide syntactically whether STR is a goal start or not. Use
 `coq-goal-command-p' on a span instead if possible."
   (let* ((match (coq-count-match "\\_<match\\_>" str))
-         (with (- (coq-count-match "\\_<with\\_>" str) (coq-count-match "\\<with\\s-+signature\\>" str)))
+         (with (- (coq-count-match "\\_<with\\_>" str) (coq-count-match "\\_<with\\s-+signature\\_>" str)))
          (letwith (+ (coq-count-match "\\_<let\\_>" str) (- with match)))
          (affect (coq-count-match ":=" str)))
     (and (proof-string-match coq-goal-command-regexp str)
          (not
           (and
            (proof-string-match
-            (concat "\\`\\(Local\\|Definition\\|Lemma\\|Theorem\\|Fact\\|Add\\|Let\\|Program\\|Module\\|Class\\|Instance\\)\\>")
+            (concat "\\`\\(Local\\|Definition\\|Lemma\\|Theorem\\|Fact\\|Add\\|Let\\|Program\\|Module\\|Class\\|Instance\\)\\_>")
             str)
            (not (= letwith affect))))
          (not (proof-string-match "\\`Declare\\s-+Module\\(\\w\\|\\s-\\|<\\)*:"
@@ -806,8 +1051,8 @@ It is used:
 (defun coq-save-command-p (span str)
   "Decide whether argument is a Save command or not"
   (or (proof-string-match coq-save-command-regexp-strict str)
-      (and (proof-string-match "\\`Proof\\>" str)
-           (not (proof-string-match "Proof\\s-*\\(\\.\\|\\<with\\>\\|using\\)" str)))))
+      (and (proof-string-match "\\`Proof\\_>" str)
+           (not (proof-string-match "\\`Proof\\s-*\\(\\.\\|\\_<with\\_>\\|\\_<using\\_>\\)" str)))))
 
 
 ;; ----- keywords for font-lock.
@@ -868,23 +1113,30 @@ It is used:
   (coq-build-regexp-list-from-db coq-tacticals-db)
   "Keywords for tacticals in a Coq script.")
 
+(defvar coq-symbol-binders "∀\\|∃\\|λ")
+
+
 
  ;; From JF Monin:
 (defvar coq-reserved
   (append
-   coq-user-reserved-db
    '(
      "False" "True" "after" "as" "cofix" "fix" "forall" "fun" "match"
+     "lazymatch" "multimatch"
      "return" "struct" "else" "end" "if" "in" "into" "let" "then"
      "using" "with" "beta" "delta" "iota" "zeta" "after" "until"
      "at" "Sort" "Time" "dest" "where"
      ;; SSReflect user reserved.
-     "is" "nosimpl" "of"))
+     "is" "nosimpl" "of")
+   coq-user-reserved-db)
   "Reserved keywords of Coq.")
 
-(defvar coq-reserved-regexp 
-  (concat "\\<with\\s-+signature\\>\\|"
-   (proof-ids-to-regexp coq-reserved) ))
+;; FIXME: ∀ and ∃ should be followed by a space in coq syntax.
+;; FIXME: actually these are not exactly reserved keywords, find
+;; another classification of keywords.
+(defvar coq-reserved-regexp
+  (concat "\\_<with\\s-+signature\\_>\\|"
+   (proof-ids-to-regexp coq-reserved)))
 
 (defvar coq-state-changing-tactics
   (coq-build-regexp-list-from-db coq-tactics-db 'filter-state-changing))
@@ -936,8 +1188,16 @@ It is used:
     "++>"
     "@"
     "->"
-    ".")
+    "."
+    "∧"
+    "∨"
+    "→"
+    "\\/"
+    "/\\"
+    "->")
   "Punctuation Symbols used by Coq.")
+
+(defvar coq-symbols-regexp (regexp-opt coq-symbols))
 
 ;; ----- regular expressions
 (defvar coq-error-regexp "^\\(Error:\\|Discarding pattern\\|Syntax error:\\|System Error:\\|User Error:\\|User error:\\|Anomaly[:.]\\|Toplevel input[,]\\)"
@@ -946,11 +1206,11 @@ It is used:
 (defvar coq-shell-eager-annotation-start
    "\376\\|\\[Reinterning\\|Warning:\\|TcDebug \\|<infomsg>")
 
-(defvar coq-id proof-id)
-(defvar coq-id-shy "@?\\(?:\\w\\|\\s_\\)+")
+(defvar coq-id "\\(@\\|_\\|\\w\\)\\(\\w\\|\\s_\\)*") ;; Coq ca start an id with @ or _
+(defvar coq-id-shy "\\(?:@\\|_\\|\\w\\)\\(?:\\w\\|\\s_\\)*")
 
-; do not use proof-ids with a space separator! 
-(defvar coq-ids (concat proof-id "\\(" "\\s-+" proof-id "\\)*"))
+; do not use proof-ids with a space separator!
+(defvar coq-ids (concat coq-id "\\(" "\\s-+" coq-id "\\)*"))
 
 (defun coq-first-abstr-regexp (paren end)
   (concat paren "\\s-*\\(" coq-ids "\\)\\s-*" end))
@@ -960,22 +1220,37 @@ It is used:
   :type 'boolean
   :group 'coq)
 
+(defcustom coq-symbol-highlight-enable nil
+  "Activates partial bound variable highlighting"
+  :type 'boolean
+  :group 'coq)
+
+(defconst coq-lambda-regexp "\\(?:\\_<fun\\_>\\|λ\\)")
+
+(defconst coq-forall-regexp "\\(?:\\_<forall\\_>\\|∀\\)")
+(defconst coq-exists-regexp "\\(?:\\_<exists\\_>\\|∃\\)")
 
 (defvar coq-font-lock-terms
-  (if coq-variable-highlight-enable
-  (list
-   ;; lambda binders
-   (list (coq-first-abstr-regexp "\\<fun\\>" "\\(?:=>\\|:\\)") 1 'font-lock-variable-name-face)
-   ;; forall binder
-   (list (coq-first-abstr-regexp "\\<forall\\>" "\\(?:,\\|:\\)") 1 'font-lock-variable-name-face)
-                                        ;   (list "\\<forall\\>"
-                                        ;         (list 0 font-lock-type-face)
-                                        ;         (list (concat "[^ :]\\s-*\\(" coq-ids "\\)\\s-*") nil nil
-                                        ;               (list 0 font-lock-variable-name-face)))
-   ;; parenthesized binders
-   (list (coq-first-abstr-regexp "(" ":[ a-zA-Z]") 1 'font-lock-variable-name-face)
-   (list (coq-first-abstr-regexp "{" ":[ a-zA-Z]") 1 'font-lock-variable-name-face)
-   ))
+  (append
+   (list ;; flattened by append above
+    (cons coq-symbol-binders 'coq-symbol-binder-face))
+   (when coq-symbol-highlight-enable
+     (list (cons coq-symbols-regexp 'coq-symbol-face)))
+   (when coq-variable-highlight-enable
+     (list
+      ;; lambda binders
+      (list (coq-first-abstr-regexp coq-lambda-regexp "\\(?:=>\\|:\\|,\\)") 1 'font-lock-variable-name-face)
+      ;; forall binder
+      (list (coq-first-abstr-regexp coq-forall-regexp "\\(?:,\\|:\\)") 1 'font-lock-variable-name-face)
+      (list (coq-first-abstr-regexp coq-exists-regexp "\\(?:,\\|:\\)") 1 'font-lock-variable-name-face)
+      ;;   (list "\\<forall\\>"
+      ;;         (list 0 font-lock-type-face)
+      ;;         (list (concat "[^ :]\\s-*\\(" coq-ids "\\)\\s-*") nil nil
+      ;;               (list 0 font-lock-variable-name-face)))
+      ;; parenthesized binders
+      (list (coq-first-abstr-regexp "(" ":[ a-zA-Z]") 1 'font-lock-variable-name-face)
+      (list (coq-first-abstr-regexp "{" ":[ a-zA-Z]") 1 'font-lock-variable-name-face)
+      )))
   "*Font-lock table for Coq terms.")
 
 
@@ -1029,58 +1304,66 @@ It is used:
 ;;  (concat "\\(with\\)\\s-+\\(" coq-id "\\)\\s-*\\([^(.]*:\\|.*)[^(.]*:=\\)"))
 ;;"\\<Prop\\>\\|\\<Set\\>\\|\\<Type\\>"
 
-;; (defconst coq-require-command-regexp
-;;   (concat "Require\\s-+\\(" proof-id "\\)")
-;;   "Regular expression matching Require commands in Coq.
-;; Group number 1 matches the name of the library which is required.")
+
+(defconst coq-context-marker-regexp
+  (concat (regexp-opt '("ltac" "constr" "uconstr") 'symbols) ":"))
 
 ;;
 ;; font-lock
 ;;
 (defvar coq-font-lock-keywords-1
-   (append
-    coq-font-lock-terms
-    (list
-    (cons coq-solve-tactics-regexp 'coq-solve-tactics-face)
-    (cons coq-solve-cheat-tactics-regexp 'coq-cheat-face)
-    (cons coq-keywords-regexp 'font-lock-keyword-face)
-    (cons coq-reserved-regexp 'font-lock-type-face)
-    (cons coq-tactics-regexp 'proof-tactics-name-face)
-    (cons (proof-regexp-alt-list coq-tacticals) 'proof-tacticals-name-face)
-    (cons (proof-regexp-alt-list-symb (list "Set" "Type" "Prop")) 'font-lock-type-face)
-    (cons "============================" 'font-lock-keyword-face)
-    (list coq-goal-with-hole-regexp 2 'font-lock-function-name-face))
-    (if coq-variable-highlight-enable
-        (list (list coq-decl-with-hole-regexp 2 'font-lock-variable-name-face)))
-    (list
-    (list coq-defn-with-hole-regexp 2 'font-lock-function-name-face)
-    (list coq-with-with-hole-regexp 2 'font-lock-function-name-face)
-    (list coq-save-with-hole-regexp 2 'font-lock-function-name-face)
-    ;; Remove spurious variable and function faces on commas.
-    '(proof-zap-commas))))
+  (append
+   coq-font-lock-terms
+   `((,coq-solve-tactics-regexp . 'coq-solve-tactics-face)
+     (,coq-solve-cheat-tactics-regexp . 'coq-cheat-face)
+     (,coq-keywords-regexp . 'font-lock-keyword-face)
+     (,coq-reserved-regexp . 'font-lock-type-face)
+     (,coq-tactics-regexp . 'proof-tactics-name-face)
+     (,(proof-regexp-alt-list coq-tacticals) . 'proof-tacticals-name-face)
+     (,(proof-regexp-alt-list-symb (list "Set" "Type" "Prop")) . 'font-lock-type-face)
+     ("============================" . 'font-lock-keyword-face)
+     (,coq-goal-with-hole-regexp 2 'font-lock-function-name-face)
+     (,coq-context-marker-regexp 1 'coq-context-qualifier-face))
+   (if coq-variable-highlight-enable
+       `((,coq-decl-with-hole-regexp 2 'font-lock-variable-name-face)))
+   `((,coq-defn-with-hole-regexp 2 'font-lock-function-name-face)
+     (,coq-with-with-hole-regexp 2 'font-lock-function-name-face)
+     (,coq-save-with-hole-regexp 2 'font-lock-function-name-face)
+     ;; Remove spurious variable and function faces on commas.
+     (proof-zap-commas))))
+
+
+;; ", " is for multiple hypothesis displayed in v8.5. If more than
+;; 1 space this is a hypothesis displayed in the middle of a line (> v8.5)
+;; "^    " is for goals in debug mode.
+(defvar coq-hyp-name-in-goal-or-response-regexp
+    "\\(^\\|^  \\|^    \\|[^^ ] ?  \\)\\(\\(?:[^\n :(),=]\\|, \\)+ *\\(?::[ \n]\\|,$\\)\\)"
+  "regexp matching hypothesis names in goal or response buffer")
 
 ;; We define a slightly different set of keywords for response buffer.
 
 (defvar coq-response-font-lock-keywords
-   (append
-    coq-font-lock-terms
-    (list
-     (cons coq-keywords-regexp 'font-lock-keyword-face)
-     (cons coq-shell-eager-annotation-start 'proof-warning-face)
-     (cons coq-error-regexp 'proof-error-face)
-     (cons (proof-regexp-alt-list-symb (list "In environment" "The term" "has type")) 'proof-error-face)
-     (cons (proof-regexp-alt-list-symb (list "Set" "Type" "Prop")) 'font-lock-type-face)
-     ;; ", " is for multiple hypothesis diplayed in v8.5.
-     (cons "^ *\\([^\n :(),]\\|, \\)+ *:" 'proof-declaration-name-face)
-     (list "^\\([^ \n]+\\) \\(is defined\\)"
-           (list 1 'font-lock-function-name-face t)))))
+  (append
+   coq-font-lock-terms
+   (list
+    (cons coq-reserved-regexp 'font-lock-type-face)
+    (cons coq-keywords-regexp 'font-lock-keyword-face)
+    (cons coq-shell-eager-annotation-start 'proof-warning-face)
+    (cons coq-error-regexp 'proof-error-face)
+    (cons (proof-regexp-alt-list-symb (list "In environment" "The term" "has type")) 'proof-error-face)
+    (cons (proof-regexp-alt-list-symb (list "Set" "Type" "Prop")) 'font-lock-type-face)
+    (list (concat "[?]" coq-id) 0 'coq-question-mark-face) ;; highlight evars and Ltac variables
+    (list coq-hyp-name-in-goal-or-response-regexp 2 'proof-declaration-name-face)
+    (list "^\\([^ \n]+\\) \\(is defined\\)" (list 1 'font-lock-function-name-face t)))))
 
 (defvar coq-goals-font-lock-keywords
-   (append
-    coq-font-lock-terms
-    (list
-     (cons "^ *\\([^ \n:()=]\\|, \\)+ *:" 'proof-declaration-name-face)
-     (cons (proof-regexp-alt-list-symb (list "Set" "Type" "Prop")) 'font-lock-type-face))))
+  (append
+   coq-font-lock-terms
+   (list
+    (cons coq-reserved-regexp 'font-lock-type-face)
+    (list (concat "[?]" coq-id) 0 'coq-question-mark-face) ;; highlight evars and Ltac variables
+    (list coq-hyp-name-in-goal-or-response-regexp 2 'proof-declaration-name-face)
+    (cons (proof-regexp-alt-list-symb (list "Set" "Type" "Prop")) 'font-lock-type-face))))
 
 
 
@@ -1097,11 +1380,15 @@ It is used:
   (modify-syntax-entry ?<  ".")
   (modify-syntax-entry ?>  ".")
   (modify-syntax-entry ?\& ".")
-  (modify-syntax-entry ?_  "_")
-  (modify-syntax-entry ?\' "_")
+  (modify-syntax-entry ?_  "_") ; beware: word consituent EXCEPT in head position
+  (modify-syntax-entry ?\' "_") ; always word constituent
+  (modify-syntax-entry ?∀ ".")
+  (modify-syntax-entry ?∃ ".")
+  (modify-syntax-entry ?λ ".") ;; maybe a bad idea... lambda is a letter
   (modify-syntax-entry ?\| ".")
 
   ;; should maybe be "_" but it makes coq-find-and-forget (in coq.el) bug
+  ;; Hence the coq-with-altered-syntax-table below to put "." into "_" class temporarily
   (modify-syntax-entry ?\. ".")
 
   (modify-syntax-entry ?\* ". 23n")
@@ -1112,6 +1399,7 @@ It is used:
 ;; constituent (better behavior for thing-at and maybe font-lock too,
 ;; for indentation we use ad hoc smie lexers).
 (defmacro coq-with-altered-syntax-table (&rest code)
+  (declare (debug t))
   (let ((res (make-symbol "res")))
     `(unwind-protect
 	 (progn (modify-syntax-entry ?\. "_")

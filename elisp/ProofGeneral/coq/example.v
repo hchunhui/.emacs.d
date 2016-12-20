@@ -1,7 +1,7 @@
 (*
     Example proof script for Coq Proof General.
 
-    example.v,v 11.1 2013/05/14 19:28:22 tews Exp
+    $Id$
 *)
 
 Module Example.

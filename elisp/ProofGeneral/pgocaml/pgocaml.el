@@ -1,6 +1,6 @@
 ;; pgocaml.el - Proof General for OCaml scripts.
 ;;
-;; David Aspinall.  pgocaml.el,v 1.1 2012/02/07 11:19:42 da Exp
+;; David Aspinall.  $Id$
 ;;
 ;; This instance of PG is handy just for using script management to
 ;; cut-and-paste into a buffer running OCaml

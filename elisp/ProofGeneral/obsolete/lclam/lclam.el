@@ -3,7 +3,7 @@
 ;; Author:         James Brotherston <jjb@dai.ed.ac.uk>
 ;; Last modified:  23 October 2001
 ;;
-;; lclam.el,v 12.0 2011/10/13 10:54:51 da Exp
+;; $Id$
 
 (require 'proof)            ; load generic parts
 (require 'proof-syntax)     

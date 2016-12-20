@@ -2,7 +2,7 @@
 ;;
 ;; You can run these by issuing "make test.isar" in PG home dir.
 ;;
-;; isar-autotest.el,v 12.2 2012/09/02 21:44:46 da Exp
+;; $Id$
 ;;
 
 (defvar isar-long-tests nil

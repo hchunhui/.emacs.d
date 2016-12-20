@@ -4,7 +4,7 @@
 ;;	   Taken from Twelf's emacs mode and
 ;;	   adapted for Proof General by David Aspinall <David.Aspinall@ed.ac.uk>
 ;;
-;; twelf-font.el,v 12.0 2011/10/13 10:54:51 da Exp
+;; $Id$
 ;;
 ;;
 

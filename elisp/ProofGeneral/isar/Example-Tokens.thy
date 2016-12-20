@@ -6,7 +6,7 @@
       For a more exhaustive test of token display, visit the test
       file etc/isar/TokensAcid.thy.  Check the FAQ for more advice.
 
-      Example-Tokens.thy,v 12.1 2012/04/30 13:17:13 da Exp
+      $Id$
 *)
 
 theory "Example-Tokens" imports Main begin

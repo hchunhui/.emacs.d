@@ -4,7 +4,7 @@
 ;; Author:    David Aspinall <David.Aspinall@ed.ac.uk>
 ;; License:   GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; proof-toolbar.el,v 12.3 2012/07/15 08:58:14 da Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;;

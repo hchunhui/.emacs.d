@@ -1,7 +1,7 @@
 ;; unicode-chars.el --- table of Unicode characters
 ;;
 ;; Author:    David Aspinall
-;; unicode-chars.el,v 12.1 2012/08/16 14:20:10 da Exp
+;; $Id$
 ;;
 ;; Adapted from Norman Walsh's unichars.el (iso8879 names removed)
 ;;

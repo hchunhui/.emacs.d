@@ -5,7 +5,7 @@
 ;; Author:      David Aspinall <da@dcs.ed.ac.uk>
 ;; Maintainer:  Proof General maintainer <proofgen@dcs.ed.ac.uk>
 ;;
-;; isabelle-system.el,v 12.5 2015/03/11 15:21:31 da Exp
+;; $Id$
 ;;
 ;; Most of this code is taken from the final version of Isamode.
 ;; --------------------------------------------------------------

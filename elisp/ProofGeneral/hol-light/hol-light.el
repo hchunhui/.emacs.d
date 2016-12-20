@@ -5,7 +5,7 @@
 ;; Author: David Aspinall <David.Aspinall@ed.ac.uk>
 ;;         Mark Adams <mark@proof-technologies.com>
 ;;
-;; hol-light.el,v 12.21 2015/01/05 11:41:31 da Exp
+;; $Id$
 ;;
 ;; See the README file in this directory for information.
 ;;

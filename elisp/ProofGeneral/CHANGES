@@ -1,8 +1,98 @@
 -*- outline -*-  
 
 This is a summary of main changes.  For details, please see
-the CVS ChangeLog and PG Trac, http://proofgeneral.inf.ed.ac.uk/trac.
+the Git ChangeLog, the GitHub repo https://github.com/ProofGeneral/PG
+and the PG Trac http://proofgeneral.inf.ed.ac.uk/trac
 
+* Changes of Proof General 4.4.1 from Proof General 4.4
+
+** Generic changes
+
+*** bug fixes
+    - Using query-replace (or replace-string) in the processed region
+      doesn't wrongly jump to the first match anymore.
+
+** Coq changes
+
+*** new menu Coq -> Auto Compilation for all background compilation options
+
+*** support for 8.5 quick compilation
+
+    See new menu Coq -> Auto Compilation. Select "no quick" as
+    long as you have not switched to "Proof using" to compile
+    without -quick. Select "quick no vio2vo" to use -quick
+    without vio2vo (and guess what "quick and vio2vo" means ;-),
+    select "ensure vo" to ensure a sound development. See the
+    option `coq-compile-quick' or the subsection "11.3.3 Quick
+    compilation and .vio Files" in the Coq reference manual.
+
+*** new option coq-compile-keep-going (in menu Coq -> Auto Compilation)
+
+    Similar to ``make -k'', with this option enabled, background
+    compilation does not stop at the first error but rather
+    continues as far as possible.
+
+*** bug fixes
+    - avoid leaving partial files behind when compilation fails
+    - 123: Parallel background compliation fails to execute some
+      imports
+    - fix error in process filter: Cannot resize window
+    - 54 partially: Buffer coq-compile-response sometimes takes
+      over the whole window
+    - 75: Library more.v is required
+    - 70: Coq trunk + compile before require => « Invalid version
+      syntax: 'trunk' »
+    - 92: Compile before require from current directory failing
+      with 8.5
+
+* Changes of Proof General 4.4 from Proof General 4.3
+
+** ProofGeneral has moved to GitHub!
+
+   https://github.com/ProofGeneral/PG
+
+   Please submit new bugs there, old bugs may stay in good old PG trac
+   for a while though: http://proofgeneral.inf.ed.ac.uk/trac
+
+** Coq changes
+
+*** indentation of ";" tactical:
+    by default the indentation is like this:
+    tac1;
+      tac2;
+      tac3.
+    do this: (setq coq-indent-semicolon-tactical 0) to have this:
+    tac1;
+    tac2;
+    tac3.
+
+*** Option to disable the auto resizing of response buffer:
+
+    By default when the response buffer is on the same column than
+    goals buffer, pg changes its size dynamically to optimize goals
+    displaying.
+
+    To disable this feature use:
+    (setq coq-optimise-resp-windows-enable nil)
+    
+*** Option to prefer top of conclusion instead of bottom
+
+    When display goals that do not fit in the goals window, PG prefers
+    to display the bottom of the goal (where lies it own conclusion.
+    You can make it prefer the top of the conclusion by setting this:
+    (setq coq-prefer-top-of-conclusion t)
+
+*** Auto adjusting of printing width
+
+    On by default. To disable: Coq/Settings/Auto Adapt Printing Width
+    or (setq coq-auto-adapt-printing-width nil).
+
+*** Removed the Set Undo 500 at start.
+    This is obsolete. To recover: (setq coq-user-init-cmd `("Set Undo 500."))
+
+*** Option to highlight usual symbols
+    Off by default, enable using:
+    (setq coq-symbol-highlight-enable t)
 
 * Changes of Proof General 4.3 from Proof General 4.2
 
@@ -72,10 +162,16 @@ the CVS ChangeLog and PG Trac, http://proofgeneral.inf.ed.ac.uk/trac.
 
        Lemma foo: forall x y,
            x = 0 -> ... .
+
     instead of:
+
        Lemma foo: forall x y,
                     x = 0 -> ... .
-    do this: (setq coq-indent-box-style t) to bring the box style back.
+    (do this: (setq coq-indent-box-style t) to bring the box style back).
+
+    Use (setq coq-smie-after-bolp-indentation 0) for a smaller indentation:
+       Lemma foo: forall x y,
+         x = 0 -> ... .
 
 *** Default indentation cases of "match with" are now indented by 2 instead of 4.
      "|" is indented by zero:
@@ -114,7 +210,7 @@ the CVS ChangeLog and PG Trac, http://proofgeneral.inf.ed.ac.uk/trac.
 *** Colors in response and goals buffers
 
     Experimental: colorize hypothesis names and some parts of error
-    and warning messages. For readability.
+    and warning messages, and also evars. For readability.
 
 *** Coq Querying facilities
 

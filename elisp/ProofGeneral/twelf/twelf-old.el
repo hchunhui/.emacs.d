@@ -3,7 +3,7 @@
 ;; Author: Frank Pfenning
 ;;	   Adapted for Proof General by David Aspinall <David.Aspinall@ed.ac.uk>
 ;;
-;; twelf-old.el,v 12.0 2011/10/13 10:54:51 da Exp
+;; $Id$
 ;;
 ;;
 

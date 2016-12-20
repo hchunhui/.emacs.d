@@ -2,7 +2,7 @@
 ;;
 ;; You can run these by issuing "make test.hol-light" in PG home dir.
 ;;
-;; hol-light-autotest.el,v 1.1 2012/02/08 17:41:57 da Exp
+;; $Id$
 ;;
 
 (eval-when-compile

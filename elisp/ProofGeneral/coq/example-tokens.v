@@ -7,7 +7,7 @@
 
     Turn on with Proof-General → Quick Options → Display → Unicode Tokens
 
-    example-tokens.v,v 11.0 2010/10/10 22:56:58 da Exp
+    $Id$
 *)
 
 Module ExampleTokens.

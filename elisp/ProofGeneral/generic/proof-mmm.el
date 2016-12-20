@@ -6,7 +6,7 @@
 ;;
 ;; The MMM package is at http://mmm-mode.sourceforge.net/
 ;;
-;; proof-mmm.el,v 12.0 2011/10/13 10:54:49 da Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;; 

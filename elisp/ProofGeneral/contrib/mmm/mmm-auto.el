@@ -3,7 +3,7 @@
 ;; Copyright (C) 2000 by Michael Abraham Shulman
 
 ;; Author: Michael Abraham Shulman <mas@kurukshetra.cjb.net>
-;; Version: mmm-auto.el,v 12.0 2011/10/13 10:54:47 da Exp
+;; Version: $Id$
 
 ;;{{{ GPL
 

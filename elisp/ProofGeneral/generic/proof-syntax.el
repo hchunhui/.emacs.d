@@ -5,7 +5,7 @@
 ;;	      Thomas Kleymann, Dilip Sequiera
 ;; License:   GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; proof-syntax.el,v 12.0 2011/10/13 10:54:49 da Exp
+;; $Id$
 ;;
 
 (require 'font-lock)

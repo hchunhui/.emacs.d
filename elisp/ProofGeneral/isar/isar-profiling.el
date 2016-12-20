@@ -2,7 +2,7 @@
 ;;
 ;; You can run these tests by issuing "make profile.isar" in PG home dir.
 ;;
-;; isar-profiling.el,v 12.0 2011/10/13 10:54:50 da Exp
+;; $Id$
 ;;
 
 (eval-when-compile

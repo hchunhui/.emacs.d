@@ -4,7 +4,7 @@
 ;; Author:      David Aspinall <David.Aspinall@ed.ac.uk> and others
 ;; License:     GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; pg-movie.el,v 12.1 2011/10/17 09:51:26 da Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;;

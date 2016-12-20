@@ -4,7 +4,7 @@
 ;; Author:      David Aspinall <David.Aspinall@ed.ac.uk> and others
 ;; License:     GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; pg-custom.el,v 12.1 2012/01/03 09:36:05 tews Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;;
@@ -150,7 +150,7 @@ Completion is activated with \\[complete].
 
 If this table is empty or needs adjusting, please make changes using
 `customize-variable' and post suggestions at
-http://proofgeneral.inf.ed.ac.uk/trac"
+https://github.com/ProofGeneral/PG/issues"
   :type '(repeat string)
   :group 'prover-config)
 

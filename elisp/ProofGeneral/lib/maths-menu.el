@@ -9,7 +9,7 @@
 ;; - Hooks added to insert tokenised versions of unicode characters.
 ;; - Added more characters to the menus.
 ;; - Define insertion functions following menu names (useful for keybindings)
-;; maths-menu.el,v 12.1 2012/08/30 14:30:23 monnier Exp
+;; $Id$
 
 
 ;; This file is free software; you can redistribute it and/or modify

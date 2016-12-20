@@ -4,7 +4,7 @@
 ;; Authors:   Hendrik Tews
 ;; License:   GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; proof-tree.el,v 12.8 2013/01/21 14:13:56 tews Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;;

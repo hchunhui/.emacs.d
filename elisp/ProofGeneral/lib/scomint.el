@@ -4,7 +4,7 @@
 ;; Author:    David Aspinall
 ;; License:   GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; scomint.el,v 12.1 2011/10/13 14:35:09 da Exp
+;; $Id$
 
 ;;; Commentary:
 ;;

@@ -4,7 +4,7 @@
 ;; License:   GPL (GNU GENERAL PUBLIC LICENSE)
 ;; Author:    David Aspinall <David.Aspinall@ed.ac.uk>
 ;;
-;; acl2.el,v 12.0 2011/10/13 10:54:47 da Exp
+;; $Id$
 ;;
 ;; Needs improvement!
 ;;
@@ -92,6 +92,6 @@
 
 
 (warn "ACL2 Proof General is incomplete!  Please help improve it!
-Please add improvements at http://proofgeneral.inf.ed.ac.uk/trac")
+Please add improvements at https://github.com/ProofGeneral/PG")
 
 (provide 'acl2)

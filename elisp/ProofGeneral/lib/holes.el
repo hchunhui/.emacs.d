@@ -2,7 +2,7 @@
 ;;
 ;; Copyright (C) 2001 Pierre Courtieu
 ;;
-;; holes.el,v 12.3 2015/03/13 14:12:13 pier Exp
+;; $Id$
 ;;
 ;; This file uses spans, an interface for extent (XEmacs) and overlays
 ;; (emacs), by Healfdene Goguen for the proofgeneral mode.

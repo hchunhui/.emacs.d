@@ -3,7 +3,7 @@
 ;; Copyright (C) 2001 by Alan Shutko
 
 ;; Author: Alan Shutko <ats@acm.org>
-;; Version: mmm-cweb.el,v 12.0 2011/10/13 10:54:47 da Exp
+;; Version: $Id$
 
 ;;{{{ GPL
 

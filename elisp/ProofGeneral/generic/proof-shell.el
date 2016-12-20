@@ -5,7 +5,7 @@
 ;;            Thomas Kleymann and Dilip Sequeira
 ;; License:   GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; proof-shell.el,v 12.20 2015/03/09 17:16:58 pier Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;;
@@ -21,11 +21,20 @@
   (require 'span)
   (require 'proof-utils))
 
+;; declare a few functions and variables from proof-tree - if we
+;; require proof-tree the compiler complains about a recusive
+;; dependency.
+(declare-function proof-tree-urgent-action "proof-tree" (flags))
+(declare-function proof-tree-handle-delayed-output "proof-tree"
+		  (old-proof-marker cmd flags span))
+(eval-when (compile)
+  ;; without the nil initialization the compiler still warns about this variable
+  (defvar proof-tree-external-display nil))
+
 (require 'scomint)
 (require 'pg-response)
 (require 'pg-goals)
 (require 'pg-user)			; proof-script, new-command-advance
-(require 'proof-tree)
 
 
 ;;
@@ -79,9 +88,11 @@ See the functions `proof-start-queue' and `proof-shell-exec-loop'.")
 
 (defsubst proof-shell-invoke-callback (listitem)
   "From `proof-action-list' LISTITEM, invoke the callback on the span."
-  (condition-case nil
+  (condition-case err
       (funcall (nth 2 listitem) (car listitem))
-    (error nil)))
+    (error
+     (message "error escaping proof-shell-invoke-callback: %s" err)
+     nil)))
 
 (defvar proof-second-action-list-active nil
   "Signals that some items are waiting outside of `proof-action-list'.
@@ -293,8 +304,10 @@ process command."
 		(apply proof-guess-command-line (list name)))))
 
     (if proof-prog-name-ask
-	(setq proof-prog-name (read-shell-command "Run process: "
-						  proof-prog-name)))
+        ;; if this option is set, an absolute file name is better to show if possible
+	(let ((prog-name (locate-file proof-prog-name exec-path exec-suffixes 1)))
+          (setq proof-prog-name (read-shell-command "Run process: "
+						  prog-name))))
     (let
 	((proc (downcase proof-assistant)))
 
@@ -379,7 +392,10 @@ process command."
 	(setq proof-shell-buffer (get-buffer (concat "*" proc "*")))
 
 	(unless (proof-shell-live-buffer)
-	  ;; Give error now if shell buffer isn't live (process exited)
+	  ;; Give error now if shell buffer isn't live (process exited). We also
+	  ;; set the process filter to nil to avoid processing error messages
+	  ;; related to the process exit.
+	  (set-process-filter (get-buffer-process proof-shell-buffer) nil)
 	  (setq proof-shell-buffer nil)
 	  (error "Starting process: %s..failed" prog-command-line)))
       
@@ -448,7 +464,9 @@ shell buffer, called by `proof-shell-bail-out' if process exits."
 	 (proc     (get-buffer-process (current-buffer)))
 	 (bufname  (buffer-name)))
     (message "%s, cleaning up and exiting..." bufname)
-    (run-hooks 'proof-shell-signal-interrupt-hook)
+    (let (prover-was-busy)
+      ;; hook functions might set prover-was-busy
+      (run-hooks 'proof-shell-signal-interrupt-hook))
     
     (redisplay t)
     (when (and alive proc)
@@ -491,7 +509,7 @@ shell buffer, called by `proof-shell-bail-out' if process exits."
     ;; frames (NB: loses if user has switched buffer in special frame)
     (if (and proof-multiple-frames-enable
 	     proof-shell-fiddle-frames)
-	(proof-delete-other-frames))
+	(proof-delete-all-associated-windows))
 
     ;; Kill associated buffer
     (let ((proof-shell-buffer nil)) ;; fool kill buffer hooks
@@ -810,14 +828,18 @@ In the first case, PG will terminate the queue of commands at the first
 available point.  In the second case, you may need to press enter inside
 the prover command buffer (e.g., with Isabelle2009 press RET inside *isabelle*)."
   (interactive)
-  (unless (proof-shell-live-buffer)
+  (let ((prover-was-busy nil))
+    (unless (proof-shell-live-buffer)
       (error "Proof process not started!"))
-  (unless proof-shell-busy
-    (error "Proof process not active!"))
-  (setq proof-shell-interrupt-pending t)
-  (with-current-buffer proof-shell-buffer
-    (interrupt-process))
-  (run-hooks 'proof-shell-signal-interrupt-hook))
+    ;; hook functions might set prover-was-busy
+    (run-hooks 'proof-shell-signal-interrupt-hook)
+    (if proof-shell-busy
+	(progn
+	  (setq proof-shell-interrupt-pending t)
+	  (with-current-buffer proof-shell-buffer
+	    (interrupt-process)))
+      (unless prover-was-busy
+	(error "Proof process not active!")))))
 
 
 
@@ -1658,6 +1680,14 @@ i.e., 'goals or 'response."
     ;; indicate that (only) a response output has been given
     'response))
   
+  ;; FIXME (CPC 2015-12-31): The documentation of this hook suggests that it
+  ;; only gets run after new output has been displayed, but this isn't true at
+  ;; the moment: indeed, it gets run even for invisible commands.
+  ;;
+  ;; This causes issues in company-coq, where completion uses invisible
+  ;; commands to display the types of completion candidates; this causes the
+  ;; goals and response buffers to scroll. I fixed it by adding checks to
+  ;; coq-mode's hooks, but maybe we should do more.
   (run-hooks 'proof-shell-handle-delayed-output-hook)))
 
 

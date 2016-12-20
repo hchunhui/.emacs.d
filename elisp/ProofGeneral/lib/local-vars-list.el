@@ -4,7 +4,7 @@
 ;; Authors: Pierre Courtieu
 ;; Maintainer: Pierre Courtieu <Pierre.Courtieu@cnam.fr>
 ;;
-;; local-vars-list.el,v 12.2 2013/07/22 12:21:48 pier Exp
+;; $Id$
 
 ;; This software is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public

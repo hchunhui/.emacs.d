@@ -4,7 +4,7 @@
 ;; Author:      David Aspinall <David.Aspinall@ed.ac.uk> and others
 ;; License:     GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; proof-utils.el,v 12.1 2012/09/05 23:01:45 pier Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;;
@@ -330,7 +330,7 @@ If flag `proof-general-debug' is nil, do nothing."
     (with-current-buffer (get-buffer-create "*PG Debug*")
       (help-mode)
       (let ((formatted (apply 'format msg args))
-	    (log-warning-minimum-level :debug)
+	    (warning-minimum-log-level :debug)
 	    (warning-minimum-level :debug)
 	    (buffer-read-only nil))
 	(display-warning 'proof-general
@@ -431,14 +431,23 @@ or if the window is the only window of its frame."
 	    ;; buffers?  Probably not an issue for us, but one
 	    ;; wonders at the shrink to fit strategy.
 	    ;; NB: way to calculate pixel fraction?
-	    (+ extraline (count-lines (point-min) (point-max)))))
+	    (+ extraline (count-lines (point-min) (point-max))))
+	   (safe-desired-height
+	    ;; Under certain circumstances (involving a non-nil
+	    ;; line-spacing), a desired-height of 1 (which happens
+	    ;; quite often, eg for an empty response buffer) gives an
+	    ;; error inside set-window-text-height. The reason for
+	    ;; this is quite complicated, it involves rounding issues
+	    ;; and emacs' habbit to sometimes resize a window by 2
+	    ;; pixels.
+	    (max 2 desired-height)))
 	;; Let's shrink or expand.  Uses new GNU Emacs function.
 	(let ((window-size-fixed nil))
 	  (set-window-text-height window
 				  ;; As explained earlier: use abs-max-height
 				  ;; but only if that makes it display all.
-				  (if (> desired-height absolute-max-height)
-				      max-height desired-height)))
+				  (if (> safe-desired-height absolute-max-height)
+				      max-height safe-desired-height)))
 	(if (window-live-p window)
 	    (progn
 	      (if (>= (window-text-height window) desired-height)

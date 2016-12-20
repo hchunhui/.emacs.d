@@ -4,7 +4,7 @@
 ;; Author:     David Aspinall <David.Aspinall@ed.ac.uk>
 ;; License:    GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; pg-xml.el,v 12.0 2011/10/13 10:54:49 da Exp
+;; $Id$
 ;;
 ;; XML functions for Proof General.
 ;;

@@ -6,7 +6,7 @@
 ;; License:      GPL (GNU GENERAL PUBLIC LICENSE)
 ;; Status:       Experimental code
 ;;
-;; proof-depends.el,v 12.1 2014/06/06 17:25:29 monnier Exp
+;; $Id$
 ;;
 ;;; Commentary:
 ;; 

@@ -4,7 +4,7 @@
 ;; Author:   David Aspinall <David.Aspinall@ed.ac.uk>
 ;; License:  GPL (GNU GENERAL PUBLIC LICENSE)
 ;;
-;; pg-pgip.el,v 12.1 2011/10/17 10:11:45 da Exp
+;; $Id$
 ;;
 ;; STATUS: Experimental
 ;;
