@@ -86,6 +86,7 @@
 (window-numbering-mode 1)
 
 ;; tuareg (OCaml)
+(add-to-list 'load-path "~/.emacs.d/elisp/caml-mode")
 (add-to-list 'load-path "~/.emacs.d/elisp/tuareg-2.0.6")
 (load "tuareg-site-file.el")
 
