@@ -9,12 +9,16 @@
 	 (user                  "hchunhui")
 	 (mail-domain           "mail.ustc.edu.cn")
 	 (fcc                   "%Sent Items")
+	 (imap-ssl              t)
+	 (imap-ssl-port         "993")
 	 (imap-delete           t)
 	 (imap-queue-folder     "%queue")
 	 (imap-trash-folder     "%Trash") ;; This must be in concile with your IMAP box setup
 	 (smtp-auth-list        ("PLAIN" "LOGIN" "CRAM-MD5"))
 	 (smtp-user             "hchunhui@mail.ustc.edu.cn")
-	 (smtp-server           "mail.ustc.edu.cn"))
+	 (smtp-server           "mail.ustc.edu.cn")
+	 (smtp-ssl              t)
+	 (smtp-ssl-port         "465"))
 	))
 
 ;; general config for all accounts
