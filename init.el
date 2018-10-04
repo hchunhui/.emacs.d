@@ -67,6 +67,13 @@
 (add-to-list 'load-path "~/.emacs.d/elisp/tuareg-2.0.6")
 (load "tuareg-site-file.el")
 
+(push "~/.opam/4.07.0/share/emacs/site-lisp" load-path)
+(setq merlin-command "ocamlmerlin")
+(setq merlin-ac-setup t)
+(autoload 'merlin-mode "merlin" "Merlin mode" t)
+(add-hook 'tuareg-mode-hook 'merlin-mode)
+(add-hook 'caml-mode-hook 'merlin-mode)
+
 ;; proof general (Coq)
 (load-file "~/.emacs.d/elisp/ProofGeneral/generic/proof-site.el")
 (setq proof-splash-enable nil)
