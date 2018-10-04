@@ -235,3 +235,9 @@ Symbols matching the text at point are put first in the completion list."
 
 ;; edit env
 (require 'edit-env)
+
+;; input method
+(add-to-list 'load-path "~/.emacs.d/elisp/chinese-wubi")
+(require 'chinese-wubi)
+(register-input-method "chinese-wubi" "Chinese-GB" 'quail-use-package "wubi" "wubi")
+(setq default-input-method "chinese-wubi")
