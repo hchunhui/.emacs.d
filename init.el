@@ -1,3 +1,4 @@
+(setq use-default-font-for-symbols nil)
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (add-to-list 'load-path "~/.emacs.d/elisp/emacs-goodies-el")
 
@@ -11,38 +12,14 @@
 ;;(color-theme-dark-laptop)
 
 ;; fonts
-;;http://zhuoqiang.me/torture-emacs.html
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(which-func ((t (:foreground "white")))))
-
-;; (defun frame-setting ()
-;;   (when (display-graphic-p)
-;;     (progn
-;;       ;; Setting English Font
-;;       (set-face-attribute 'default nil :font "DejaVu Sans Mono 10")
-;;       ;; Chinese Font
-;;       (dolist (charset '(kana han symbol cjk-misc bopomofo))
-;; 	(set-fontset-font (frame-parameter nil 'font)
-;; 			  charset
-;; 			  (font-spec :family "WenQuanYi Zen Hei" :size 16))))))
-
-;; (if (and (fboundp 'daemonp) (daemonp))
-;;     (add-hook 'after-make-frame-functions
-;; 	      (lambda (frame)
-;; 		(with-selected-frame frame
-;; 		  (frame-setting))))
-;;   (frame-setting))
 (require 'chinese-fonts-setup)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(cfs--fontsize-steps (quote (2 4 4)) t))
+ '(cfs--current-profile-name "profile1" t)
+ '(cfs--fontsize-steps (quote (2 4 4)) t)
 
 ;; options
 (setq frame-title-format "%b@emacs")
@@ -174,6 +151,7 @@ occurence of CHAR."
 ;;(add-to-list 'load-path "~/.emacs.d/elisp/mew")
 (autoload 'mew "mew" nil t)
 (autoload 'mew-send "mew" nil t)
+(setq mew-ssl-verify-level 0)
 
 ;; Optional setup (Read Mail menu):
 (setq read-mail-command 'mew)
