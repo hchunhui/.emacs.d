@@ -85,6 +85,9 @@
 	  (cons (cons 'proof-mode proof-mode-map)
 		minor-mode-map-alist)))
 
+(autoload 'rust-mode "rust-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+
 ;; flymake
 (autoload 'flymake-find-file-hook "flymake" "" t)
 (add-hook 'find-file-hook 'flymake-find-file-hook)
