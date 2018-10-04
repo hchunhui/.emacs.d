@@ -1,2 +1,9 @@
 *.elc
 *~
+ac-comphist.dat
+bookmarks
+elpa/
+ido.last
+tramp
+eshell/
+url/
