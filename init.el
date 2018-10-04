@@ -19,7 +19,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(cfs--current-profile-name "profile1" t)
- '(cfs--fontsize-steps (quote (2 4 4)) t)
+ '(cfs--fontsize-steps (quote (2 4 4)) t))
 
 ;; options
 (setq frame-title-format "%b@emacs")
