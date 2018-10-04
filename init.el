@@ -228,3 +228,7 @@ Symbols matching the text at point are put first in the completion list."
            (position (cdr (assoc selected-symbol name-and-pos))))
       (push-mark (point))
       (goto-char position))))
+
+;; fcitx.el
+(require 'fcitx)
+(fcitx-default-setup)
