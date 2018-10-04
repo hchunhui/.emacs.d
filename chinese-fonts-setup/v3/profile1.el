@@ -4,7 +4,7 @@
 (setq cfs--custom-set-fontnames
       '(
         ("DejaVu Sans Mono" "PragmataPro" "Monaco" "Consolas" "Menlof" "Droid Sans Mono Pro" "Droid Sans Mono" "Inconsolata" "Source Code Pro" "Lucida Console" "Envy Code R" "Andale Mono" "Lucida Sans Typewriter" "monoOne" "Lucida Typewriter" "Panic Sans" "Bitstream Vera Sans Mono" "HyperFont" "PT Mono" "Ti92Pluspc" "Excalibur Monospace" "Courier New" "Courier" "Cousine" "Fira Mono" "Lekton" "Ubuntu Mono" "Liberation Mono" "M+ 1mn" "BPmono" "Free Mono" "Anonymous Pro" "ProFont" "ProFontWindows" "Latin Modern Mono" "Code 2002" "ProggyCleanTT" "ProggyTinyTT")
-        ("文泉驿等宽正黑" "文泉驿正黑" "文泉驿点阵正黑" "黑体" "文泉驿等宽微米黑" "微软雅黑" "Microsoft Yahei" "Microsoft_Yahei" "Hiragino Sans GB" "SimHei" "SimSun" "NSimSun" "FangSong" "KaiTi" "FangSong_GB2312" "KaiTi_GB2312" "LiSu" "YouYuan" "新宋体" "宋体" "楷体_GB2312" "仿宋_GB2312" "幼圆" "隶书" "STXihei" "STKaiti" "STSong" "STZhongsong" "STFangsong" "FZShuTi" "FZYaoti" "STCaiyun" "STHupo" "STLiti" "STXingkai" "STXinwei" "方正姚体" "方正舒体" "方正粗圆_GBK" "华文仿宋" "华文中宋" "华文彩云" "华文新魏" "华文细黑" "华文行楷")
+        ("WenQuanYi Zen Hei" "文泉驿正黑" "文泉驿等宽正黑" "文泉驿点阵正黑" "黑体" "文泉驿等宽微米黑" "微软雅黑" "Microsoft Yahei" "Microsoft_Yahei" "Hiragino Sans GB" "SimHei" "SimSun" "NSimSun" "FangSong" "KaiTi" "FangSong_GB2312" "KaiTi_GB2312" "LiSu" "YouYuan" "新宋体" "宋体" "楷体_GB2312" "仿宋_GB2312" "幼圆" "隶书" "STXihei" "STKaiti" "STSong" "STZhongsong" "STFangsong" "FZShuTi" "FZYaoti" "STCaiyun" "STHupo" "STLiti" "STXingkai" "STXinwei" "方正姚体" "方正舒体" "方正粗圆_GBK" "华文仿宋" "华文中宋" "华文彩云" "华文新魏" "华文细黑" "华文行楷")
         ("HanaMinB" "SimSun-ExtB" "MingLiU-ExtB" "PMingLiU-ExtB" "MingLiU_HKSCS-ExtB")
        ))
 
@@ -13,13 +13,13 @@
 ;;; 按 C-<up> 增大光标处字号，按 C-<down> 减小光标处字号。
 (setq cfs--custom-set-fontsizes
       '(
-        (9    11.0  9.0 )
-        (10   12.5 10.5)
-        (11.5 14.5 12.0)
-        (12.5 15.0 13.5)
-        (14   16.5 15.0)
-        (16   20.5 16.5)
-        (18   21.0 18.0)
-        (20   24.0 21.0)
-        (22   26.5 22.5)
-       ))
+        (9    11.0  11.0)
+        (10   12.5 12.5)
+        (11.5 14.5 14.5)
+        (12.5 15.0 15.0)
+        (14   16.5 16.5)
+        (16   20.5 20.5)
+        (18   21.0 21.0)
+        (20   24.0 24.0)
+        (22   26.5 26.5)
+	))
