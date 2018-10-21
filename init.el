@@ -46,7 +46,9 @@
 (add-to-list 'auto-mode-alist '("\\.F90\\'" . f90-mode))
 
 ;; golden ratio
-(require 'golden-ratio)
+(use-package golden-ratio
+  :defer t
+  :bind ([f6] . golden-ratio-mode))
 
 ;; auto complete
 (require 'auto-complete-config)
@@ -59,7 +61,9 @@
 (yas/load-directory yas/root-directory)
 
 ;; sdcv
-(require 'sdcv-mode)
+(use-package sdcv-mode
+  :defer t
+  :bind ("C-c d" . sdcv-search))
 
 ;; unicad
 (require 'unicad)
@@ -159,12 +163,10 @@ occurence of CHAR."
 
 ;; global keys
 (global-set-key [(f5)] 'wl-revert-buffer)
-(global-set-key [(f6)] 'golden-ratio-mode)
 (global-set-key [(f7)] 'other-window)
 (global-set-key [(f8)] 'delete-other-windows)
 (global-set-key [(f9)] 'compile)
 (global-set-key [(f11)] 'ido-imenu)
-(global-set-key (kbd "C-c d") 'sdcv-search)
 (define-key global-map (kbd "C-c g") 'wy-go-to-char)
 
 
