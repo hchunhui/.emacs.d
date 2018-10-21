@@ -56,9 +56,18 @@
 (add-to-list 'ac-modes 'coq-mode)
 
 ;; yasnippet
-(require 'yasnippet-bundle)
-(setq yas/root-directory "~/.emacs.d/mysnippets")
-(yas/load-directory yas/root-directory)
+(use-package yasnippet
+  :defer t
+  :commands (yas-minor-mode)
+  :init
+  (add-hook 'prog-mode-hook #'yas-minor-mode)
+  (add-hook 'latex-mode-hook #'yas-minor-mode)
+  (add-hook 'coq-mode-hook #'yas-minor-mode)
+  (add-hook 'html-mode-hook #'yas-minor-mode)
+  (add-hook 'org-mode-hook #'yas-minor-mode)
+  :config
+  (setq yas-snippet-dirs "~/.emacs.d/mysnippets")
+  (yas-reload-all))
 
 ;; sdcv
 (use-package sdcv-mode
