@@ -5,6 +5,12 @@
 (setq-default initial-scratch-message
 	      ";; A man, a plan, a canal - Panama! ;;\n\n")
 
+;; This is only needed once, near the top of the file
+(eval-when-compile
+  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+  (add-to-list 'load-path "~/.emacs.d/elisp/use-package")
+  (require 'use-package))
+
 ;; theme
 (require 'color-theme-solarized)
 (color-theme-initialize)
@@ -75,15 +81,20 @@
 (add-hook 'caml-mode-hook 'merlin-mode)
 
 ;; proof general (Coq)
-(load-file "~/.emacs.d/elisp/ProofGeneral/generic/proof-site.el")
-(setq proof-splash-enable nil)
-(defvar proof-mode-map (make-sparse-keymap))
-(define-key proof-mode-map (kbd "C-,") 'proof-undo-last-successful-command)
-(define-key proof-mode-map (kbd "C-.") 'proof-assert-next-command-interactive)
-(or (assoc 'proof-mode minor-mode-map-alist)
-    (setq minor-mode-map-alist
-	  (cons (cons 'proof-mode proof-mode-map)
-		minor-mode-map-alist)))
+(use-package proof-site
+	     :defer t
+	     :mode ("\\.v\\'" . coq-mode)
+	     :load-path
+	     "~/.emacs.d/elisp/ProofGeneral/generic"
+	     :config
+	     (setq proof-splash-enable nil)
+	     (defvar proof-mode-map (make-sparse-keymap))
+	     (define-key proof-mode-map (kbd "C-,") 'proof-undo-last-successful-command)
+	     (define-key proof-mode-map (kbd "C-.") 'proof-assert-next-command-interactive)
+	     (or (assoc 'proof-mode minor-mode-map-alist)
+		 (setq minor-mode-map-alist
+		       (cons (cons 'proof-mode proof-mode-map)
+			     minor-mode-map-alist))))
 
 (autoload 'rust-mode "rust-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
@@ -179,9 +190,10 @@ occurence of CHAR."
       'mew-send-hook))
 
 ;; evil
-(add-to-list 'load-path "~/.emacs.d/elisp/evil")
-(require 'evil)
-(global-set-key [(f1)] 'evil-mode)
+(use-package evil
+  :defer t
+  :load-path "~/.emacs.d/elisp/evil"
+  :bind ([f1] . evil-mode))
 
 ;; ido-imenu
 (defun ido-imenu ()

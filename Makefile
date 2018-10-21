@@ -10,8 +10,7 @@ ELS = \
 	elisp/popup.elc \
 	elisp/sdcv-mode.elc \
 	elisp/unicad.elc \
-	elisp/yasnippet-bundle.elc \
-	init.elc
+	elisp/yasnippet-bundle.elc
 
 all: $(ELS)
 	make -C elisp/ProofGeneral
