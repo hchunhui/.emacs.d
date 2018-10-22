@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: static function
+# key: sfun
+# --
+static ${1:int} ${2:fun}(${3:int arg})
+{
+	$4
+}
