@@ -54,6 +54,10 @@
 (require 'auto-complete-config)
 (ac-config-default)
 (add-to-list 'ac-modes 'coq-mode)
+(setq ac-use-menu-map t)
+;; Default settings
+(define-key ac-menu-map "\C-n" 'ac-next)
+(define-key ac-menu-map "\C-p" 'ac-previous)
 
 ;; yasnippet
 (use-package yasnippet
