@@ -70,7 +70,7 @@
   (add-hook 'html-mode-hook #'yas-minor-mode)
   (add-hook 'org-mode-hook #'yas-minor-mode)
   :config
-  (setq yas-snippet-dirs "~/.emacs.d/mysnippets")
+  (setq yas-snippet-dirs '("~/.emacs.d/mysnippets"))
   (yas-reload-all))
 
 ;; sdcv
