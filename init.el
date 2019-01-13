@@ -45,6 +45,10 @@
 (add-to-list 'auto-mode-alist '("\\.C\\'" . cc-mode))
 (add-to-list 'auto-mode-alist '("\\.F90\\'" . f90-mode))
 
+;; dtrt indent
+(require 'dtrt-indent)
+(dtrt-indent-global-mode)
+
 ;; golden ratio
 (use-package golden-ratio
   :defer t
