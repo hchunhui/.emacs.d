@@ -1,3 +1,9 @@
+(set 'gc-cons-threshold 5000000)
+(add-hook 'after-make-frame-functions
+	  (lambda (frame)
+	      (set-face-attribute 'default nil :height 90)))
+;;(set-face-attribute 'default nil :height 90)
+(add-to-list 'face-ignored-fonts "Noto Color Emoji")
 (setq use-default-font-for-symbols nil)
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (add-to-list 'load-path "~/.emacs.d/elisp/emacs-goodies-el")
@@ -13,7 +19,7 @@
 
 ;; theme
 (require 'color-theme-solarized)
-(color-theme-initialize)
+;;(color-theme-initialize)
 (color-theme-solarized-dark)
 ;;(color-theme-dark-laptop)
 
@@ -25,7 +31,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(cfs--current-profile-name "profile1" t)
- '(cfs--fontsize-steps (quote (2 4 4)) t))
+ '(cfs--fontsize-steps '(2 4 4) t))
 
 ;; options
 (setq frame-title-format "%b@emacs")
@@ -94,7 +100,7 @@
 (add-to-list 'load-path "~/.emacs.d/elisp/tuareg-2.0.6")
 (load "tuareg-site-file.el")
 
-(push "~/.opam/4.07.0/share/emacs/site-lisp" load-path)
+(push "~/.opam/4.09.0/share/emacs/site-lisp" load-path)
 (setq merlin-command "ocamlmerlin")
 (setq merlin-ac-setup t)
 (autoload 'merlin-mode "merlin" "Merlin mode" t)
@@ -243,8 +249,8 @@ Symbols matching the text at point are put first in the completion list."
       (goto-char position))))
 
 ;; fcitx.el
-(require 'fcitx)
-(fcitx-default-setup)
+;;(require 'fcitx)
+;;(fcitx-default-setup)
 
 ;; edit env
 (require 'edit-env)

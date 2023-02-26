@@ -4,7 +4,7 @@
 (setq cfs--custom-set-fontnames
       '(
         ("Monospace")
-        ("Noto Sans CJK SC" "WenQuanYi Zen Hei" "文泉驿正黑" "文泉驿等宽正黑")
+        ("思源黑体" "Noto Sans CJK SC" "WenQuanYi Zen Hei" "文泉驿正黑" "文泉驿等宽正黑")
         ("HanaMinB")
        ))
 
