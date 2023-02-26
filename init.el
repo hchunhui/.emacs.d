@@ -248,10 +248,6 @@ Symbols matching the text at point are put first in the completion list."
       (push-mark (point))
       (goto-char position))))
 
-;; fcitx.el
-;;(require 'fcitx)
-;;(fcitx-default-setup)
-
 ;; edit env
 (require 'edit-env)
 
