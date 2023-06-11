@@ -18,10 +18,8 @@
   (require 'use-package))
 
 ;; theme
-(require 'color-theme-solarized)
-;;(color-theme-initialize)
-(color-theme-solarized-dark)
-;;(color-theme-dark-laptop)
+(require 'solarized-theme)
+(load-theme `solarized t)
 
 ;; fonts
 (require 'chinese-fonts-setup)
@@ -31,7 +29,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(cfs--current-profile-name "profile1" t)
- '(cfs--fontsize-steps '(2 4 4) t))
+ '(cfs--fontsize-steps '(2 4 4) t)
+ '(frame-background-mode 'dark))
 
 ;; options
 (setq frame-title-format "%b@emacs")
