@@ -18,8 +18,8 @@
   (require 'use-package))
 
 ;; theme
-(require 'solarized-theme)
-(load-theme `solarized t)
+;;(require 'solarized-theme)
+;;(load-theme `solarized t)
 
 ;; fonts
 (require 'chinese-fonts-setup)
@@ -29,8 +29,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(cfs--current-profile-name "profile1" t)
- '(cfs--fontsize-steps '(2 4 4) t)
- '(frame-background-mode 'dark))
+ '(cfs--fontsize-steps '(2 4 4) t))
 
 ;; options
 (setq frame-title-format "%b@emacs")
@@ -46,7 +45,7 @@
 (ido-mode t)
 (show-paren-mode t)
 (column-number-mode t)
-(which-func-mode t)
+(which-function-mode t)
 (add-to-list 'auto-mode-alist '("\\.C\\'" . cc-mode))
 (add-to-list 'auto-mode-alist '("\\.F90\\'" . f90-mode))
 
